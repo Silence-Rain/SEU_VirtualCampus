@@ -18,12 +18,11 @@ public class Client {
 		PrintWriter pw = null;
 		
 		try{
-			socket = new Socket("localhost", 8080);
+			socket = new Socket("localhost", 9001);
 			os = socket.getOutputStream();
 			pw = new PrintWriter(os);
 
-			pw.println("09015331");
-			pw.println("admin");
+			pw.println("09015331&admin&admin");
 			pw.flush();
 			
 			is = socket.getInputStream();

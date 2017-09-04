@@ -4,35 +4,34 @@ import java.io.*;
 import java.net.*;
 import java.sql.*;
 
+import common.UserInfo;
+import database.LoginModel;
+
 public class Login {
+	private LoginModel model;
+	private UserInfo info;
+	private boolean loginFlag;
 
 	public static void main(String[] args) {
 		
 		Login lg = new Login();
-		Connection con = null;
-		
-		try{
-			Class.forName("com.hxtt.sql.access.AccessDriver");
-			System.out.println("Driver loaded");
-			
-			String url = "jdbc:Access:///d:/VirtualCampus/db/vCampus.accdb";
-			con = DriverManager.getConnection(url);
-			System.out.println("Database connected");
+
+		try {
+			lg.login();
+		} catch (IOException e) {
+			System.out.println("Fail to release resource");
+			e.printStackTrace();
 		}
-		catch (ClassNotFoundException e){
-			System.out.println("Fail to load driver");
-		}
-		catch (SQLException e){
-			System.out.println("Fail to connect database");
-		}
-		
-		lg.login(con);
 	}
 	
-	public boolean login(Connection con) {
-		
-		boolean loginFlag = false;
-		
+	public Login() {
+		this.model = new LoginModel();
+		this.info = new UserInfo();
+		this.loginFlag = false;
+	}
+	
+	public boolean login() throws IOException {
+
 		ServerSocket server = null;
 		Socket socket = null;
 		
@@ -45,24 +44,22 @@ public class Login {
 		
 		try{
 			
-			server = new ServerSocket(8080);
+			server = new ServerSocket(9001);
 			socket = server.accept();			
 			
 			is = socket.getInputStream();
 			isr = new InputStreamReader(is);
 			br = new BufferedReader(isr);
 			
-			String usr = br.readLine();
-			String pwd = br.readLine();
-
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from tbUser where u_ID='" + usr + "';");
+			String detail = br.readLine();
+			info.setInfoByQuery(detail);
+			ResultSet rs = (ResultSet)model.search(info);
 			
 			os = socket.getOutputStream();
 			pw = new PrintWriter(os);
 				
 			rs.next();
-			if (pwd.equals(rs.getString("u_Pwd"))) {
+			if (info.getPwd().equals(rs.getString("u_Pwd")) && info.getType().equals(rs.getString("u_Type"))) {
 				pw.println("Login Success");
 				pw.flush();
 
@@ -74,16 +71,6 @@ public class Login {
 
 				loginFlag = false;
 			}
-			
-			pw.close();
-			os.close();
-			br.close();
-			isr.close();
-			is.close();
-			socket.close();
-			server.close();
-			
-			return loginFlag ? true : false;
 
 		}
 		catch (SQLException e) {
@@ -98,6 +85,17 @@ public class Login {
 
 			return false;
 		}
+		finally {
+			pw.close();
+			os.close();
+			br.close();
+			isr.close();
+			is.close();
+			socket.close();
+			server.close();
+		}
+		
+		return loginFlag ? true : false;
 	}
 
 }
