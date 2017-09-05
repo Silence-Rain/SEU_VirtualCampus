@@ -28,10 +28,13 @@ public class ServerThread extends Thread {
 			try {
 				Socket client = server.accept();
 				
-				ClientThread current = new ClientThread(client);
+				ClientThread current = new ClientThread(client, this);
 				clients.add(current);
 				current.start();
 				
+				for (int i = 0; i < clients.size(); i++) { 
+					System.out.println(clients.get(i)); 
+				} 
 				System.out.println("Number of connected client: " + clients.size());
 				
 			} catch (IOException e) {
@@ -48,5 +51,15 @@ public class ServerThread extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean closeClientConnection(ClientThread ct) {
+		if (clients.contains(ct)) {
+			clients.remove(ct);
+			
+			return true;
+		}
+
+		return false;	
 	}
 }
