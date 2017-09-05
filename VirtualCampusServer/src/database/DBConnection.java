@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	private static Connection con = null;
-	private static String DBurl = "jdbc:Access:///C:/学习/项目/seu2017-java/db/vCampus.accdb";
+	private static String DBurl = "jdbc:Access:///C:/学习/项目/SEU_VirtualCampus/db/vCampus.accdb";
 	
 	public static Connection getConnection() {
 		if (con == null) {

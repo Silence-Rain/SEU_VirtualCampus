@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/学习/项目/seu2017-java/VirtualCampusServer/lib/Access_JDBC30.jar"/>
+	<classpathentry kind="lib" path="C:/学习/项目/SEU_VirtualCampus/VirtualCampusServer/lib/Access_JDBC30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,25 +1,20 @@
 package server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import helper.Login;
+import java.util.Vector;
 
 public class ServerThread extends Thread {
 	private ServerSocket server;
-	private Socket client;
-	private BufferedReader br;
-	private PrintWriter pw;
+	private Vector<ClientThread> clients;
 	
 	public ServerThread() {
 		
 		try {
-			server = new ServerSocket(9001);		
-			System.out.println("Listen on port 9001");
+			server = new ServerSocket(8081);
+			System.out.println("Server main thread start.\nListen on port 8081");
+			clients = new Vector<ClientThread>();
 			
 			this.start();
 		}
@@ -31,20 +26,15 @@ public class ServerThread extends Thread {
 	public void run() {
 		while(!server.isClosed()) {
 			try {
-				client = server.accept();
+				Socket client = server.accept();
 				
-				br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-				pw = new PrintWriter(client.getOutputStream());
+				ClientThread current = new ClientThread(client);
+				clients.add(current);
+				current.start();
 				
-				Login lg = new Login();
-				if (lg.login(br, pw)) {
-					System.out.println("main thread");
-				}
+				System.out.println("Number of connected client: " + clients.size());
 				
 			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (NullPointerException e) {
-				System.out.println("No client connection");
 				e.printStackTrace();
 			}
 		}
@@ -55,7 +45,6 @@ public class ServerThread extends Thread {
 			try {
 				server.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
