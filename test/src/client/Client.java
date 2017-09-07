@@ -15,14 +15,36 @@ public class Client extends Thread{
 		try{
 			socket = new Socket("localhost", 8081);
 			pw = new PrintWriter(socket.getOutputStream());
-
-			pw.println("09015331&admin&admin");
-			pw.flush();
-			
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));	
-			System.out.println(br.readLine());
+
+
+			pw.println(101);
+			pw.flush();
+			pw.println("09015331&admin&admin");
+			pw.flush();	
+			if (Integer.parseInt(br.readLine()) == 1011)
+				System.out.println("Login success");
+			else
+				System.out.println("Login fail");
 			
-			sleep(10000);
+			
+			pw.println(102);
+			pw.println("09015330&15330&student");
+			pw.flush();	
+			if (Integer.parseInt(br.readLine()) == 1021)
+				System.out.println("Register success");
+			else
+				System.out.println("Register fail");
+			
+			
+			pw.println(103);
+			pw.flush();	
+			if (Integer.parseInt(br.readLine()) == 1031)
+				System.out.println("Logout success");
+			else
+				System.out.println("Logout fail");
+			
+
 			
 			br.close();
 
@@ -32,8 +54,6 @@ public class Client extends Thread{
 
 		}
 		catch(IOException e){
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		

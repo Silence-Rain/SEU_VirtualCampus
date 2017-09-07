@@ -1,18 +1,16 @@
 package helper;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import common.UserInfo;
 import database.LoginModel;
 
-public class Login {
+public class Login{
 	private LoginModel model;
 	private UserInfo info;
 	private boolean loginFlag;
+	private boolean regFlag;
 	
 	public Login() {
 		this.model = new LoginModel();
@@ -20,27 +18,15 @@ public class Login {
 		this.loginFlag = false;
 	}
 	
-	public boolean login(BufferedReader br, PrintWriter pw) {
+	public boolean login(String token) {
 		
 		try{
-			
-			String token = br.readLine();
+
 			info.setInfoByQuery(token);
 			ResultSet rs = (ResultSet)model.search(info);
 
 			rs.next();
-			if (info.getPwd().equals(rs.getString("u_Pwd")) && info.getType().equals(rs.getString("u_Type"))) {
-				pw.println("Login Success");
-				pw.flush();
-
-				loginFlag = true;
-			}
-			else{
-				pw.println("Wrong username or password");
-				pw.flush();
-
-				loginFlag = false;
-			}
+			loginFlag =  info.getPwd().equals(rs.getString("u_Pwd")) && info.getType().equals(rs.getString("u_Type"));
 
 		}
 		catch (SQLException e) {
@@ -49,14 +35,17 @@ public class Login {
 
 			return false;
 		} 
-		catch (IOException e) {
-			System.out.println("IO exception");
-			e.printStackTrace();
-
-			return false;
-		}
 		
-		return loginFlag ? true : false;
+		return loginFlag;
+	}
+	
+	public boolean register(String token) {
+			
+		info.setInfoByQuery(token);
+			
+		regFlag = model.insert(info);
+		
+		return regFlag;
 	}
 
 }
