@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="test/src"/>
+	<classpathentry kind="src" path="VirtualCampusClient/src"/>
+	<classpathentry kind="src" path="VirtualCampusServer/src"/>
+	<classpathentry kind="lib" path="VirtualCampusServer/lib/Access_JDBC30.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/13672/Desktop/quaqua.jar"/>
+	<classpathentry kind="lib" path="C:/Users/13672/Desktop/Swing样式大全（全56种经典）/7种另类风格和实例/JTattoo.jar"/>
+	<classpathentry kind="lib" path="C:/Users/13672/Desktop/Swing样式大全（全56种经典）/7种另类风格和实例/JTattooDemo.jar"/>
+	<classpathentry kind="lib" path="C:/Users/13672/Desktop/Swing样式大全（全56种经典）/7种另类风格和实例/liquidlnf.jar"/>
+	<classpathentry kind="output" path="VirtualCampusClient/bin"/>
+</classpath>
