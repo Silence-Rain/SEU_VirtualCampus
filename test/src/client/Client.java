@@ -4,45 +4,36 @@ import java.io.*;
 import java.net.*;
 
 
-public class Client {
+public class Client extends Thread{
 
 	public static void main(String[] args) {
 		
 		Socket socket = null;
-		
-		InputStream is = null;
-		InputStreamReader isr = null;
 		BufferedReader br = null;
-		
-		OutputStream os = null;
 		PrintWriter pw = null;
 		
 		try{
-			socket = new Socket("localhost", 8080);
-			os = socket.getOutputStream();
-			pw = new PrintWriter(os);
+			socket = new Socket("localhost", 8081);
+			pw = new PrintWriter(socket.getOutputStream());
 
-			pw.println("09015331");
-			pw.println("admin");
+			pw.println("09015331&admin&admin");
 			pw.flush();
 			
-			is = socket.getInputStream();
-			isr = new InputStreamReader(is);
-			br = new BufferedReader(isr);
-			
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));	
 			System.out.println(br.readLine());
 			
+			sleep(10000);
+			
 			br.close();
-			isr.close();
-			is.close();
 
 			pw.close();
-			os.close();
 
 			socket.close();
 
 		}
 		catch(IOException e){
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
