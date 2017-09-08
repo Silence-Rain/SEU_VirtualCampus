@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream;
 import seu.vCampus.common.Bank;
 import seu.vCampus.common.MessageTypes;
 import seu.vCampus.util.SocketHelper;
-public class IBankImpl implements IBank,MessageTypes{
+public abstract class IBankImpl implements IBank,MessageTypes{
 	ObjectInputStream is;
 	  ObjectOutputStream os;
 
@@ -39,12 +39,14 @@ public class IBankImpl implements IBank,MessageTypes{
 	    return null;
 	  }
 
-	  public boolean transferAccount(Bank bank)
+	  public boolean transferAccount(String money,String receiveID)
 	  {
 	    try {
 	      this.os.writeInt(100);
 	      this.os.flush();
-	      this.os.writeObject(bank);
+	      this.os.writeObject(money);
+	      this.os.flush();
+	      this.os.writeObject(receiveID);
 	      this.os.flush();
 	      try
 	      {

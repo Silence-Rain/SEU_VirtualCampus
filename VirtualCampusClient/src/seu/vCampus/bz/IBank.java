@@ -8,3 +8,4 @@ public abstract interface IBank {
 	public abstract boolean transferAccount(String money,String receiveID );
 
 }
+
