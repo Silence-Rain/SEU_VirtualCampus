@@ -34,6 +34,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Rectangle;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BankView {
 
@@ -50,9 +52,6 @@ public class BankView {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTable table_2;
-	private JTable table_3;
-	private JTable table_4;
-	private JTable table_5;
 	private JTable table_6;
 	private JTable table_7;
 	private JTable table_8;
@@ -60,34 +59,39 @@ public class BankView {
 	private JTextField textField_5;
 	private JTable table_10;
 	private JTable table_11;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTable table_3;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+//		try {
+//			UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+//		} catch (Throwable e) {
+//			e.printStackTrace();
+//		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-//				String windows = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
-//				try {
-//					UIManager.setLookAndFeel(windows);
-//				} catch (ClassNotFoundException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (InstantiationException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (IllegalAccessException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (UnsupportedLookAndFeelException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				String windows = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+				try {
+					UIManager.setLookAndFeel(windows);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				try {
 					BankView window = new BankView();
 					window.frame.dispose();
@@ -130,7 +134,7 @@ public class BankView {
 		infoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		infoPanel.setAlignmentY(Component.TOP_ALIGNMENT);
 		infoPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-		tabbedPane.addTab("\u5B66\u7C4D\u7BA1\u7406\r\n",
+		tabbedPane.addTab("\u5b66\u7c4d\u7ba1\u7406",
 				new ImageIcon(BankView.class.getResource("/images/infoIcon.png")), infoPanel,
 				null);
 //		tabbedPane.setDisabledIconAt(0,
@@ -139,13 +143,71 @@ public class BankView {
 		infoPanel.setLayout(new CardLayout(0, 0));
 
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.setFont(new Font("YouYuan", Font.PLAIN, 14));
 		infoPanel.add(tabbedPane_1, null);
 
 		JPanel panel = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel, null);
-
-		JPanel panel_1 = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel_1, null);
+		tabbedPane_1.addTab("\u67e5\u770b\u4fe1\u606f", null, panel, null);
+		panel.setLayout(null);
+		
+		JTextPane textPane_13 = new JTextPane();
+		textPane_13.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_13.setBackground(UIManager.getColor("Button.background"));
+		textPane_13.setText("\u59d3\u540d\uff1a");
+		textPane_13.setBounds(75, 20, 51, 21);
+		panel.add(textPane_13);
+		
+		textField_6 = new JTextField();
+		textField_6.setBounds(174, 20, 66, 21);
+		panel.add(textField_6);
+		textField_6.setColumns(10);
+		
+		JTextPane textPane_14 = new JTextPane();
+		textPane_14.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_14.setBackground(UIManager.getColor("Button.background"));
+		textPane_14.setText("性别：");
+		textPane_14.setBounds(75, 66, 51, 21);
+		panel.add(textPane_14);
+		
+		textField_7 = new JTextField();
+		textField_7.setBounds(174, 66, 66, 21);
+		panel.add(textField_7);
+		textField_7.setColumns(10);
+		
+		JTextPane textPane_15 = new JTextPane();
+		textPane_15.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_15.setBackground(UIManager.getColor("Button.background"));
+		textPane_15.setText("民族：");
+		textPane_15.setBounds(75, 116, 51, 21);
+		panel.add(textPane_15);
+		
+		textField_8 = new JTextField();
+		textField_8.setBounds(174, 116, 66, 21);
+		panel.add(textField_8);
+		textField_8.setColumns(10);
+		
+		JTextPane textPane_16 = new JTextPane();
+		textPane_16.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_16.setBackground(UIManager.getColor("Button.background"));
+		textPane_16.setText("学院：");
+		textPane_16.setBounds(75, 165, 51, 21);
+		panel.add(textPane_16);
+		
+		textField_9 = new JTextField();
+		textField_9.setBounds(174, 165, 66, 21);
+		panel.add(textField_9);
+		textField_9.setColumns(10);
+		
+		JButton btnNewButton = new JButton("上传头像");
+		btnNewButton.setFont(new Font("幼圆", Font.PLAIN, 14));
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		btnNewButton.setBounds(365, 20, 162, 153);
+		panel.add(btnNewButton);
 		tabbedPane.setForegroundAt(0, new Color(0, 0, 128));
 
 		// the bank part
@@ -247,12 +309,12 @@ public class BankView {
 
 		JButton button = new JButton("\u786E\u8BA4");
 		button.setFont(new Font("YouYuan", Font.PLAIN, 14));
-		button.setBounds(60, 179, 55, 22);
+		button.setBounds(60, 179, 83, 22);
 		checkPanel.add(button);
 
 		JButton button_1 = new JButton("\u53D6\u6D88");
 		button_1.setFont(new Font("YouYuan", Font.PLAIN, 14));
-		button_1.setBounds(172, 179, 55, 22);
+		button_1.setBounds(172, 179, 83, 22);
 		checkPanel.add(button_1);
 
 		// transfer record part-------------------------------------------------------------------------
@@ -563,94 +625,210 @@ public class BankView {
 				new ImageIcon(BankView.class.getResource("/images/playroom.png")),
 				orderPanel, null);
 		orderPanel.setLayout(null);
-// the order Pane-----------------------------------------------------------------------------------		
-		JTabbedPane orderTab = new JTabbedPane(JTabbedPane.TOP);
-		orderTab.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		orderTab.setBounds(0, 0, 700, 360);
-		orderPanel.add(orderTab);
-//the yuyue part----------------------------------------------------------------		
-		JPanel yuyuePanel = new JPanel();
-		orderTab.addTab("预约\r\n", null, yuyuePanel, null);
-		yuyuePanel.setLayout(null);
 		
-		JTabbedPane Apptab = new JTabbedPane(JTabbedPane.TOP);
-		Apptab.setBounds(10, 10, 500, 300);
-		yuyuePanel.add(Apptab);
+		JTabbedPane tabbedPane_4 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		tabbedPane_4.setBounds(0, 0, 650, 360);
+		orderPanel.add(tabbedPane_4);
 		
-		JPanel todayPanel = new JPanel();
-		Apptab.addTab("今天", null, todayPanel, null);
-		todayPanel.setLayout(null);
+		JPanel panel_1 = new JPanel();
+		tabbedPane_4.addTab("预约", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JTextPane textPane_17 = new JTextPane();
+		textPane_17.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		textPane_17.setText("预约项目：");
+		textPane_17.setBounds(34, 10, 97, 21);
+		panel_1.add(textPane_17);
+		
+		JComboBox comboBox_4 = new JComboBox();
+		comboBox_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"羽毛球", "篮球", "乒乓球", "健身房"}));
+		comboBox_4.setBounds(141, 10, 75, 21);
+		panel_1.add(comboBox_4);
+		
+		JTabbedPane tabbedPane_5 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_5.setFont(new Font("幼圆", Font.PLAIN, 13));
+		tabbedPane_5.setBounds(34, 53, 431, 252);
+		panel_1.add(tabbedPane_5);
+		
+		JPanel panel_6 = new JPanel();
+		tabbedPane_5.addTab("--今天--", null, panel_6, null);
+		panel_6.setLayout(null);
+		
+		JTextPane textPane_18 = new JTextPane();
+		textPane_18.setText("09:00-10:00（剩余29）");
+		textPane_18.setBounds(46, 10, 147, 21);
+		panel_6.add(textPane_18);
+		
+		JButton button_8 = new JButton("进入预约");
+		button_8.setBounds(260, 8, 93, 23);
+		panel_6.add(button_8);
+		
+		JTextPane textPane_19 = new JTextPane();
+		textPane_19.setText("10:00-11:00（剩余29）");
+		textPane_19.setBounds(46, 49, 147, 21);
+		panel_6.add(textPane_19);
+		
+		JButton button_10 = new JButton("进入预约");
+		button_10.setBounds(260, 49, 93, 23);
+		panel_6.add(button_10);
+		
+		JTextPane textPane_20 = new JTextPane();
+		textPane_20.setText("14:00-15:00（剩余29）");
+		textPane_20.setBounds(46, 98, 147, 21);
+		panel_6.add(textPane_20);
+		
+		JButton button_11 = new JButton("进入预约");
+		button_11.setBounds(260, 96, 93, 23);
+		panel_6.add(button_11);
+		
+		JTextPane textPane_21 = new JTextPane();
+		textPane_21.setText("15:00-16:00（剩余29）");
+		textPane_21.setBounds(46, 142, 147, 21);
+		panel_6.add(textPane_21);
+		
+		JButton button_14 = new JButton("进入预约");
+		button_14.setBounds(260, 140, 93, 23);
+		panel_6.add(button_14);
+		
+		JTextPane textPane_22 = new JTextPane();
+		textPane_22.setText("16:00-17:00（剩余29）");
+		textPane_22.setBounds(46, 189, 147, 21);
+		panel_6.add(textPane_22);
+		
+		JButton button_15 = new JButton("进入预约");
+		button_15.setBounds(260, 189, 93, 23);
+		panel_6.add(button_15);
+		
+		JPanel panel_7 = new JPanel();
+		tabbedPane_5.addTab("--明天--", null, panel_7, null);
+		panel_7.setLayout(null);
+		
+		JTextPane textPane_23 = new JTextPane();
+		textPane_23.setText("09:00-10:00");
+		textPane_23.setBounds(49, 10, 107, 21);
+		panel_7.add(textPane_23);
+		
+		JTextPane textPane_24 = new JTextPane();
+		textPane_24.setText("10:00-11:00");
+		textPane_24.setBounds(49, 48, 107, 21);
+		panel_7.add(textPane_24);
+		
+		JTextPane textPane_25 = new JTextPane();
+		textPane_25.setText("14:00-15：00");
+		textPane_25.setBounds(49, 89, 107, 21);
+		panel_7.add(textPane_25);
+		
+		JTextPane textPane_26 = new JTextPane();
+		textPane_26.setText("15：00-16：00");
+		textPane_26.setBounds(49, 134, 107, 21);
+		panel_7.add(textPane_26);
+		
+		JTextPane textPane_27 = new JTextPane();
+		textPane_27.setText("16:00-17:00");
+		textPane_27.setBounds(49, 176, 107, 21);
+		panel_7.add(textPane_27);
+		
+		JButton button_16 = new JButton("进入预约");
+		button_16.setBounds(252, 10, 93, 23);
+		panel_7.add(button_16);
+		
+		JButton button_17 = new JButton("进入预约");
+		button_17.setBounds(252, 48, 93, 23);
+		panel_7.add(button_17);
+		
+		JButton button_18 = new JButton("进入预约");
+		button_18.setBounds(252, 87, 93, 23);
+		panel_7.add(button_18);
+		
+		JButton button_19 = new JButton("进入预约");
+		button_19.setBounds(252, 132, 93, 23);
+		panel_7.add(button_19);
+		
+		JButton button_20 = new JButton("进入预约");
+		button_20.setBounds(252, 174, 93, 23);
+		panel_7.add(button_20);
+		
+		JPanel panel_5 = new JPanel();
+		tabbedPane_5.addTab("--后天--", null, panel_5, null);
+		panel_5.setLayout(null);
+		
+		JTextPane textPane_28 = new JTextPane();
+		textPane_28.setText("09:00--10:00");
+		textPane_28.setBounds(45, 10, 93, 21);
+		panel_5.add(textPane_28);
+		
+		JTextPane textPane_29 = new JTextPane();
+		textPane_29.setText("10:00--11:00");
+		textPane_29.setBounds(45, 53, 93, 21);
+		panel_5.add(textPane_29);
+		
+		JTextPane textPane_30 = new JTextPane();
+		textPane_30.setText("14:00--15:00");
+		textPane_30.setBounds(45, 102, 93, 21);
+		panel_5.add(textPane_30);
+		
+		JTextPane textPane_31 = new JTextPane();
+		textPane_31.setText("15:00--16:00");
+		textPane_31.setBounds(45, 144, 93, 21);
+		panel_5.add(textPane_31);
+		
+		JTextPane textPane_32 = new JTextPane();
+		textPane_32.setText("16:00--17:00");
+		textPane_32.setBounds(45, 192, 93, 21);
+		panel_5.add(textPane_32);
+		
+		JButton button_21 = new JButton("进入预约");
+		button_21.setBounds(250, 10, 93, 23);
+		panel_5.add(button_21);
+		
+		JButton button_22 = new JButton("进入预约");
+		button_22.setBounds(250, 51, 93, 23);
+		panel_5.add(button_22);
+		
+		JButton button_23 = new JButton("进入预约");
+		button_23.setBounds(250, 100, 93, 23);
+		panel_5.add(button_23);
+		
+		JButton button_24 = new JButton("进入预约");
+		button_24.setBounds(250, 142, 93, 23);
+		panel_5.add(button_24);
+		
+		JButton button_25 = new JButton("进入预约");
+		button_25.setBounds(250, 190, 93, 23);
+		panel_5.add(button_25);
+		
+		JPanel panel_8 = new JPanel();
+		tabbedPane_4.addTab("预约记录", null, panel_8, null);
+		panel_8.setLayout(null);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(10, 10, 400, 150);
-		todayPanel.add(scrollPane_5);
+		scrollPane_5.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		scrollPane_5.setBounds(79, 48, 404, 252);
+		panel_8.add(scrollPane_5);
 		
 		table_3 = new JTable();
-		scrollPane_5.setViewportView(table_3);
-		table_3.setBackground(UIManager.getColor("Button.background"));
-		table_3.setGridColor(SystemColor.inactiveCaption);
+		table_3.setRowHeight(25);
 		table_3.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"\u7FBD\u6BDB\u7403", null, null, null},
-				{"\u7BEE\u7403", null, null, null},
-				{"\u4E52\u4E53\u7403", null, null, null},
-				{"\u5065\u8EAB", null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 			},
 			new String[] {
-				"", "09:00-11:00", "2:00-4:00", "6:00-8:00"
+				"\u65F6\u95F4", "\u9884\u7EA6\u9879\u76EE", "\u5907\u6CE8"
 			}
 		));
-		table_3.getColumnModel().getColumn(1).setMinWidth(20);
-		table_3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		
-		JPanel tomorrowPanel = new JPanel();
-		Apptab.addTab("明天", null, tomorrowPanel, null);
-		tomorrowPanel.setLayout(null);
-		
-		table_4 = new JTable();
-		table_4.setGridColor(SystemColor.inactiveCaption);
-		table_4.setBackground(UIManager.getColor("Button.background"));
-		table_4.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, "09:00-11:00", "2:00-4:00", "6:00-8:00"},
-				{"\u7FBD\u6BDB\u7403", null, null, null},
-				{"\u7BEE\u7403", null, null, null},
-				{"\u4E52\u4E53\u7403", null, null, null},
-				{"\u5065\u8EAB", null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column"
-			}
-		));
-		table_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		table_4.setBounds(0, 0, 495, 200);
-		tomorrowPanel.add(table_4);
-		
-		JPanel afterPanel = new JPanel();
-		Apptab.addTab("后天", null, afterPanel, null);
-		afterPanel.setLayout(null);
-		
-		table_5 = new JTable();
-		table_5.setGridColor(SystemColor.inactiveCaption);
-		table_5.setBackground(UIManager.getColor("Button.background"));
-		table_5.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		table_5.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, "09:00-11:00", "2:00-4:00", "6:00-8:00"},
-				{"\u7FBD\u6BDB\u7403", null, null, null},
-				{"\u7BEE\u7403", null, null, null},
-				{"\u4E52\u4E53\u7403", null, null, null},
-				{"\u5065\u8EAB", null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column"
-			}
-		));
-		table_5.setBounds(0, 0, 495, 200);
-		afterPanel.add(table_5);
-		
-		JPanel yuyueRedPanel = new JPanel();
-		orderTab.addTab("预约记录", null, yuyueRedPanel, null);
+		scrollPane_5.setViewportView(table_3);
 //choose class!!!-----------------------------------------------------------------------
 		
 		JPanel classPanel = new JPanel();
@@ -794,7 +972,7 @@ public class BankView {
 				GroupLayout.PREFERRED_SIZE, 364, GroupLayout.PREFERRED_SIZE));
 //the libirary!!!-----------------------------------------------------------------------------		
 		JPanel librPanel = new JPanel();
-		tabbedPane.addTab("图 书 馆\r\n", new ImageIcon(BankView.class.getResource("/images/libr.png")), librPanel, null);
+		tabbedPane.addTab("\u56fe\u0020\u4e66\u0020\u9986", new ImageIcon(BankView.class.getResource("/images/libr.png")), librPanel, null);
 		librPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
