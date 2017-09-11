@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import common.MsgType;
+import helper.Bank;
 import helper.Login;
 
 public class ClientThread extends Thread 
@@ -31,6 +32,9 @@ public class ClientThread extends Thread
 	
 	public void run() {
 		int cmd = 0;
+		String token = "";
+		String result = "";
+		String results[] = null;
 		
 		while (true) {
 			try {
@@ -51,7 +55,6 @@ public class ClientThread extends Thread
 			case 1:
 				
 				Login lg = new Login();
-				String token = "";
 				try {
 					if (cmd != LOGOUT)
 						token = br.readLine();
@@ -109,6 +112,64 @@ public class ClientThread extends Thread
 			
 			//Bank module
 			case 2:
+				Bank bk = new Bank();
+				try {
+					token = br.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				switch (cmd) {
+				case BANK_BALANCE_QUERY:
+					result = bk.queryBalance(token);
+					if (result != null) {
+						pw.println(BANK_BALANCE_QUERY_SUCCESS);
+						pw.flush();
+						pw.println(result);
+						pw.flush();
+						
+					}
+					else {
+						pw.println(BANK_BALANCE_QUERY_FAIL);
+						pw.flush();
+					}
+					
+					break;
+					
+				case BANK_TRANSFER:
+					if (bk.transfer(token)) {
+						pw.println(BANK_TRANSFER_SUCCESS);
+						pw.flush();
+					}
+					else {
+						pw.println(BANK_TRANSFER_FAIL);
+						pw.flush();
+					}
+					break;
+					
+				case BANK_TRANSFER_RECORD_QUERY:
+					results = bk.queryTranferRecord(token);
+					if (results != null) {
+						pw.println(BANK_TRANSFER_RECORD_SUCCESS);
+						pw.flush();
+						
+						pw.println(results.length);
+						pw.flush();
+						for (String s: results) {
+							pw.println(s);
+							pw.flush();
+						}
+					}
+					else {
+						pw.println(BANK_TRANSFER_RECORD_FAIL);
+						pw.flush();
+					}
+					
+					break;
+						
+				}
+				
+				
 				break;
 				
 			//StudentRoll module

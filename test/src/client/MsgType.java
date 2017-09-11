@@ -1,4 +1,4 @@
-package common;
+package client;
 
 public abstract interface MsgType {
 	/*
