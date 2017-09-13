@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import common.GoodInfo;
+import common.BookStatusInfo;
 
-public class GoodModel implements Model{
-	
+public class BookStatusModel implements Model{
+
 	private Connection con;
 	private String query;
-	private GoodInfo info;
+	private BookStatusInfo info;
 	
-	public GoodModel() {
+	public BookStatusModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
 		this.info = null;
@@ -21,12 +21,12 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean insert(Object obj) {
-		info = (GoodInfo)obj;
+		info = (BookStatusInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbGoods values (" + info.getId() + ",'" + info.getName() + "'," + info.getRemainNum() 
-			+ "," + info.getPrice() + ",'" + info.getSupplier()+ "','" + info.getTag() + "');";
+			query = "insert into tbBookStatus values (" + info.getId() + ",'" + info.getName() + "','" + info.getBorrower() 
+			+ "'," + info.getBorrowDate() + "," + info.getReturnDate() + ");";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -41,12 +41,12 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (GoodInfo)obj;
+		info = (BookStatusInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbGoods set productName='" + info.getName() + "',remainNum=" + info.getRemainNum() + ",price=" 
-			+ info.getPrice()+ ",supplier=" + info.getSupplier() + "',tag='" + info.getTag() + "' where ID=" + info.getId() + ";";
+			query = "update tbBookStatus set bookName='" + info.getName() + "',borrower='" + info.getBorrower() + "',borrowDate=" 
+			+ info.getBorrowDate()+ ",returnDate=" + info.getReturnDate() + " where ID=" + info.getId() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -61,11 +61,11 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (GoodInfo)obj;
+		info = (BookStatusInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbGoods where ID=" + info.getId() + ";";
+			query = "delete from tbBookStatus where ID=" + info.getId() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -80,12 +80,12 @@ public class GoodModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (GoodInfo)obj;
-
+		info = (BookStatusInfo)obj;
+		
 		if (info.getId() != 0)
-			query = "select * from tbGoods where ID=" + info.getId() + ";";
+			query = "select * from tbBook where ID=" + info.getId() + ";";
 		else if (info.getName() != null)
-			query = "select * from tbGoods where productName='" + info.getName() + "';";
+			query = "select * from tbBook where bookName='" + info.getName() + "';";
 		
 		try {
 			Statement stmt = con.createStatement();
@@ -102,5 +102,4 @@ public class GoodModel implements Model{
 		
 		return null;
 	}
-
 }

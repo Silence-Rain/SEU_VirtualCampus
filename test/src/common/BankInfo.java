@@ -15,7 +15,7 @@ public class BankInfo implements Serializable{
 		this.setTransferTo(to);
 		this.setTransferAmount(am);
 		this.setTransferDate(dt);
-	}	
+	}
 	
 	public void setId(String param) {
 		this.id = param;
