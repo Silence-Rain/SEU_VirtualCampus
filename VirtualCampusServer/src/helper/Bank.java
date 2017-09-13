@@ -11,37 +11,32 @@ import database.BankModel;
 
 public class Bank {
 	private BankModel model;
-	private BankInfo info;
 	
 	public Bank() {
 		this.model = new BankModel();
-		this.info = new BankInfo();
 	}
 	
-	public String queryBalance(String token) {
+	public double queryBalance(BankInfo info) {
 		
 		try{
 
-			info.setInfoByQuery(token);
 			ResultSet rs = (ResultSet)model.search(info);
 			
 			rs.last();
 			
-			return rs.getString("balance");
+			return Double.parseDouble(rs.getString("balance"));
 
 		}
 		catch (SQLException e) {
 			System.out.println("Database exception");
 			e.printStackTrace();
 
-			return null;
+			return 0;
 		} 
 		
 	}
 	
-	public boolean transfer(String token) {
-			
-		info.setInfoByQuery(token);
+	public boolean transfer(BankInfo info) {
 		
 		info.setBalance(info.getBalance() + info.getTransferAmount());
 		
@@ -69,22 +64,22 @@ public class Bank {
 
 	}
 	
-	public String[] queryTranferRecord(String token) {
+	public BankInfo[] queryTranferRecord(BankInfo info) {
 		
 		try{
 
-			info.setInfoByQuery(token);
 			ResultSet rs = (ResultSet)model.search(info);
-			Vector<String> v = new Vector<String>();
+			Vector<BankInfo> v = new Vector<BankInfo>();
 			
 
 			while (rs.next()) {
-				String row = rs.getString("userID") + "\t" + rs.getString("balance") + "\t" + rs.getString("transferTo") + "\t" + rs.getString("transferAmount") + "\t" 
-						+ timestampToDate(rs.getString("transferDate"));
-				v.add(row);
+				BankInfo temp = new BankInfo(rs.getString("userID"), rs.getDouble("balance"), rs.getString("transferTo"),
+						rs.getDouble("transferAmount"), rs.getLong("transferDate"));
+
+				v.add(temp);
 			}
 			
-			String arr[] = (String[])v.toArray(new String[rs.getRow()]);
+			BankInfo arr[] = (BankInfo[])v.toArray(new BankInfo[rs.getRow()]);
 			
 			return arr;
 

@@ -5,31 +5,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import common.BankInfo;
+import common.OrderInfo;
 
-public class BankModel implements Model{
+public class OrderModel implements Model{
+	
 	private Connection con;
 	private String query;
-	private BankInfo info;
+	private OrderInfo info;
 	
-	public BankModel() {
+	public OrderModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
 		this.info = null;
-	}	
+	}
 
 	@Override
 	public boolean insert(Object obj) {
-		info = (BankInfo)obj;
+		info = (OrderInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbBank values ('" + info.getId() + "'," + info.getBalance() + ",'" + info.getTransferTo() + "',"
-			+ info.getTransferAmount() + "," + info.getTransferDate() + ");";
+			query = "insert into tbOrder values (" + info.getId() + ",'" + info.getName() + "','" + info.getBuyer() 
+			+ "'," + info.getBuyNum() + "," + info.getBuyTime() + ");";
 			System.out.println(query);
 			
-			if (stmt.executeUpdate(query) != 0)
+			if (stmt.executeUpdate(query) != 0) {
+				query = "update tbGoods set remainNum=remainNum-" + info.getBuyNum() + " where id=" + info.getId() + ";";
+				
 				return true;
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -40,12 +44,12 @@ public class BankModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (BankInfo)obj;
+		info = (OrderInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbBank set balance=" + info.getBalance() + ",transferTo=" + info.getTransferTo()
-			+ "',transferAmount=" + info.getTransferAmount() + ",transferDate=" + info.getTransferDate() + " where userID='" + info.getId() + "';";
+			query = "update tbOrder set ID=" + info.getId() + ",productName='" + info.getName() + "',buyNum=" + info.getBuyNum() 
+			+ " where buyer='" + info.getBuyer() + "' and buyTime=" + info.getBuyTime() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -60,11 +64,11 @@ public class BankModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (BankInfo)obj;
+		info = (OrderInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbBank where userID='" + info.getId() + "';";
+			query = "delete from tbOrder where buyer='" + info.getBuyer() + "' and buyTime=" + info.getBuyTime() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -79,11 +83,29 @@ public class BankModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (BankInfo)obj;
+		info = (OrderInfo)obj;
 		
 		try {
-			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			query = "select * from tbBank where userID='" + info.getId() + "' order by transferDate;";
+			Statement stmt = con.createStatement();
+			query = "select * from tbOrder where buyer='" + info.getBuyer() + "';";
+			System.out.println(query);
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			if (rs != null)
+				return rs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Object searchAll() {
+		try {
+			Statement stmt = con.createStatement();
+			query = "select * from tbOrder;";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);

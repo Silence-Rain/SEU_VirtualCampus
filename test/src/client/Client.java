@@ -3,71 +3,93 @@ package client;
 import java.io.*;
 import java.net.*;
 
+import common.BankInfo;
+import common.StudentRollInfo;
+import common.UserInfo;
+
 
 public class Client extends Thread implements MsgType{
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		
 		Socket socket = null;
-		BufferedReader br = null;
-		PrintWriter pw = null;
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
 		
 		String curUser = "09015331";
 		
 		try{
 			socket = new Socket("localhost", 8081);
-			pw = new PrintWriter(socket.getOutputStream());
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));	
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());	
 
 
-			pw.println(LOGIN);
-			pw.flush();
-			pw.println("09015331&admin&admin");
-			pw.flush();	
-			if (Integer.parseInt(br.readLine()) == LOGIN_SUCCESS)
+			UserInfo info = new UserInfo("09015331", "admin", "admin", "", "");
+			oos.writeInt(LOGIN);
+			oos.writeObject(info);
+			oos.flush();	
+			if (ois.readInt() == LOGIN_SUCCESS)
 				System.out.println("Login success");
 			else
 				System.out.println("Login fail");
 			
-			
-			pw.println(BANK_TRANSFER);
-			pw.flush();
-			pw.println("09015331&3000&09015336&-1000&1560000000");
-			pw.flush();
-			if (Integer.parseInt(br.readLine()) == BANK_TRANSFER_SUCCESS)
-				System.out.println("Tranfer success");
+			/*
+			//Bank Module
+			BankInfo bankInfo = new BankInfo("09015331", 3000, "09015336", -500, 1506000000);
+			oos.writeInt(BANK_TRANSFER);
+			oos.writeObject(bankInfo);
+			oos.flush();
+			if (ois.readInt() == BANK_TRANSFER_SUCCESS)
+				System.out.println("Transfer success");
 			else
-				System.out.println("Tranfer fail");
+				System.out.println("Transfer fail");
 			
 			
-			pw.println(BANK_TRANSFER_RECORD_QUERY);
-			pw.flush();
-			pw.println("09015331");
-			pw.flush();
-			if (Integer.parseInt(br.readLine()) == BANK_TRANSFER_RECORD_SUCCESS) {
-				int len = Integer.parseInt(br.readLine());
+			oos.writeInt(BANK_TRANSFER_RECORD_QUERY);
+			oos.writeObject(bankInfo);
+			oos.flush();
+			if (ois.readInt() == BANK_TRANSFER_RECORD_SUCCESS) {
+				BankInfo res[] = (BankInfo[])ois.readObject();
 				
-				for (int i = 0; i < len; i++) {
-					String data = br.readLine();
-					System.out.println(data);
+				for (BankInfo b: res) {
+					System.out.println(b.getId()+"\t"+b.getBalance()+"\t"+b.getTransferTo()+"\t"+b.getTransferAmount()+"\t"+b.getTransferDate());
 				}
 			}	
 			else
 				System.out.println("Query fail");
+			*/
 			
 			
-			pw.println(LOGOUT);
-			pw.flush();	
-			if (Integer.parseInt(br.readLine()) == LOGOUT_SUCCESS)
+			/*
+			//StudentRoll Module
+			StudentRollInfo stuInfo = new StudentRollInfo("09015331", "", "", "", "", "", "", "", "", "", "", "");
+			oos.writeInt(STUDENTROLL_INFO_QUERY);
+			oos.writeObject(stuInfo);
+			oos.flush();
+			if (ois.readInt() == STUDENTROLL_INFO_QUERY_SUCCESS) {
+				StudentRollInfo res = (StudentRollInfo)ois.readObject();
+				
+				System.out.println(res.getId()+"\t"+res.getName()+"\t"+res.getAge()+"\t"+res.getGender()+"\t"+res.getBirthday()+"\t"+res.getBirthPlace()+"\t"
+				+res.getEntranceTime()+"\t"+res.getPhoto()+"\t"+res.getNation()+"\t"+res.getDepartment()+"\t"+res.getMajor()+"\t"+res.getDormitory());
+			}
+			else
+				System.out.println("Query fail");
+			*/
+				
+			
+			
+			oos.writeInt(LOGOUT);
+			oos.flush();	
+			if (ois.readInt() == LOGOUT_SUCCESS)
 				System.out.println("Logout success");
 			else
 				System.out.println("Logout fail");
 			
 
 			
-			br.close();
+			ois.close();
 
-			pw.close();
+			oos.close();
 
 			socket.close();
 

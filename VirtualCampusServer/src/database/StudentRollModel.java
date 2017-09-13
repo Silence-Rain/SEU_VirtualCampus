@@ -5,14 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import common.BankInfo;
+import common.StudentRollInfo;
 
-public class BankModel implements Model{
+public class StudentRollModel implements Model{
+	
 	private Connection con;
 	private String query;
-	private BankInfo info;
+	private StudentRollInfo info;
 	
-	public BankModel() {
+	public StudentRollModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
 		this.info = null;
@@ -20,12 +21,14 @@ public class BankModel implements Model{
 
 	@Override
 	public boolean insert(Object obj) {
-		info = (BankInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbBank values ('" + info.getId() + "'," + info.getBalance() + ",'" + info.getTransferTo() + "',"
-			+ info.getTransferAmount() + "," + info.getTransferDate() + ");";
+			query = "insert into tbStudentRoll values ('" + info.getId() + "','" + info.getName() + "','" + info.getAge()
+			+ "','" + info.getGender() + "','" + info.getBirthday() + "','" + info.getBirthPlace() + "','" + info.getEntranceTime()
+			+ "','" + info.getPhoto() + "','" + info.getNation() + info.getDepartment() + "','" + info.getMajor()
+			+ "','" + info.getDormitory() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -40,12 +43,14 @@ public class BankModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (BankInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbBank set balance=" + info.getBalance() + ",transferTo=" + info.getTransferTo()
-			+ "',transferAmount=" + info.getTransferAmount() + ",transferDate=" + info.getTransferDate() + " where userID='" + info.getId() + "';";
+			query = "update tbStudentRoll set stuName='" + info.getName() + "',age=" + info.getAge()+ "',gender=" + info.getGender() 
+			+ "',birthday='" + info.getBirthday() + "',birthPlace=" + info.getBirthPlace()+ "',entranceTime=" + info.getEntranceTime() 
+			+ "',photo='" + info.getPhoto() + "',nation=" + info.getNation() + "',department=" + info.getDepartment() 
+			+ "',major='" + info.getMajor() + "',dormitory=" + info.getDormitory() + "' where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -60,11 +65,11 @@ public class BankModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (BankInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbBank where userID='" + info.getId() + "';";
+			query = "delete from tbStudentRoll where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -79,11 +84,11 @@ public class BankModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (BankInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
-			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			query = "select * from tbBank where userID='" + info.getId() + "' order by transferDate;";
+			Statement stmt = con.createStatement();
+			query = "select * from tbStudentRoll where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
