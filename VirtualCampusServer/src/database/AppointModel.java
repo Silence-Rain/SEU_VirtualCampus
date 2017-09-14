@@ -5,15 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import common.GoodInfo;
+import common.AppointInfo;
 
-public class GoodModel implements Model{
-	
+public class AppointModel implements Model{
+
 	private Connection con;
 	private String query;
-	private GoodInfo info;
+	private AppointInfo info;
 	
-	public GoodModel() {
+	public AppointModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
 		this.info = null;
@@ -21,12 +21,11 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean insert(Object obj) {
-		info = (GoodInfo)obj;
+		info = (AppointInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbGoods values (" + info.getId() + ",'" + info.getName() + "'," + info.getRemainNum() 
-			+ "," + info.getPrice() + ",'" + info.getSupplier()+ "','" + info.getTag() + "');";
+			query = "insert into tbAppoint values ('" + info.getItem() + "','" + info.getItemRemain() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -41,12 +40,11 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (GoodInfo)obj;
+		info = (AppointInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbGoods set productName='" + info.getName() + "',remainNum=" + info.getRemainNum() + ",price=" 
-			+ info.getPrice()+ ",supplier=" + info.getSupplier() + "',tag='" + info.getTag() + "' where ID=" + info.getId() + ";";
+			query = "update tbAppoint set itemRemain='" + info.getItemRemain() + "' where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -61,11 +59,11 @@ public class GoodModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (GoodInfo)obj;
+		info = (AppointInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbGoods where ID=" + info.getId() + ";";
+			query = "delete from tbAppoint where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -80,15 +78,11 @@ public class GoodModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (GoodInfo)obj;
-
-		if (info.getId() != 0)
-			query = "select * from tbGoods where ID=" + info.getId() + ";";
-		else if (info.getName() != null)
-			query = "select * from tbGoods where productName='" + info.getName() + "';";
+		info = (AppointInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
+			query = "select * from tbAppoint where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -102,5 +96,4 @@ public class GoodModel implements Model{
 		
 		return null;
 	}
-
 }

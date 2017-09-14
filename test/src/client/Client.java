@@ -48,7 +48,7 @@ public class Client extends Thread implements MsgType{
 			oos.writeInt(BANK_TRANSFER_RECORD_QUERY);
 			oos.writeObject(bankInfo);
 			oos.flush();
-			if (ois.readInt() == BANK_TRANSFER_RECORD_SUCCESS) {
+			if (ois.readInt() == BANK_TRANSFER_RECORD_QUERY_SUCCESS) {
 				BankInfo res[] = (BankInfo[])ois.readObject();
 				
 				for (BankInfo b: res) {
