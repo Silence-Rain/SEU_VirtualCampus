@@ -19,6 +19,8 @@ import java.awt.Container;
 import javax.swing.border.LineBorder;
 
 import seu.vCampus.util.SocketHelper;
+import seu.vCampus.bz.*;
+import seu.vCampus.common.Product;
 
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -47,11 +49,11 @@ public class BankView {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextPane textPane_3;
-	private JTextField textField_2;
-	private JTable table_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTable table_2;
+	private JTextField textField_ProductName;
+	private JTable table_Shopcat;
+	private JTextField textField_OrderCost;
+	private JTextField textField_OrderTime;
+	private JTable table_Order;
 	private JTable table_6;
 	private JTable table_7;
 	private JTable table_8;
@@ -64,6 +66,11 @@ public class BankView {
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTable table_3;
+	
+	private JComboBox comboBox_ProductTab;
+	private JTable table_Product;
+	
+	IShop ishop;
 
 	/**
 	 * Launch the application.
@@ -93,7 +100,8 @@ public class BankView {
 					e.printStackTrace();
 				}
 				try {
-					BankView window = new BankView();
+					IShop ishop=new IShopImpl();
+					BankView window = new BankView(ishop);
 					window.frame.dispose();
 					window.frame.setUndecorated(true);
 					window.frame.setVisible(true);
@@ -107,8 +115,9 @@ public class BankView {
 	/**
 	 * Create the application.
 	 */
-	public BankView() {
+	public BankView(IShop ishop) {
 		this.sockethelper = sockethelper;
+		this.ishop=ishop;
 		initialize();
 	}
 
@@ -117,6 +126,8 @@ public class BankView {
 	 */
 
 	private void initialize() {
+		
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 744, 394);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,7 +162,7 @@ public class BankView {
 		panel.setLayout(null);
 		
 		JTextPane textPane_13 = new JTextPane();
-		textPane_13.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_13.setFont(new Font("骞煎渾", Font.PLAIN, 14));
 		textPane_13.setBackground(UIManager.getColor("Button.background"));
 		textPane_13.setText("\u59d3\u540d\uff1a");
 		textPane_13.setBounds(75, 20, 51, 21);
@@ -163,9 +174,9 @@ public class BankView {
 		textField_6.setColumns(10);
 		
 		JTextPane textPane_14 = new JTextPane();
-		textPane_14.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_14.setFont(new Font("骞煎渾", Font.PLAIN, 14));
 		textPane_14.setBackground(UIManager.getColor("Button.background"));
-		textPane_14.setText("性别：");
+		textPane_14.setText("鎬у埆锛�");
 		textPane_14.setBounds(75, 66, 51, 21);
 		panel.add(textPane_14);
 		
@@ -175,9 +186,9 @@ public class BankView {
 		textField_7.setColumns(10);
 		
 		JTextPane textPane_15 = new JTextPane();
-		textPane_15.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_15.setFont(new Font("骞煎渾", Font.PLAIN, 14));
 		textPane_15.setBackground(UIManager.getColor("Button.background"));
-		textPane_15.setText("民族：");
+		textPane_15.setText("姘戞棌锛�");
 		textPane_15.setBounds(75, 116, 51, 21);
 		panel.add(textPane_15);
 		
@@ -187,9 +198,9 @@ public class BankView {
 		textField_8.setColumns(10);
 		
 		JTextPane textPane_16 = new JTextPane();
-		textPane_16.setFont(new Font("幼圆", Font.PLAIN, 14));
+		textPane_16.setFont(new Font("骞煎渾", Font.PLAIN, 14));
 		textPane_16.setBackground(UIManager.getColor("Button.background"));
-		textPane_16.setText("学院：");
+		textPane_16.setText("瀛﹂櫌锛�");
 		textPane_16.setBounds(75, 165, 51, 21);
 		panel.add(textPane_16);
 		
@@ -198,11 +209,12 @@ public class BankView {
 		panel.add(textField_9);
 		textField_9.setColumns(10);
 		
-		JButton btnNewButton = new JButton("上传头像");
-		btnNewButton.setFont(new Font("幼圆", Font.PLAIN, 14));
+		JButton btnNewButton = new JButton("涓婁紶澶村儚");
+		btnNewButton.setFont(new Font("骞煎渾", Font.PLAIN, 14));
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
 				
 			}
 		});
@@ -337,7 +349,7 @@ public class BankView {
 
 		JTextPane txtpnYear = new JTextPane();
 		txtpnYear.setBackground(UIManager.getColor("Button.background"));
-		txtpnYear.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		txtpnYear.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		txtpnYear.setText("\u5E74\r\n");
 		txtpnYear.setBounds(174, 29, 18, 24);
 		recordPanel.add(txtpnYear);
@@ -351,7 +363,7 @@ public class BankView {
 
 		JTextPane textPane_6 = new JTextPane();
 		textPane_6.setBackground(UIManager.getColor("Button.background"));
-		textPane_6.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		textPane_6.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		textPane_6.setText("\u6708");
 		textPane_6.setBounds(273, 29, 18, 24);
 		recordPanel.add(textPane_6);
@@ -366,7 +378,7 @@ public class BankView {
 
 		JTextPane textPane_7 = new JTextPane();
 		textPane_7.setBackground(UIManager.getColor("Button.background"));
-		textPane_7.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		textPane_7.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		textPane_7.setText("\u65E5");
 		textPane_7.setBounds(375, 29, 23, 24);
 		recordPanel.add(textPane_7);
@@ -377,7 +389,7 @@ public class BankView {
 			}
 		});
 		bankPanel.setLayout(null);
-		button_2.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		button_2.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		button_2.setBounds(43, 117, 100, 22);
 		recordPanel.add(button_2);
 		GroupLayout gl_transPanel = new GroupLayout(transPanel);
@@ -428,184 +440,253 @@ public class BankView {
 		// the shop part----------------------------------------------------
 
 		JPanel shopPanel = new JPanel();
-		shopPanel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		shopPanel.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tabbedPane.addTab("\u5546    \u5E97",
 				new ImageIcon(BankView.class.getResource("/images/shopping.png")), shopPanel,
 				null);
 		shopPanel.setLayout(null);
 //shop panel
 		JTabbedPane tab2 = new JTabbedPane(JTabbedPane.TOP);
-		tab2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		tab2.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tab2.setBounds(0, 0, 700, 360);
 		shopPanel.add(tab2);
-//the buy buy buy part-----------------------------------------------------------------
-		JPanel buyPanel = new JPanel();
-		buyPanel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		tab2.addTab("\u5728\u7EBF\u8D2D\u4E70",
-				new ImageIcon(BankView.class.getResource("/images/buying.png")), buyPanel, null);
-		buyPanel.setLayout(null);
-
-		JTextPane textPane_5 = new JTextPane();
-		textPane_5.setDisabledTextColor(UIManager.getColor("Button.background"));
-		textPane_5.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		textPane_5.setText("\u6309\u5546\u54C1\u540D\u79F0\uFF1A");
-		textPane_5.setBounds(33, 32, 90, 24);
-		buyPanel.add(textPane_5);
-
-		textField_2 = new JTextField();
-		textField_2.setBounds(135, 34, 114, 22);
-		buyPanel.add(textField_2);
-		textField_2.setColumns(10);
-
-		JTextPane textPane_8 = new JTextPane();
-		textPane_8.setDisabledTextColor(UIManager.getColor("Button.background"));
-		textPane_8.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		textPane_8.setText("\u6309\u6807\u7B7E\uFF1A");
-		textPane_8.setBounds(33, 87, 70, 24);
-		buyPanel.add(textPane_8);
-
-		JButton button_3 = new JButton("\u5546\u54C1\u67E5\u8BE2");
-		button_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		button_3.setBounds(341, 59, 103, 22);
-		buyPanel.add(button_3);
 		Object[][] cellData = { { "row1-col1", "row1-col2" }, { "row2-col1", "row2-col2" } };
 		String[] columnNames = { "col1", "col2" };
-
-		JButton button_5 = new JButton("\u52A0\u5165\u8D2D\u7269\u8F66");
-		button_5.setBounds(405, 269, 119, 22);
-		buyPanel.add(button_5);
-
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		comboBox_3.setModel(
-				new DefaultComboBoxModel(new String[] { "\u8863", "\u98DF", "\u4F4F", "\u884C", "\u5176\u4ED6" }));
-		comboBox_3.setBounds(135, 87, 114, 24);
-		buyPanel.add(comboBox_3);
-
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(33, 144, 488, 115);
-		buyPanel.add(scrollPane_2);
-
-		JTable tablebuy = new JTable();
-		tablebuy.setRowHeight(25);
-		scrollPane_2.setViewportView(tablebuy);
-		tablebuy.setBackground(UIManager.getColor("Button.background"));
-		tablebuy.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		tablebuy.setModel(new DefaultTableModel(
-				new Object[][] { { "", "", "", "", "", null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
-				new String[] { "\u5546\u54C1\u540D\u79F0", "\u751F\u4EA7\u5546", "\u6807\u7B7E", "\u5E93\u5B58/\u4EF6",
-						"\u5355\u4EF7/\u5143", "\u662F\u5426\u52A0\u5165\u8D2D\u7269\u8F66" }) {
-			Class[] columnTypes = new Class[] { Object.class, Object.class, Object.class, Object.class, Object.class,
-					Boolean.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		tablebuy.getColumnModel().getColumn(4).setPreferredWidth(69);
-		tablebuy.getColumnModel().getColumn(5).setPreferredWidth(99);
+		//the buy buy buy part-----------------------------------------------------------------
+				JPanel buyPanel = new JPanel();
+				buyPanel.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+				tab2.addTab("\u5728\u7EBF\u8D2D\u4E70",
+						new ImageIcon(BankView.class.getResource("/images/buying.png")), buyPanel, null);
+				buyPanel.setLayout(null);
+				
+						JTextPane textPane_5 = new JTextPane();
+						textPane_5.setBackground(SystemColor.control);
+						textPane_5.setDisabledTextColor(SystemColor.control);
+						textPane_5.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+						textPane_5.setText("\u6309\u5546\u54C1\u540D\u79F0\uFF1A");
+						textPane_5.setBounds(33, 32, 90, 24);
+						buyPanel.add(textPane_5);
+						
+								textField_ProductName = new JTextField();
+								textField_ProductName.setBounds(135, 34, 114, 22);
+								buyPanel.add(textField_ProductName);
+								textField_ProductName.setColumns(10);
+								
+										JTextPane textPane_8 = new JTextPane();
+										textPane_8.setBackground(SystemColor.control);
+										textPane_8.setDisabledTextColor(UIManager.getColor("Button.background"));
+										textPane_8.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+										textPane_8.setText("\u6309\u6807\u7B7E\uFF1A");
+										textPane_8.setBounds(33, 87, 70, 24);
+										buyPanel.add(textPane_8);
+										
+												JButton button_ProductQuery = new JButton("\u5546\u54C1\u67E5\u8BE2");
+												button_ProductQuery.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent e) {
+														String name=textField_ProductName.getText();
+														String tab=(String) comboBox_ProductTab.getSelectedItem();
+														Vector<Product> v=ishop.inquireProduct(name,tab);
+														
+													}
+												});
+												button_ProductQuery.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+												button_ProductQuery.setBounds(341, 59, 103, 22);
+												buyPanel.add(button_ProductQuery);
+												
+														JButton button_ProductAddShopcat = new JButton("\u52A0\u5165\u8D2D\u7269\u8F66");
+														button_ProductAddShopcat.addActionListener(new ActionListener() {
+															public void actionPerformed(ActionEvent e) {
+																Vector<String> product = null;//加入购物车的所有商品
+																for(int i=1;i<table_Product.getRowCount();i++) {
+																	if((boolean) table_Product.getValueAt(i, 6)==true) {
+																		product.add((String) table_Product.getValueAt(i,0));
+																		
+																	}
+																}
+																((DefaultTableModel) table_Shopcat).addRow(product);
+															}
+														});
+														button_ProductAddShopcat.setBounds(405, 269, 119, 22);
+														buyPanel.add(button_ProductAddShopcat);
+														
+																JComboBox comboBox_ProductTab_1 = new JComboBox();
+																comboBox_ProductTab_1.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+																comboBox_ProductTab_1.setModel(
+																		new DefaultComboBoxModel(new String[] {"全部", "衣", "食", "住", "行", "其他"}));
+																comboBox_ProductTab_1.setBounds(135, 87, 114, 24);
+																buyPanel.add(comboBox_ProductTab_1);
+																
+																		JScrollPane scrollPane_2 = new JScrollPane();
+																		scrollPane_2.setBounds(33, 144, 486, 115);
+																		buyPanel.add(scrollPane_2);
+																		
+																				JTable table_Product = new JTable();
+																				table_Product.setRowHeight(25);
+																				scrollPane_2.setViewportView(table_Product);
+																				table_Product.setBackground(UIManager.getColor("Button.background"));
+																				table_Product.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+																				table_Product.setModel(new DefaultTableModel(
+																					new Object[][] {
+																						{null, "", "", "", "", "", null},
+																						{null, null, null, null, null, null, null},
+																						{null, null, null, null, null, null, null},
+																						{null, null, null, null, null, null, null},
+																					},
+																					new String[] {
+																						"\u5546\u54C1ID", "\u5546\u54C1\u540D\u79F0", "\u751F\u4EA7\u5546", "\u6807\u7B7E", "\u5E93\u5B58/\u4EF6", "\u5355\u4EF7/\u5143", "\u662F\u5426\u52A0\u5165\u8D2D\u7269\u8F66"
+																					}
+																				) {
+																					Class[] columnTypes = new Class[] {
+																						Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Boolean.class
+																					};
+																					public Class getColumnClass(int columnIndex) {
+																						return columnTypes[columnIndex];
+																					}
+																				});
+																				table_Product.getColumnModel().getColumn(5).setPreferredWidth(69);
+																				table_Product.getColumnModel().getColumn(6).setPreferredWidth(99);
 //the shopcat part---------------------------------------------------------------------------------------------
 		JPanel shopcatPanel = new JPanel();
-		shopcatPanel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		shopcatPanel.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		tab2.addTab("\u8D2D\u7269\u8F66",
 				new ImageIcon(BankView.class.getResource("/images/shopcat.png")), shopcatPanel, null);
 		shopcatPanel.setLayout(null);
-		
-		JButton button_6 = new JButton("\u7ED3\u7B97");
-		button_6.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		button_6.setBounds(391, 189, 74, 33);
-		shopcatPanel.add(button_6);
-		
-		JTextPane textPane_9 = new JTextPane();
-		textPane_9.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		textPane_9.setText("\u5408\u8BA1\uFF1A");
-		textPane_9.setBounds(151, 190, 48, 24);
-		shopcatPanel.add(textPane_9);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(208, 190, 87, 22);
-		shopcatPanel.add(textField_3);
-		textField_3.setColumns(10);
-		
-		JTextPane textPane_10 = new JTextPane();
-		textPane_10.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		textPane_10.setText("\u5143");
-		textPane_10.setBounds(305, 190, 23, 24);
-		shopcatPanel.add(textPane_10);
 		
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(-13, 0, 650, 300);
 		shopcatPanel.add(layeredPane);
 		
-		JButton button_9 = new JButton("\u5220\u9664");
-		button_9.setBounds(539, 51, 62, 22);
-		layeredPane.add(button_9);
+		JButton button_ProductDeleteShopcat = new JButton("\u5220\u9664");
+		button_ProductDeleteShopcat.setBounds(55, 194, 62, 22);
+		layeredPane.add(button_ProductDeleteShopcat);
 		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(45, 25, 484, 150);
 		layeredPane.add(scrollPane_3);
 		
-		table_1 = new JTable();
-		table_1.setRowHeight(25);
-		scrollPane_3.setViewportView(table_1);
-		table_1.setBackground(UIManager.getColor("Button.background"));
-		table_1.setModel(new DefaultTableModel(
+		table_Shopcat = new JTable();
+		table_Shopcat.setRowHeight(25);
+		scrollPane_3.setViewportView(table_Shopcat);
+		table_Shopcat.setBackground(UIManager.getColor("Button.background"));
+		table_Shopcat.setModel(new DefaultTableModel(
 			new Object[][] {
-				{Boolean.FALSE, "", "", "", "", "", ""},
-				{Boolean.FALSE, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null},
+				{Boolean.FALSE, null, "", "", "", "", "", ""},
+				{Boolean.FALSE, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"\u9009\u62E9", "\u5546\u54C1\u540D\u79F0", "\u751F\u4EA7\u5546", "\u6807\u7B7E", "\u5E93\u5B58/\u4EF6", "\u5355\u4EF7/\u5143", "\u8D2D\u4E70\u6570\u91CF"
+				"\u9009\u62E9", "\u5546\u54C1ID", "\u5546\u54C1\u540D\u79F0", "\u751F\u4EA7\u5546", "\u6807\u7B7E", "\u5E93\u5B58/\u4EF6", "\u5355\u4EF7/\u5143", "\u8D2D\u4E70\u6570\u91CF"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
+				Boolean.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
-		table_1.getColumnModel().getColumn(0).setMinWidth(20);
-		table_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		table_Shopcat.getColumnModel().getColumn(0).setMinWidth(20);
+		table_Shopcat.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		
+		JButton button_ProductCalculate = new JButton("\u7ED3\u7B97");
+		button_ProductCalculate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double c=0;//cost
+				for(int i=1;i<table_Shopcat.getRowCount();i++) {
+					if((Boolean)table_Shopcat.getValueAt(i, 0)==true) {
+						c=c+(double)table_Shopcat.getValueAt(i, 6)*(int)table_Shopcat.getValueAt(i,7);
+					}
+				}
+				String cs=String.valueOf(c);
+				textField_OrderCost.setText(cs);
+			}
+		});
+		button_ProductCalculate.setBounds(278, 189, 74, 33);
+		layeredPane.add(button_ProductCalculate);
+		button_ProductCalculate.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+		
+		JTextPane textPane_9 = new JTextPane();
+		textPane_9.setBackground(SystemColor.control);
+		textPane_9.setBounds(362, 192, 48, 24);
+		layeredPane.add(textPane_9);
+		textPane_9.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+		textPane_9.setText("\u5408\u8BA1\uFF1A");
+		
+		textField_OrderCost = new JTextField();
+		textField_OrderCost.setBounds(420, 195, 87, 22);
+		layeredPane.add(textField_OrderCost);
+		textField_OrderCost.setEditable(false);
+		textField_OrderCost.setColumns(10);
+		
+		JTextPane textPane_10 = new JTextPane();
+		textPane_10.setBackground(SystemColor.control);
+		textPane_10.setBounds(506, 194, 23, 24);
+		layeredPane.add(textPane_10);
+		textPane_10.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+		textPane_10.setText("\u5143");
+		
+		JButton button_Buy = new JButton("确认购买");
+		button_Buy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double c=0;//cost
+				Vector<String>id = null;
+				Vector<Integer>num = null;
+				for(int i=1;i<table_Shopcat.getRowCount();i++) {
+					if((Boolean)table_Shopcat.getValueAt(i, 0)==true) {
+						id.add((String) table_Shopcat.getValueAt(i, 1));
+						num.add((Integer) table_Shopcat.getValueAt(i, 7));
+						c=c+(double)table_Shopcat.getValueAt(i, 6)*(int)table_Shopcat.getValueAt(i,7);
+					}
+				}
+				ishop.buyOK(id, num,c);
+			}
+		});
+		button_Buy.setBounds(414, 247, 93, 23);
+		layeredPane.add(button_Buy);
 // the check shop part-----------------------------------------------------------------------------------
 		JPanel checkshopPanel = new JPanel();
 		checkshopPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		checkshopPanel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
+		checkshopPanel.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
 		tab2.addTab("\u8BA2\u5355\u67E5\u8BE2",
 				new ImageIcon(BankView.class.getResource("/images/lookfor.png")),
 				checkshopPanel, null);
 		checkshopPanel.setLayout(null);
 		
 		JTextPane textPane_11 = new JTextPane();
-		textPane_11.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		textPane_11.setText("下单日期:");
+		textPane_11.setBackground(SystemColor.control);
+		textPane_11.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		textPane_11.setText("\u8BA2\u5355\u65E5\u671F");
 		textPane_11.setBounds(171, 12, 79, 24);
 		checkshopPanel.add(textPane_11);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(260, 14, 114, 22);
-		checkshopPanel.add(textField_4);
-		textField_4.setColumns(10);
+		textField_OrderTime = new JTextField();
+		textField_OrderTime.setBounds(260, 14, 114, 22);
+		checkshopPanel.add(textField_OrderTime);
+		textField_OrderTime.setColumns(10);
 		
-		JButton button_7 = new JButton("\u67E5\u8BE2");
-		button_7.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 14));
-		button_7.setBounds(417, 14, 86, 22);
-		checkshopPanel.add(button_7);
+		JButton button_OrderQuery = new JButton("\u67E5\u8BE2");
+		button_OrderQuery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String time=textField.getText();
+				ishop.inquireOrder(id, time);
+			}
+		});
+		button_OrderQuery.setFont(new Font("脦垄脠铆脩脜潞脷", Font.PLAIN, 14));
+		button_OrderQuery.setBounds(417, 14, 86, 22);
+		checkshopPanel.add(button_OrderQuery);
 		
 		JScrollPane scrollPane_4 = new JScrollPane();
 		scrollPane_4.setBounds(54, 75, 508, 150);
 		checkshopPanel.add(scrollPane_4);
 		
-		table_2 = new JTable();
-		table_2.setRowHeight(25);
-		scrollPane_4.setViewportView(table_2);
-		table_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		table_2.setBackground(UIManager.getColor("Button.background"));
-		table_2.setModel(new DefaultTableModel(
+		table_Order = new JTable();
+		table_Order.setRowHeight(25);
+		scrollPane_4.setViewportView(table_Order);
+		table_Order.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		table_Order.setBackground(UIManager.getColor("Button.background"));
+		table_Order.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"", "", "", "", "", "", "", ""},
 				{null, null, null, null, null, null, null, null},
@@ -627,82 +708,82 @@ public class BankView {
 		orderPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane_4 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		tabbedPane_4.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tabbedPane_4.setBounds(0, 0, 650, 360);
 		orderPanel.add(tabbedPane_4);
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane_4.addTab("预约", null, panel_1, null);
+		tabbedPane_4.addTab("棰勭害", null, panel_1, null);
 		panel_1.setLayout(null);
 		
 		JTextPane textPane_17 = new JTextPane();
-		textPane_17.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		textPane_17.setText("预约项目：");
+		textPane_17.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		textPane_17.setText("棰勭害椤圭洰锛�");
 		textPane_17.setBounds(34, 10, 97, 21);
 		panel_1.add(textPane_17);
 		
 		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"羽毛球", "篮球", "乒乓球", "健身房"}));
+		comboBox_4.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"缇芥瘺鐞�", "绡悆", "涔掍箵鐞�", "鍋ヨ韩鎴�"}));
 		comboBox_4.setBounds(141, 10, 75, 21);
 		panel_1.add(comboBox_4);
 		
 		JTabbedPane tabbedPane_5 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_5.setFont(new Font("幼圆", Font.PLAIN, 13));
+		tabbedPane_5.setFont(new Font("骞煎渾", Font.PLAIN, 13));
 		tabbedPane_5.setBounds(34, 53, 431, 252);
 		panel_1.add(tabbedPane_5);
 		
 		JPanel panel_6 = new JPanel();
-		tabbedPane_5.addTab("--今天--", null, panel_6, null);
+		tabbedPane_5.addTab("--浠婂ぉ--", null, panel_6, null);
 		panel_6.setLayout(null);
 		
 		JTextPane textPane_18 = new JTextPane();
-		textPane_18.setText("09:00-10:00（剩余29）");
+		textPane_18.setText("09:00-10:00锛堝墿浣�29锛�");
 		textPane_18.setBounds(46, 10, 147, 21);
 		panel_6.add(textPane_18);
 		
-		JButton button_8 = new JButton("进入预约");
+		JButton button_8 = new JButton("杩涘叆棰勭害");
 		button_8.setBounds(260, 8, 93, 23);
 		panel_6.add(button_8);
 		
 		JTextPane textPane_19 = new JTextPane();
-		textPane_19.setText("10:00-11:00（剩余29）");
+		textPane_19.setText("10:00-11:00锛堝墿浣�29锛�");
 		textPane_19.setBounds(46, 49, 147, 21);
 		panel_6.add(textPane_19);
 		
-		JButton button_10 = new JButton("进入预约");
+		JButton button_10 = new JButton("杩涘叆棰勭害");
 		button_10.setBounds(260, 49, 93, 23);
 		panel_6.add(button_10);
 		
 		JTextPane textPane_20 = new JTextPane();
-		textPane_20.setText("14:00-15:00（剩余29）");
+		textPane_20.setText("14:00-15:00锛堝墿浣�29锛�");
 		textPane_20.setBounds(46, 98, 147, 21);
 		panel_6.add(textPane_20);
 		
-		JButton button_11 = new JButton("进入预约");
+		JButton button_11 = new JButton("杩涘叆棰勭害");
 		button_11.setBounds(260, 96, 93, 23);
 		panel_6.add(button_11);
 		
 		JTextPane textPane_21 = new JTextPane();
-		textPane_21.setText("15:00-16:00（剩余29）");
+		textPane_21.setText("15:00-16:00锛堝墿浣�29锛�");
 		textPane_21.setBounds(46, 142, 147, 21);
 		panel_6.add(textPane_21);
 		
-		JButton button_14 = new JButton("进入预约");
+		JButton button_14 = new JButton("杩涘叆棰勭害");
 		button_14.setBounds(260, 140, 93, 23);
 		panel_6.add(button_14);
 		
 		JTextPane textPane_22 = new JTextPane();
-		textPane_22.setText("16:00-17:00（剩余29）");
+		textPane_22.setText("16:00-17:00锛堝墿浣�29锛�");
 		textPane_22.setBounds(46, 189, 147, 21);
 		panel_6.add(textPane_22);
 		
-		JButton button_15 = new JButton("进入预约");
+		JButton button_15 = new JButton("杩涘叆棰勭害");
 		button_15.setBounds(260, 189, 93, 23);
 		panel_6.add(button_15);
 		
 		JPanel panel_7 = new JPanel();
-		tabbedPane_5.addTab("--明天--", null, panel_7, null);
+		tabbedPane_5.addTab("--鏄庡ぉ--", null, panel_7, null);
 		panel_7.setLayout(null);
 		
 		JTextPane textPane_23 = new JTextPane();
@@ -716,12 +797,12 @@ public class BankView {
 		panel_7.add(textPane_24);
 		
 		JTextPane textPane_25 = new JTextPane();
-		textPane_25.setText("14:00-15：00");
+		textPane_25.setText("14:00-15锛�00");
 		textPane_25.setBounds(49, 89, 107, 21);
 		panel_7.add(textPane_25);
 		
 		JTextPane textPane_26 = new JTextPane();
-		textPane_26.setText("15：00-16：00");
+		textPane_26.setText("15锛�00-16锛�00");
 		textPane_26.setBounds(49, 134, 107, 21);
 		panel_7.add(textPane_26);
 		
@@ -730,28 +811,28 @@ public class BankView {
 		textPane_27.setBounds(49, 176, 107, 21);
 		panel_7.add(textPane_27);
 		
-		JButton button_16 = new JButton("进入预约");
+		JButton button_16 = new JButton("杩涘叆棰勭害");
 		button_16.setBounds(252, 10, 93, 23);
 		panel_7.add(button_16);
 		
-		JButton button_17 = new JButton("进入预约");
+		JButton button_17 = new JButton("杩涘叆棰勭害");
 		button_17.setBounds(252, 48, 93, 23);
 		panel_7.add(button_17);
 		
-		JButton button_18 = new JButton("进入预约");
+		JButton button_18 = new JButton("杩涘叆棰勭害");
 		button_18.setBounds(252, 87, 93, 23);
 		panel_7.add(button_18);
 		
-		JButton button_19 = new JButton("进入预约");
+		JButton button_19 = new JButton("杩涘叆棰勭害");
 		button_19.setBounds(252, 132, 93, 23);
 		panel_7.add(button_19);
 		
-		JButton button_20 = new JButton("进入预约");
+		JButton button_20 = new JButton("杩涘叆棰勭害");
 		button_20.setBounds(252, 174, 93, 23);
 		panel_7.add(button_20);
 		
 		JPanel panel_5 = new JPanel();
-		tabbedPane_5.addTab("--后天--", null, panel_5, null);
+		tabbedPane_5.addTab("--鍚庡ぉ--", null, panel_5, null);
 		panel_5.setLayout(null);
 		
 		JTextPane textPane_28 = new JTextPane();
@@ -779,32 +860,32 @@ public class BankView {
 		textPane_32.setBounds(45, 192, 93, 21);
 		panel_5.add(textPane_32);
 		
-		JButton button_21 = new JButton("进入预约");
+		JButton button_21 = new JButton("杩涘叆棰勭害");
 		button_21.setBounds(250, 10, 93, 23);
 		panel_5.add(button_21);
 		
-		JButton button_22 = new JButton("进入预约");
+		JButton button_22 = new JButton("杩涘叆棰勭害");
 		button_22.setBounds(250, 51, 93, 23);
 		panel_5.add(button_22);
 		
-		JButton button_23 = new JButton("进入预约");
+		JButton button_23 = new JButton("杩涘叆棰勭害");
 		button_23.setBounds(250, 100, 93, 23);
 		panel_5.add(button_23);
 		
-		JButton button_24 = new JButton("进入预约");
+		JButton button_24 = new JButton("杩涘叆棰勭害");
 		button_24.setBounds(250, 142, 93, 23);
 		panel_5.add(button_24);
 		
-		JButton button_25 = new JButton("进入预约");
+		JButton button_25 = new JButton("杩涘叆棰勭害");
 		button_25.setBounds(250, 190, 93, 23);
 		panel_5.add(button_25);
 		
 		JPanel panel_8 = new JPanel();
-		tabbedPane_4.addTab("预约记录", null, panel_8, null);
+		tabbedPane_4.addTab("棰勭害璁板綍", null, panel_8, null);
 		panel_8.setLayout(null);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		scrollPane_5.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		scrollPane_5.setBounds(79, 48, 404, 252);
 		panel_8.add(scrollPane_5);
 		
@@ -832,29 +913,29 @@ public class BankView {
 //choose class!!!-----------------------------------------------------------------------
 		
 		JPanel classPanel = new JPanel();
-		classPanel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		classPanel.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tabbedPane.addTab("\u9009    \u8BFE",
 				new ImageIcon(BankView.class.getResource("/images/chooseclass.png")),
 				classPanel, null);
 		classPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		tabbedPane_2.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tabbedPane_2.setBounds(0, 0, 700, 360);
 		classPanel.add(tabbedPane_2);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		tabbedPane_2.addTab("选  课", new ImageIcon(BankView.class.getResource("/images/chooseclass.png")), panel_4, null);
+		panel_4.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		tabbedPane_2.addTab("閫�  璇�", new ImageIcon(BankView.class.getResource("/images/chooseclass.png")), panel_4, null);
 		panel_4.setLayout(null);
 		
-		JButton button_12 = new JButton("选择");
-		button_12.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		JButton button_12 = new JButton("閫夋嫨");
+		button_12.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		button_12.setBounds(82, 169, 93, 23);
 		panel_4.add(button_12);
 		
-		JButton button_13 = new JButton("退选");
-		button_13.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		JButton button_13 = new JButton("閫�閫�");
+		button_13.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		button_13.setBounds(334, 169, 93, 23);
 		panel_4.add(button_13);
 		
@@ -878,21 +959,21 @@ public class BankView {
 				"\u8BFE\u7A0BID", "\u8BFE\u7A0B\u540D\u79F0", "\u6388\u8BFE\u6559\u5E08", "\u4E0A\u8BFE\u65F6\u95F4", "\u8BFE\u7A0B\u5B66\u5206", "\u8BFE\u7A0B\u72B6\u6001"
 			}
 		));
-		table_6.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		table_6.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		table_6.setRowHeight(25);
 //the check grade part---------------------------------------------------------------------------		
 		JPanel panel_2 = new JPanel();
-		tabbedPane_2.addTab("成绩查询", new ImageIcon(BankView.class.getResource("/images/checkgrade.png")), panel_2, null);
+		tabbedPane_2.addTab("鎴愮哗鏌ヨ", new ImageIcon(BankView.class.getResource("/images/checkgrade.png")), panel_2, null);
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		scrollPane.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		scrollPane.setBounds(31, 45, 528, 140);
 		panel_2.add(scrollPane);
 		
 		table_7 = new JTable();
 		table_7.setRowHeight(25);
-		table_7.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		table_7.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		table_7.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
@@ -911,7 +992,7 @@ public class BankView {
 		scrollPane.setViewportView(table_7);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane_2.addTab("课表查询", new ImageIcon(BankView.class.getResource("/images/chooseclassResult.png")), panel_3, null);
+		tabbedPane_2.addTab("璇捐〃鏌ヨ", new ImageIcon(BankView.class.getResource("/images/chooseclassResult.png")), panel_3, null);
 		panel_3.setLayout(null);
 		
 		JScrollPane scrollPane_6 = new JScrollPane();
@@ -936,13 +1017,13 @@ public class BankView {
 		scrollPane_6.setViewportView(table_8);
 		
 		JScrollPane scrollPane_7 = new JScrollPane();
-		scrollPane_7.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		scrollPane_7.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		scrollPane_7.setBounds(10, 28, 120, 200);
 		panel_3.add(scrollPane_7);
 		
 		table_9 = new JTable();
 		table_9.setRowHeight(25);
-		table_9.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		table_9.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		table_9.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
@@ -976,17 +1057,17 @@ public class BankView {
 		librPanel.setLayout(null);
 		
 		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		tabbedPane_3.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
 		tabbedPane_3.setBounds(0, 0, 700, 360);
 		librPanel.add(tabbedPane_3);
 		
 		JPanel LookforPanel = new JPanel();
-		tabbedPane_3.addTab("查询书籍", null, LookforPanel, null);
+		tabbedPane_3.addTab("鏌ヨ涔︾睄", null, LookforPanel, null);
 		LookforPanel.setLayout(null);
 		
 		JTextPane textPane_12 = new JTextPane();
-		textPane_12.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		textPane_12.setText("书名：");
+		textPane_12.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
+		textPane_12.setText("涔﹀悕锛�");
 		textPane_12.setBounds(116, 28, 62, 21);
 		LookforPanel.add(textPane_12);
 		
@@ -995,7 +1076,7 @@ public class BankView {
 		LookforPanel.add(textField_5);
 		textField_5.setColumns(10);
 		
-		JButton button_4 = new JButton("查询");
+		JButton button_4 = new JButton("鏌ヨ");
 		button_4.setBounds(397, 26, 93, 23);
 		LookforPanel.add(button_4);
 		
@@ -1022,7 +1103,7 @@ public class BankView {
 		scrollPane_8.setViewportView(table_10);
 //borrrowed	books part-------------------------------------------------------------	
 		JPanel borrowedPanel = new JPanel();
-		tabbedPane_3.addTab("已借书籍", null, borrowedPanel, null);
+		tabbedPane_3.addTab("宸插�熶功绫�", null, borrowedPanel, null);
 		borrowedPanel.setLayout(null);
 		
 		JScrollPane scrollPane_9 = new JScrollPane();
