@@ -99,9 +99,9 @@ public abstract interface MsgType {
 	public static final int COURSE_STATUS_CURRICULUM = 613;
 	public static final int COURSE_STATUS_CURRICULUM_SUCCESS = 6131;
 	public static final int COURSE_STATUS_CURRICULUM_FAIL = 6132;
-	public static final int COURSE_STATUS_QUERY_TEACHER = 614;
-	public static final int COURSE_STATUS_QUERY_TEACHER_SUCCESS = 6141;
-	public static final int COURSE_STATUS_QUERY_TEACHER_FAIL = 6142;
+	public static final int COURSE_STATUS_QUERY = 614;
+	public static final int COURSE_STATUS_QUERY_SUCCESS = 6141;
+	public static final int COURSE_STATUS_QUERY_FAIL = 6142;
 	
 	public static final int APPOINT_ITEM_QUERY = 701;
 	public static final int APPOINT_ITEM_QUERY_SUCCESS = 7011;

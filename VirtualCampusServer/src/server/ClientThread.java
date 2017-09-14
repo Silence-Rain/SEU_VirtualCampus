@@ -5,7 +5,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import common.AppointInfo;
+import common.AppointStatusInfo;
 import common.BankInfo;
+import common.BookInfo;
+import common.BookStatusInfo;
+import common.CourseInfo;
+import common.CourseStatusInfo;
 import common.GoodInfo;
 import common.MsgType;
 import common.OrderInfo;
@@ -15,6 +21,9 @@ import helper.Bank;
 import helper.Login;
 import helper.Shop;
 import helper.StudentRoll;
+import helper.Library;
+import helper.Course;
+import helper.Appoint;
 
 public class ClientThread extends Thread 
 	implements MsgType{
@@ -344,6 +353,121 @@ public class ClientThread extends Thread
 	
 	private void Library(int cmd) {
 		
+		BookInfo bookInfo = null;
+		BookStatusInfo bsInfo = null;
+		Library lb = new Library();
+		
+		if (cmd / 10 == 40) {
+			try {
+				bookInfo = (BookInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch(cmd) {
+			case LIBRARY_BOOK_QUERY:
+				try {
+					BookInfo result[] = lb.queryBook(bookInfo);
+					if (result != null) {
+						oos.writeInt(LIBRARY_BOOK_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(LIBRARY_BOOK_QUERY_FAIL);
+					}
+					
+					oos.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case LIBRARY_BOOK_ADD:
+				try {
+					int writeBack = (lb.addBook(bookInfo)) ? LIBRARY_BOOK_ADD_SUCCESS : LIBRARY_BOOK_ADD_FAIL;
+					oos.writeInt(writeBack);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case LIBRARY_BOOK_DELETE:
+				try {
+					int writeBack = (lb.deleteBook(bookInfo)) ? LIBRARY_BOOK_DELETE_SUCCESS : LIBRARY_BOOK_DELETE_FAIL;
+					oos.writeInt(writeBack);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case LIBRARY_BOOK_MODIFY:
+				try {
+					int writeBack = (lb.modifyBook(bookInfo)) ? LIBRARY_BOOK_MODIFY_SUCCESS : LIBRARY_BOOK_MODIFY_FAIL;
+					oos.writeInt(writeBack);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+			
+			}
+		}
+		else {
+			try {
+				bsInfo = (BookStatusInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch(cmd) {
+			case LIBRARY_STATUS_BORROW:
+				try {
+					int writeBack = (lb.borrowBook(bsInfo)) ? LIBRARY_STATUS_BORROW_SUCCESS : LIBRARY_STATUS_BORROW_FAIL;
+					oos.writeInt(writeBack);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case LIBRARY_STATUS_RETURN:
+				try {
+					int writeBack = (lb.returnBook(bsInfo)) ? LIBRARY_STATUS_RETURN_SUCCESS : LIBRARY_STATUS_RETURN_FAIL;
+					oos.writeInt(writeBack);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case LIBRARY_STATUS_QUERY:
+				try {
+					BookStatusInfo result[] = lb.queryStatus(bsInfo);
+					if (result != null) {
+						oos.writeInt(LIBRARY_STATUS_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(LIBRARY_STATUS_QUERY_FAIL);
+					}
+					
+					oos.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			}
+		}
+		
 	}
 	
 	private void Shop(int cmd) {
@@ -501,10 +625,304 @@ public class ClientThread extends Thread
 	}
 	
 	private void Course(int cmd) {
+		CourseInfo courseInfo = null;
+		CourseStatusInfo csInfo = null;
+		Course cs = new Course();
 		
+		if (cmd / 10 == 60) {
+			try {
+				courseInfo = (CourseInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch(cmd) {
+			case COURSE_QUERY:
+				try {
+					CourseInfo result = cs.queryCourse(courseInfo);
+					if (result != null) {
+						oos.writeInt(COURSE_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(COURSE_QUERY_FAIL);
+					}
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+				break;
+				
+			case COURSE_ADD:
+				try {
+					int wb = (cs.addCourse(courseInfo)) ? COURSE_ADD_SUCCESS : COURSE_ADD_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case COURSE_DELETE:
+				try {
+					int wb = (cs.deleteCourse(courseInfo)) ? COURSE_DELETE_SUCCESS : COURSE_DELETE_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case COURSE_MODIFY:
+				try {
+					int wb = (cs.modifyCourse(courseInfo)) ? COURSE_MODIFY_SUCCESS : COURSE_MODIFY_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+			}
+		}
+		else {
+			try {
+				csInfo = (CourseStatusInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch (cmd) {
+			case COURSE_STATUS_SELECT:
+				try {
+					int wb = (cs.selectCourse(csInfo)) ? COURSE_STATUS_SELECT_SUCCESS : COURSE_STATUS_SELECT_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case COURSE_STATUS_DESELECT:
+				try {
+					int wb = (cs.deselectCourse(csInfo)) ? COURSE_STATUS_DESELECT_SUCCESS : COURSE_STATUS_DESELECT_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case COURSE_STATUS_CURRICULUM:
+				try {
+					CourseInfo result[] = cs.queryCurriculum(csInfo);
+					if (result != null) {
+						oos.writeInt(SHOP_ORDER_QUERY_STUTEA_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(SHOP_ORDER_QUERY_STUTEA_FAIL);
+					}
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case COURSE_STATUS_QUERY:
+				try {
+					CourseStatusInfo result[] = cs.queryStatus(csInfo);
+					if (result != null) {
+						oos.writeInt(COURSE_STATUS_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(COURSE_STATUS_QUERY_FAIL);
+					}
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			}
+		}
 	}
 	
 	private void Appoint(int cmd) {
+		
+		AppointInfo apInfo = null;
+		AppointStatusInfo apsInfo = null;
+		Appoint ap = new Appoint();
+		
+		if (cmd / 10 == 70) {
+			try {
+				apInfo = (AppointInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch(cmd) {
+			case APPOINT_ITEM_QUERY:
+				try {
+					AppointInfo[] result = ap.queryAppointItem(apInfo);
+					if (result != null) {
+						oos.writeInt(APPOINT_ITEM_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(APPOINT_ITEM_QUERY_FAIL);
+					}
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+				break;
+				
+			case APPOINT_ITEM_ADD:
+				try {
+					int wb = (ap.addItem(apInfo)) ? APPOINT_ITEM_ADD_SUCCESS : APPOINT_ITEM_ADD_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case APPOINT_ITEM_DELETE:
+				try {
+					int wb = (ap.deleteItem(apInfo)) ? APPOINT_ITEM_DELETE_SUCCESS : APPOINT_ITEM_DELETE_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case APPOINT_ITEM_MODIFY:
+				try {
+					int wb = (ap.modifyItem(apInfo)) ? APPOINT_ITEM_MODIFY_SUCCESS : APPOINT_ITEM_MODIFY_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+			}
+		}
+		else {
+			try {
+				apsInfo = (AppointStatusInfo)ois.readObject();
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
+			switch (cmd) {
+			case APPOINT_STATUS_ADD:
+				try {
+					int wb = (ap.addStatus(apsInfo)) ? APPOINT_STATUS_ADD_SUCCESS : APPOINT_STATUS_ADD_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case APPOINT_STATUS_DELETE:
+				try {
+					int wb = (ap.deleteStatus(apsInfo)) ? APPOINT_STATUS_DELETE_SUCCESS : APPOINT_STATUS_DELETE_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case APPOINT_STATUS_MODIFY:
+				try {
+					int wb = (ap.modifyStatus(apsInfo)) ? APPOINT_STATUS_MODIFY_SUCCESS : APPOINT_STATUS_MODIFY_FAIL;
+					oos.writeInt(wb);
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			case APPOINT_STATUS_RECORD_QUERY:
+				try {
+					AppointStatusInfo result[] = ap.queryStatus(apsInfo);
+					if (result != null) {
+						oos.writeInt(APPOINT_STATUS_RECORD_QUERY_SUCCESS);
+						oos.writeObject(result);	
+					}
+					else {
+						oos.writeInt(APPOINT_STATUS_RECORD_QUERY_FAIL);
+					}
+					
+					oos.flush();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+				
+			}
+		}
 		
 	}
 }

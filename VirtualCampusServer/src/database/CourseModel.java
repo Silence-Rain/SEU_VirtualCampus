@@ -81,11 +81,8 @@ public class CourseModel implements Model{
 	@Override
 	public Object search(Object obj) {
 		info = (CourseInfo)obj;
-		
-		if (info.getId() != 0)
-			query = "select * from tbCourse where ID=" + info.getId() + ";";
-		else if (info.getName() != null)
-			query = "select * from tbCourse where courseName='" + info.getName() + "';";
+
+		query = "select * from tbCourse;";
 		
 		try {
 			Statement stmt = con.createStatement();

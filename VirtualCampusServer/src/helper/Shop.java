@@ -22,10 +22,12 @@ public class Shop {
 		try {
 			ResultSet rs = (ResultSet)goodModel.search(info);
 			
-			rs.next();
+			if (rs.next()) {		
+				return new GoodInfo(rs.getInt("ID"), rs.getString("productName"), rs.getInt("remainNum"), rs.getDouble("price"), 
+						rs.getString("supplier"), rs.getString("tag"));
+			}
 			
-			return new GoodInfo(rs.getInt("ID"), rs.getString("productName"), rs.getInt("remainNum"), rs.getDouble("price"), 
-					rs.getString("supplier"), rs.getString("tag"));
+			return null;
 			
 		} catch (SQLException e) {
 			System.out.println("Database exception");

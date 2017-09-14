@@ -82,10 +82,10 @@ public class BookStatusModel implements Model{
 	public Object search(Object obj) {
 		info = (BookStatusInfo)obj;
 		
-		if (info.getId() != 0)
-			query = "select * from tbBook where ID=" + info.getId() + ";";
+		if (info.getBorrower() != null)
+			query = "select * from tbBookStatus where borrower=" + info.getBorrower() + ";";
 		else if (info.getName() != null)
-			query = "select * from tbBook where bookName='" + info.getName() + "';";
+			query = "select * from tbBookStatus where bookName='" + info.getName() + "';";
 		
 		try {
 			Statement stmt = con.createStatement();

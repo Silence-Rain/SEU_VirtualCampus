@@ -82,7 +82,7 @@ public class AppointModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "select * from tbAppoint where item='" + info.getItem() + "';";
+			query = "select * from tbAppoint;";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
