@@ -4,27 +4,31 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import common.UserInfo;
-import database.DBConnection;
 
-public class LoginModel implements Model{
-	private UserInfo info;
+import common.StudentRollInfo;
+
+public class StudentRollModel implements Model{
+	
 	private Connection con;
 	private String query;
+	private StudentRollInfo info;
 	
-	public LoginModel() {
-		this.info = null;
+	public StudentRollModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
-	}
-	
+		this.info = null;
+	}	
+
 	@Override
 	public boolean insert(Object obj) {
-		info = (UserInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbUser values ('" + info.getStuId() + "','" + info.getPwd() + "','" + info.getType() + "','" + info.getName() + "','" + info.getCard() + "');";
+			query = "insert into tbStudentRoll values ('" + info.getId() + "','" + info.getName() + "','" + info.getAge()
+			+ "','" + info.getGender() + "','" + info.getBirthday() + "','" + info.getBirthPlace() + "','" + info.getEntranceTime()
+			+ "','" + info.getPhoto() + "','" + info.getNation() + info.getDepartment() + "','" + info.getMajor()
+			+ "','" + info.getDormitory() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -39,11 +43,14 @@ public class LoginModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (UserInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbUser set u_Pwd='" + info.getPwd() + "',u_Type='" + info.getType() + "',u_Name=" + info.getName() + "',u_Card=" + info.getCard() + "' where u_ID='" + info.getStuId() + "';";
+			query = "update tbStudentRoll set stuName='" + info.getName() + "',age=" + info.getAge()+ "',gender=" + info.getGender() 
+			+ "',birthday='" + info.getBirthday() + "',birthPlace=" + info.getBirthPlace()+ "',entranceTime=" + info.getEntranceTime() 
+			+ "',photo='" + info.getPhoto() + "',nation=" + info.getNation() + "',department=" + info.getDepartment() 
+			+ "',major='" + info.getMajor() + "',dormitory=" + info.getDormitory() + "' where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -58,11 +65,11 @@ public class LoginModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (UserInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbUser where u_ID='" + info.getStuId() + "';";
+			query = "delete from tbStudentRoll where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -77,11 +84,11 @@ public class LoginModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (UserInfo)obj;
+		info = (StudentRollInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "select * from tbUser where u_ID='" + info.getStuId() + "';";
+			query = "select * from tbStudentRoll where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -95,5 +102,5 @@ public class LoginModel implements Model{
 		
 		return null;
 	}
-	
+
 }

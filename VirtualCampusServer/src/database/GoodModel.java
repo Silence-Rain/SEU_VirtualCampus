@@ -4,27 +4,29 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import common.UserInfo;
-import database.DBConnection;
 
-public class LoginModel implements Model{
-	private UserInfo info;
+import common.GoodInfo;
+
+public class GoodModel implements Model{
+	
 	private Connection con;
 	private String query;
+	private GoodInfo info;
 	
-	public LoginModel() {
-		this.info = null;
+	public GoodModel() {
 		this.con = DBConnection.getConnection();
 		this.query = "";
+		this.info = null;
 	}
-	
+
 	@Override
 	public boolean insert(Object obj) {
-		info = (UserInfo)obj;
+		info = (GoodInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbUser values ('" + info.getStuId() + "','" + info.getPwd() + "','" + info.getType() + "','" + info.getName() + "','" + info.getCard() + "');";
+			query = "insert into tbGoods values (" + info.getId() + ",'" + info.getName() + "'," + info.getRemainNum() 
+			+ "," + info.getPrice() + ",'" + info.getSupplier()+ "','" + info.getTag() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -39,11 +41,12 @@ public class LoginModel implements Model{
 
 	@Override
 	public boolean modify(Object obj) {
-		info = (UserInfo)obj;
+		info = (GoodInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbUser set u_Pwd='" + info.getPwd() + "',u_Type='" + info.getType() + "',u_Name=" + info.getName() + "',u_Card=" + info.getCard() + "' where u_ID='" + info.getStuId() + "';";
+			query = "update tbGoods set productName='" + info.getName() + "',remainNum=" + info.getRemainNum() + ",price=" 
+			+ info.getPrice()+ ",supplier=" + info.getSupplier() + "',tag='" + info.getTag() + "' where ID=" + info.getId() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -58,11 +61,11 @@ public class LoginModel implements Model{
 
 	@Override
 	public boolean delete(Object obj) {
-		info = (UserInfo)obj;
+		info = (GoodInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbUser where u_ID='" + info.getStuId() + "';";
+			query = "delete from tbGoods where productName='" + info.getName() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -77,11 +80,11 @@ public class LoginModel implements Model{
 
 	@Override
 	public Object search(Object obj) {
-		info = (UserInfo)obj;
+		info = (GoodInfo)obj;
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "select * from tbUser where u_ID='" + info.getStuId() + "';";
+			query = "select * from tbGoods where productName='" + info.getName() + "';";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
@@ -95,5 +98,5 @@ public class LoginModel implements Model{
 		
 		return null;
 	}
-	
+
 }

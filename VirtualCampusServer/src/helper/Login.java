@@ -8,21 +8,18 @@ import database.LoginModel;
 
 public class Login{
 	private LoginModel model;
-	private UserInfo info;
 	private boolean loginFlag;
 	private boolean regFlag;
 	
 	public Login() {
 		this.model = new LoginModel();
-		this.info = new UserInfo();
 		this.loginFlag = false;
 	}
 	
-	public boolean login(String token) {
+	public boolean login(UserInfo info) {
 		
 		try{
 
-			info.setInfoByQuery(token);
 			ResultSet rs = (ResultSet)model.search(info);
 
 			rs.next();
@@ -39,9 +36,7 @@ public class Login{
 		return loginFlag;
 	}
 	
-	public boolean register(String token) {
-			
-		info.setInfoByQuery(token);
+	public boolean register(UserInfo info) {
 			
 		regFlag = model.insert(info);
 		

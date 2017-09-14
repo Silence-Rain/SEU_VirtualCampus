@@ -78,12 +78,15 @@ public abstract interface MsgType {
 	public static final int SHOP_MODIFY_ADMIN = 513;
 	public static final int SHOP_MODIFY_ADMIN_SUCCESS = 5131;
 	public static final int SHOP_MODIFY_ADMIN_FAIL = 5132;
+	public static final int SHOP_ORDER_QUERY_ADMIN=514;
+	public static final int SHOP_ORDER_QUERY_ADMIN_SUCCESS=5141;
+	public static final int SHOP_ORDER_QUERY_ADMIN_FAIL=5142;
 	public static final int SHOP_BUY_STUTEA = 521;
 	public static final int SHOP_BUY_STUTEA_SUCCESS = 5211;
 	public static final int SHOP_BUY_STUTEA_FAIL = 5212;
-	public static final int SHOP_EXPORT_ORDER_STUTEA = 522;
-	public static final int SHOP_EXPORT_ORDER_STUTEA_SUCCESS = 5221;
-	public static final int SHOP_EXPORT_ORDER_STUTEA_FAIL = 5222;
+	public static final int SHOP_ORDER_QUERY_STUTEA = 522;
+	public static final int SHOP_ORDER_QUERY_STUTEA_SUCCESS = 5221;
+	public static final int SHOP_ORDER_QUERY_STUTEA_FAIL = 5222;	
 	
 	public static final int COURSE_QUERY = 601;
 	public static final int COURSE_QUERY_SUCCESS = 6011;
