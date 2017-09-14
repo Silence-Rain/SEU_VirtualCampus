@@ -46,15 +46,15 @@ public abstract interface MsgType {
 	public static final int LIBRARY_BOOK_MODIFY = 404;
 	public static final int LIBRARY_BOOK_MODIFY_SUCCESS = 4041;
 	public static final int LIBRARY_BOOK_MODIFY_FAIL = 4042;
-	public static final int LIBRARY_STATUS_BORROW_STUTEA = 411;
-	public static final int LIBRARY_STATUS_BORROW_STUTEA_SUCCESS = 4111;
-	public static final int LIBRARY_STATUS_BORROW_STUTEA_FAIL = 4112;
-	public static final int LIBRARY_STATUS_RETURN_STUTEA = 412;
-	public static final int LIBRARY_STATUS_RETURN_STUTEA_SUCCESS = 4121;
-	public static final int LIBRARY_STATUS_RETURN_STUTEA_FAIL = 4122;
-	public static final int LIBRARY_STATUS_RECORD_STUTEA = 413;
-	public static final int LIBRARY_STATUS_RECORD_STUTEA_SUCCESS = 4131;
-	public static final int LIBRARY_STATUS_RECORD_STUTEA_FAIL = 4132;
+	public static final int LIBRARY_STATUS_BORROW = 411;
+	public static final int LIBRARY_STATUS_BORROW_SUCCESS = 4111;
+	public static final int LIBRARY_STATUS_BORROW_FAIL = 4112;
+	public static final int LIBRARY_STATUS_RETURN = 412;
+	public static final int LIBRARY_STATUS_RETURN_SUCCESS = 4121;
+	public static final int LIBRARY_STATUS_RETURN_FAIL = 4122;
+	public static final int LIBRARY_STATUS_QUERY = 413;
+	public static final int LIBRARY_STATUS_QUERY_SUCCESS = 4131;
+	public static final int LIBRARY_STATUS_QUERY_FAIL = 4132;
 	
 	public static final int SHOP_GOODS_QUERY = 501;
 	public static final int SHOP_GOODS_QUERY_SUCCESS = 5011;
