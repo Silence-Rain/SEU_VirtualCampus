@@ -1,7 +1,10 @@
 package common;
 
-public class BookInfo {
+import java.io.Serializable;
+
+public class BookInfo implements Serializable {
 	
+	private static final long serialVersionUID = 4;
 	private int id;
 	private String name;
 	private String author;

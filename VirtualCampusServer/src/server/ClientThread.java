@@ -1,4 +1,4 @@
-package server;
+	package server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -204,6 +204,7 @@ public class ClientThread extends Thread
 	}
 	
 	private void Bank(int cmd) {
+		System.out.println(cmd);
 		BankInfo bankInfo = null;
 		Bank bk = new Bank();
 		
@@ -631,7 +632,8 @@ public class ClientThread extends Thread
 		
 		if (cmd / 10 == 60) {
 			try {
-				courseInfo = (CourseInfo)ois.readObject();
+				if (cmd != COURSE_QUERY)
+					courseInfo = (CourseInfo)ois.readObject();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -641,7 +643,8 @@ public class ClientThread extends Thread
 			switch(cmd) {
 			case COURSE_QUERY:
 				try {
-					CourseInfo result = cs.queryCourse(courseInfo);
+					CourseInfo result[] = cs.queryCourse(courseInfo);
+					
 					if (result != null) {
 						oos.writeInt(COURSE_QUERY_SUCCESS);
 						oos.writeObject(result);	
@@ -739,11 +742,11 @@ public class ClientThread extends Thread
 				try {
 					CourseInfo result[] = cs.queryCurriculum(csInfo);
 					if (result != null) {
-						oos.writeInt(SHOP_ORDER_QUERY_STUTEA_SUCCESS);
+						oos.writeInt(COURSE_STATUS_CURRICULUM_SUCCESS);
 						oos.writeObject(result);	
 					}
 					else {
-						oos.writeInt(SHOP_ORDER_QUERY_STUTEA_FAIL);
+						oos.writeInt(COURSE_STATUS_CURRICULUM_FAIL);
 					}
 					
 					oos.flush();

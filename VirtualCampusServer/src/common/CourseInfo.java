@@ -1,15 +1,18 @@
 package common;
 
-public class CourseInfo {
-	
+import java.io.Serializable;
+
+public class CourseInfo implements Serializable {
+
+	private static final long serialVersionUID = 1;
 	private String id;
 	private String name;
 	private String teacher;
 	private String place;
 	private String time;
-	private int credit;
+	private double credit;
 	
-	public CourseInfo(String id, String name, String teacher, String place, String time, int credit) {
+	public CourseInfo(String id, String name, String teacher, String place, String time, double credit) {
 		this.id = id;
 		this.name = name;
 		this.teacher = teacher;
@@ -48,10 +51,10 @@ public class CourseInfo {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public int getCredit() {
+	public double getCredit() {
 		return credit;
 	}
-	public void setCredit(int credit) {
+	public void setCredit(double credit) {
 		this.credit = credit;
 	}
 }

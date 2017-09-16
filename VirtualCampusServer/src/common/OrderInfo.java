@@ -1,7 +1,10 @@
 package common;
 
-public class OrderInfo {
-	
+import java.io.Serializable;
+
+public class OrderInfo implements Serializable {
+
+	private static final long serialVersionUID = 9;
 	private int id;
 	private String name;
 	private String buyer;

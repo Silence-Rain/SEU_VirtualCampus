@@ -1,14 +1,15 @@
 package common;
 
-public class CourseStatusInfo {
-	
+import java.io.Serializable;
+
+public class CourseStatusInfo implements Serializable {
+
+	private static final long serialVersionUID = 2;
 	private String id;
-	private String name;
 	private String selector;
 	
-	public CourseStatusInfo(String id, String name, String selector) {
+	public CourseStatusInfo(String id, String selector) {
 		this.id = id;
-		this.name = name;
 		this.selector = selector;
 	}
 	
@@ -17,12 +18,6 @@ public class CourseStatusInfo {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public String getSelector() {
 		return selector;

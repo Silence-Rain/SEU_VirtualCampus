@@ -3,6 +3,8 @@ package common;
 import java.io.Serializable;
 
 public class BankInfo implements Serializable{
+
+	private static final long serialVersionUID = 3;
 	private String id;
 	private double balance;
 	private String transferTo;

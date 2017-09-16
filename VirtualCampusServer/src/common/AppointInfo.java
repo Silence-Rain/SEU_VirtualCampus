@@ -1,7 +1,10 @@
 package common;
 
-public class AppointInfo {
-	
+import java.io.Serializable;
+
+public class AppointInfo implements Serializable{
+
+	private static final long serialVersionUID = 6;
 	private String item;
 	private String itemRemain[][];
 	

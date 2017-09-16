@@ -18,17 +18,19 @@ public class Course {
 		csModel = new CourseStatusModel();
 	}
 	
-	public CourseInfo queryCourse(CourseInfo info) {
+	public CourseInfo[] queryCourse(CourseInfo info) {
 		try {
-			ResultSet rs = (ResultSet)cModel.search(info);
+			ResultSet rs = (ResultSet)cModel.search(null);
+			Vector<CourseInfo> v = new Vector<CourseInfo>();
 			
-			if (rs.next()) {	
-				return new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
-						rs.getString("time"), rs.getInt("credit"));
+			while (rs.next()) {	
+				CourseInfo temp = new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
+						rs.getString("time"), rs.getDouble("credit"));
+				v.add(temp);
 				
 			}
 			
-			return null;
+			return (CourseInfo[])v.toArray(new CourseInfo[rs.getRow()]);
 			
 		} catch (SQLException e) {
 			System.out.println("Database exception");
@@ -70,14 +72,17 @@ public class Course {
 				v1.add(temp);
 			}
 			
-			for (CourseInfo i: v1) {
-				rs = (ResultSet)cModel.search(i);
+			
+			
+			for (int i = 0; i < v1.size(); i++) {
+				rs = (ResultSet)cModel.search(v1.get(i));
 				
-				if (rs.next()) {	
-					CourseInfo temp = new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
-							rs.getString("time"), rs.getInt("credit"));
-					v.add(temp);
-				}
+				rs.next();	
+				CourseInfo temp = new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
+						rs.getString("time"), rs.getDouble("credit"));
+
+				v.add(temp);
+				
 			}
 
 			CourseInfo arr[] = (CourseInfo[])v.toArray(new CourseInfo[rs.getRow()]);
@@ -98,7 +103,7 @@ public class Course {
 			Vector<CourseStatusInfo> v = new Vector<CourseStatusInfo>();
 		
 			while (rs.next()) {	
-				CourseStatusInfo temp = new CourseStatusInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("selector"));
+				CourseStatusInfo temp = new CourseStatusInfo(rs.getString("ID"), rs.getString("selector"));
 				v.add(temp);
 			}
 

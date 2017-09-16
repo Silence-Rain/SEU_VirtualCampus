@@ -1,7 +1,10 @@
 package common;
 
-public class AppointStatusInfo {
-	
+import java.io.Serializable;
+
+public class AppointStatusInfo implements Serializable{
+
+	private static final long serialVersionUID = 7;
 	private String userID;
 	private String item;
 	private long appointDate;

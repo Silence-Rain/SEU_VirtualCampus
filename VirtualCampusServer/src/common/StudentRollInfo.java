@@ -3,7 +3,8 @@ package common;
 import java.io.Serializable;
 
 public class StudentRollInfo implements Serializable{
-	
+
+	private static final long serialVersionUID = 10;
 	private String id;
 	private String name;
 	private String age;

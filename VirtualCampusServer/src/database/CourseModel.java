@@ -82,7 +82,10 @@ public class CourseModel implements Model{
 	public Object search(Object obj) {
 		info = (CourseInfo)obj;
 
-		query = "select * from tbCourse;";
+		if (info == null)
+			query = "select * from tbCourse;";
+		else
+			query = "select * from tbCourse where ID='" + info.getId() + "';";
 		
 		try {
 			Statement stmt = con.createStatement();

@@ -1,7 +1,10 @@
 package common;
 
-public class BookStatusInfo {
+import java.io.Serializable;
+
+public class BookStatusInfo implements Serializable {
 	
+	private static final long serialVersionUID = 5;
 	private int id;
 	private String name;
 	private String borrower;

@@ -1,7 +1,10 @@
 package common;
 
-public class GoodInfo {
+import java.io.Serializable;
 
+public class GoodInfo implements Serializable {
+
+	private static final long serialVersionUID = 8;
 	private int id;
 	private String name;
 	private int remainNum;
