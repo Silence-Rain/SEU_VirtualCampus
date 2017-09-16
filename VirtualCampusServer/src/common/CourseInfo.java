@@ -2,14 +2,14 @@ package common;
 
 public class CourseInfo {
 	
-	private int id;
+	private String id;
 	private String name;
 	private String teacher;
 	private String place;
 	private String time;
 	private int credit;
 	
-	public CourseInfo(int id, String name, String teacher, String place, String time, int credit) {
+	public CourseInfo(String id, String name, String teacher, String place, String time, int credit) {
 		this.id = id;
 		this.name = name;
 		this.teacher = teacher;
@@ -18,10 +18,10 @@ public class CourseInfo {
 		this.credit = credit;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {

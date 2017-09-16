@@ -23,7 +23,7 @@ public class Course {
 			ResultSet rs = (ResultSet)cModel.search(info);
 			
 			if (rs.next()) {	
-				return new CourseInfo(rs.getInt("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
+				return new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
 						rs.getString("time"), rs.getInt("credit"));
 				
 			}
@@ -65,7 +65,7 @@ public class Course {
 			Vector<CourseInfo> v1 = new Vector<CourseInfo>();
 			
 			while (rs.next()) {
-				CourseInfo temp = new CourseInfo(rs.getInt("ID"), "", "", "", "", 0);
+				CourseInfo temp = new CourseInfo(rs.getString("ID"), "", "", "", "", 0);
 				
 				v1.add(temp);
 			}
@@ -74,7 +74,7 @@ public class Course {
 				rs = (ResultSet)cModel.search(i);
 				
 				if (rs.next()) {	
-					CourseInfo temp = new CourseInfo(rs.getInt("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
+					CourseInfo temp = new CourseInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("teacher"), rs.getString("place"), 
 							rs.getString("time"), rs.getInt("credit"));
 					v.add(temp);
 				}
@@ -98,7 +98,7 @@ public class Course {
 			Vector<CourseStatusInfo> v = new Vector<CourseStatusInfo>();
 		
 			while (rs.next()) {	
-				CourseStatusInfo temp = new CourseStatusInfo(rs.getInt("ID"), rs.getString("courseName"), rs.getString("selector"));
+				CourseStatusInfo temp = new CourseStatusInfo(rs.getString("ID"), rs.getString("courseName"), rs.getString("selector"));
 				v.add(temp);
 			}
 

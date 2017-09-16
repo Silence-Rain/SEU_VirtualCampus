@@ -102,5 +102,23 @@ public class StudentRollModel implements Model{
 		
 		return null;
 	}
+	
+	public Object searchAll() {
+		try {
+			Statement stmt = con.createStatement();
+			query = "select * from tbStudentRoll;";
+			System.out.println(query);
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			if (rs != null)
+				return rs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 }

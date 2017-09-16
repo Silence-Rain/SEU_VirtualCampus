@@ -25,7 +25,7 @@ public class CourseStatusModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbCourseStatus values (" + info.getId() + ",'" + info.getName() + "','" + info.getSelector() + ");";
+			query = "insert into tbCourseStatus values ('" + info.getId() + "','" + info.getName() + "','" + info.getSelector() + ");";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -44,7 +44,7 @@ public class CourseStatusModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbCourseStatus set courseName='" + info.getName() + "',selector='" + info.getSelector() + "' where ID=" + info.getId() + ";";
+			query = "update tbCourseStatus set courseName='" + info.getName() + "',selector='" + info.getSelector() + "' where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -63,7 +63,7 @@ public class CourseStatusModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbCourseStatus where ID=" + info.getId() + ";";
+			query = "delete from tbCourseStatus where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -80,8 +80,8 @@ public class CourseStatusModel implements Model{
 	public Object search(Object obj) {
 		info = (CourseStatusInfo)obj;
 		
-		if (info.getId() != 0)
-			query = "select * from tbCourseStatus where ID=" + info.getId() + ";";
+		if (info.getId() != null)
+			query = "select * from tbCourseStatus where ID='" + info.getId() + "';";
 		else if (info.getName() != null)
 			query = "select * from tbCourseStatus where courseName='" + info.getName() + "';";
 		

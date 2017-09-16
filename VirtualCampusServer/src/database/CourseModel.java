@@ -25,7 +25,7 @@ public class CourseModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbCourse values (" + info.getId() + ",'" + info.getName() + "','" + info.getTeacher() 
+			query = "insert into tbCourse values ('" + info.getId() + "','" + info.getName() + "','" + info.getTeacher() 
 			+ "','" + info.getPlace() + "','" + info.getTime() + "'," + info.getCredit() + ");";
 			System.out.println(query);
 			
@@ -46,7 +46,7 @@ public class CourseModel implements Model{
 		try {
 			Statement stmt = con.createStatement();
 			query = "update tbCourse set courseName='" + info.getName() + "',teacher='" + info.getTeacher() + "',pub='" 
-			+ info.getPlace() + "',time='" + info.getTime() + "',credit=" + info.getCredit() + " where ID=" + info.getId() + ";";
+			+ info.getPlace() + "',time='" + info.getTime() + "',credit=" + info.getCredit() + " where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -65,7 +65,7 @@ public class CourseModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "delete from tbCourse where ID=" + info.getId() + ";";
+			query = "delete from tbCourse where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
