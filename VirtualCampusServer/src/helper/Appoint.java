@@ -72,7 +72,7 @@ public class Appoint {
 			
 			while (rs.next()) {
 				AppointStatusInfo temp = new AppointStatusInfo(rs.getString("userID"), rs.getString("item"), rs.getInt("appointDate")
-						, rs.getInt("appointTime"));
+						, rs.getInt("appointTime"), rs.getInt("timestamp"));
 				v.add(temp);				
 			}
 			

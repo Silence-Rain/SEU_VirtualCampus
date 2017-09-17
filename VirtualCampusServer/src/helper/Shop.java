@@ -18,16 +18,20 @@ public class Shop {
 		this.orderModel = new OrderModel();
 	}
 	
-	public GoodInfo queryGoods(GoodInfo info) {
+	public GoodInfo[] queryGoods(GoodInfo info) {
 		try {
 			ResultSet rs = (ResultSet)goodModel.search(info);
+			Vector<GoodInfo> v = new Vector<GoodInfo>();
 			
-			if (rs.next()) {		
-				return new GoodInfo(rs.getInt("ID"), rs.getString("productName"), rs.getInt("remainNum"), rs.getDouble("price"), 
+			while (rs.next()) {
+				GoodInfo temp =  new GoodInfo(rs.getInt("ID"), rs.getString("productName"), rs.getInt("remainNum"), rs.getDouble("price"), 
 						rs.getString("supplier"), rs.getString("tag"));
+				v.add(temp);
 			}
 			
-			return null;
+			GoodInfo arr[] = (GoodInfo[])v.toArray(new GoodInfo[rs.getRow()]);
+			
+			return arr;
 			
 		} catch (SQLException e) {
 			System.out.println("Database exception");

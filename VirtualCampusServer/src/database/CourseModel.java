@@ -45,7 +45,7 @@ public class CourseModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbCourse set courseName='" + info.getName() + "',teacher='" + info.getTeacher() + "',pub='" 
+			query = "update tbCourse set courseName='" + info.getName() + "',teacher='" + info.getTeacher() + "',place='" 
 			+ info.getPlace() + "',time='" + info.getTime() + "',credit=" + info.getCredit() + " where ID='" + info.getId() + "';";
 			System.out.println(query);
 			

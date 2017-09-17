@@ -26,7 +26,7 @@ public class AppointStatusModel implements Model{
 		try {
 			Statement stmt = con.createStatement();
 			query = "insert into tbAppointStatus values ('" + info.getUserID() + "','" + info.getItem() + "'," + info.getAppointDate()
-			+ "," + info.getAppointTime() + ");";
+			+ "," + info.getAppointTime() + "," + info.getTimestamp() + ");";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -46,7 +46,7 @@ public class AppointStatusModel implements Model{
 		try {
 			Statement stmt = con.createStatement();
 			query = "update tbAppointStatus set item='" + info.getItem() + "',appointDate=" + info.getAppointDate() + ",appointTime='" 
-			+ info.getAppointTime() + " where userID='" + info.getUserID() + "';";
+			+ info.getAppointTime() + ",timestamp='" + info.getTimestamp() + " where userID='" + info.getUserID() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)

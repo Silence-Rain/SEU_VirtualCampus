@@ -82,10 +82,7 @@ public class GoodModel implements Model{
 	public Object search(Object obj) {
 		info = (GoodInfo)obj;
 
-		if (info.getId() != 0)
-			query = "select * from tbGoods where ID=" + info.getId() + ";";
-		else if (info.getName() != null)
-			query = "select * from tbGoods where productName='" + info.getName() + "';";
+		query = "select * from tbGoods;";
 		
 		try {
 			Statement stmt = con.createStatement();

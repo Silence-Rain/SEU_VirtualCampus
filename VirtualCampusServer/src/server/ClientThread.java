@@ -39,6 +39,7 @@ public class ClientThread extends Thread
 		try {
 			ois = new ObjectInputStream(client.getInputStream());
 			oos = new ObjectOutputStream(client.getOutputStream());
+			System.out.println("Client connected");
 		} catch (IOException e) {
 			System.out.println("Cannot get IO stream");
 			e.printStackTrace();
@@ -472,6 +473,7 @@ public class ClientThread extends Thread
 	}
 	
 	private void Shop(int cmd) {
+		System.out.println(cmd);
 		GoodInfo goodInfo = null;
 		Shop sp = new Shop();
 		
@@ -489,7 +491,7 @@ public class ClientThread extends Thread
 			switch(cmd) {
 			case SHOP_GOODS_QUERY:
 				try {
-					GoodInfo result = sp.queryGoods(goodInfo);
+					GoodInfo[] result = sp.queryGoods(goodInfo);
 					if (result != null) {
 						oos.writeInt(SHOP_GOODS_QUERY_SUCCESS);
 						oos.writeObject(result);	

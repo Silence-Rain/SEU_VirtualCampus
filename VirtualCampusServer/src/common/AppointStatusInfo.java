@@ -7,14 +7,17 @@ public class AppointStatusInfo implements Serializable{
 	private static final long serialVersionUID = 7;
 	private String userID;
 	private String item;
-	private long appointDate;
-	private long appointTime;
+	private int appointDate;
+	private int appointTime;
+	private long timestamp;
 	
-	public AppointStatusInfo(String userID, String item, long appointDate, long appointTime) {
+	
+	public AppointStatusInfo(String userID, String item, int appointDate, int appointTime, long ts) {
 		this.userID = userID;
 		this.item = item;
 		this.appointDate = appointDate;
 		this.appointTime = appointTime;
+		this.timestamp = ts;
 	}
 	
 	public String getUserID() {
@@ -29,16 +32,22 @@ public class AppointStatusInfo implements Serializable{
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public long getAppointDate() {
+	public int getAppointDate() {
 		return appointDate;
 	}
-	public void setAppointDate(long appointDate) {
+	public void setAppointDate(int appointDate) {
 		this.appointDate = appointDate;
 	}
-	public long getAppointTime() {
+	public int getAppointTime() {
 		return appointTime;
 	}
-	public void setAppointTime(long appointTime) {
+	public void setAppointTime(int appointTime) {
 		this.appointTime = appointTime;
+	}
+	public long getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(long ts) {
+		this.timestamp = ts;
 	}
 }
