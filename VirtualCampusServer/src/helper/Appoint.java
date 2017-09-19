@@ -54,7 +54,21 @@ public class Appoint {
 	}
 	
 	public boolean addStatus(AppointStatusInfo info) {
-		return asm.insert(info);
+		
+		AppointInfo temp = new AppointInfo(info.getItem(), "");
+		ResultSet rs = (ResultSet)am.searchByName(temp);
+		
+		try {
+			rs.next();
+			temp.setItemRemain(rs.getString("itemRemain"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String[][] cur = temp.getItemRemain();
+		cur[info.getAppointDate()][info.getAppointTime()] = String.valueOf(Integer.parseInt(cur[info.getAppointDate()][info.getAppointTime()]) - 1);
+		
+		return asm.insert(info) && am.modify(temp);
 	}
 	
 	public boolean deleteStatus(AppointStatusInfo info) {

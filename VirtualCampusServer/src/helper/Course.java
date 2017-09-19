@@ -97,14 +97,20 @@ public class Course {
 		}
 	}
 	
-	public CourseStatusInfo[] queryStatus(CourseStatusInfo info) {
+	public CourseStatusInfo[] queryStatus(CourseInfo info) {
 		try {
-			ResultSet rs = (ResultSet)csModel.search(info);
+			ResultSet rs = (ResultSet)cModel.searchByTeacher(info);
 			Vector<CourseStatusInfo> v = new Vector<CourseStatusInfo>();
+			
+			if (rs.next()) {
+				CourseStatusInfo temp = new CourseStatusInfo(rs.getString("ID"), null);
+			
+				rs = (ResultSet)csModel.search(temp);
 		
-			while (rs.next()) {	
-				CourseStatusInfo temp = new CourseStatusInfo(rs.getString("ID"), rs.getString("selector"));
-				v.add(temp);
+				while (rs.next()) {	
+					CourseStatusInfo temp1 = new CourseStatusInfo(rs.getString("ID"), rs.getString("selector"));
+					v.add(temp1);
+				}
 			}
 
 			CourseStatusInfo arr[] = (CourseStatusInfo[])v.toArray(new CourseStatusInfo[rs.getRow()]);

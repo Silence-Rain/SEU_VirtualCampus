@@ -591,6 +591,8 @@ public class ClientThread extends Thread
 					else {
 						oos.writeInt(SHOP_ORDER_BUY_FAIL);
 					}
+					
+					oos.flush();
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -706,7 +708,8 @@ public class ClientThread extends Thread
 		}
 		else {
 			try {
-				csInfo = (CourseStatusInfo)ois.readObject();
+				if (cmd != COURSE_STATUS_QUERY)
+					csInfo = (CourseStatusInfo)ois.readObject();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -761,10 +764,13 @@ public class ClientThread extends Thread
 				
 			case COURSE_STATUS_QUERY:
 				try {
-					CourseStatusInfo result[] = cs.queryStatus(csInfo);
+
+					CourseInfo cInfo = (CourseInfo)ois.readObject();
+	
+					CourseStatusInfo result[] = cs.queryStatus(cInfo);
 					if (result != null) {
 						oos.writeInt(COURSE_STATUS_QUERY_SUCCESS);
-						oos.writeObject(result);	
+						oos.writeObject(result);
 					}
 					else {
 						oos.writeInt(COURSE_STATUS_QUERY_FAIL);
@@ -772,7 +778,7 @@ public class ClientThread extends Thread
 					
 					oos.flush();
 					
-				} catch (IOException e) {
+				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
 				

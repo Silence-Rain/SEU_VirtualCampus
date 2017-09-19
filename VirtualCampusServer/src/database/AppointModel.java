@@ -44,7 +44,7 @@ public class AppointModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbAppoint set itemRemain='" + info.getItemRemain() + "' where item='" + info.getItem() + "';";
+			query = "update tbAppoint set itemRemain='" + info.getItemRemainStr() + "' where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -83,6 +83,26 @@ public class AppointModel implements Model{
 		try {
 			Statement stmt = con.createStatement();
 			query = "select * from tbAppoint;";
+			System.out.println(query);
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			if (rs != null)
+				return rs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Object searchByName(Object obj) {
+		info = (AppointInfo)obj;
+		
+		try {
+			Statement stmt = con.createStatement();
+			query = "select * from tbAppoint where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);

@@ -46,7 +46,7 @@ public class GoodModel implements Model{
 		try {
 			Statement stmt = con.createStatement();
 			query = "update tbGoods set productName='" + info.getName() + "',remainNum=" + info.getRemainNum() + ",price=" 
-			+ info.getPrice()+ ",supplier=" + info.getSupplier() + "',tag='" + info.getTag() + "' where ID=" + info.getId() + ";";
+			+ info.getPrice()+ ",supplier='" + info.getSupplier() + "',tag='" + info.getTag() + "' where ID=" + info.getId() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)

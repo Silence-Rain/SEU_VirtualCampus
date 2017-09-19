@@ -102,4 +102,25 @@ public class CourseModel implements Model{
 		
 		return null;
 	}
+
+	public Object searchByTeacher(Object obj) {
+		info = (CourseInfo)obj;
+
+		query = "select * from tbCourse where teacher='" + info.getTeacher() + "';";
+		
+		try {
+			Statement stmt = con.createStatement();
+			System.out.println(query);
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			if (rs != null)
+				return rs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

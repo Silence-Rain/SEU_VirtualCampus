@@ -24,7 +24,8 @@ public class LoginModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbUser values ('" + info.getStuId() + "','" + info.getPwd() + "','" + info.getType() + "','" + info.getName() + "','" + info.getCard() + "');";
+			query = "insert into tbUser values ('" + info.getStuId() + "','" + info.getPwd() + "','" + info.getType() + "','" 
+			+ info.getName() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -43,7 +44,8 @@ public class LoginModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbUser set u_Pwd='" + info.getPwd() + "',u_Type='" + info.getType() + "',u_Name=" + info.getName() + "',u_Card=" + info.getCard() + "' where u_ID='" + info.getStuId() + "';";
+			query = "update tbUser set u_Pwd='" + info.getPwd() + "',u_Type='" + info.getType() + "',u_Name=" + info.getName() 
+			+ "' where u_ID='" + info.getStuId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)

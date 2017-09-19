@@ -25,14 +25,15 @@ public class OrderModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbOrder values (" + info.getId() + ",'" + info.getName() + "','" + info.getBuyer() 
+			query = "insert into tbOrder (productName,buyer,buyNum,buyTime) values ('" + info.getName() + "','" + info.getBuyer() 
 			+ "'," + info.getBuyNum() + "," + info.getBuyTime() + ");";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0) {
-				query = "update tbGoods set remainNum=remainNum-" + info.getBuyNum() + " where id=" + info.getId() + ";";
-				
-				return true;
+				query = "update tbGoods set remainNum=remainNum-" + info.getBuyNum() + " where productName='" + info.getName() + "';";
+				System.out.println(query);
+				if (stmt.executeUpdate(query) != 0)
+					return true;
 			}
 			
 		} catch (SQLException e) {
@@ -48,8 +49,8 @@ public class OrderModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbOrder set ID=" + info.getId() + ",productName='" + info.getName() + "',buyNum=" + info.getBuyNum() 
-			+ " where buyer='" + info.getBuyer() + "' and buyTime=" + info.getBuyTime() + ";";
+			query = "update tbOrder set productName='" + info.getName() + "',buyNum=" + info.getBuyNum() 
+			+ " where buyer='" + info.getBuyer() + "' and buyTime=" + info.getBuyTime() + " where id='" + info.getId() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)

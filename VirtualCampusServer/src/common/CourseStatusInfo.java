@@ -8,8 +8,8 @@ public class CourseStatusInfo implements Serializable {
 	private String id;
 	private String selector;
 	
-	public CourseStatusInfo(String id, String selector) {
-		this.id = id;
+	public CourseStatusInfo(String i, String selector) {
+		this.id = i;
 		this.selector = selector;
 	}
 	

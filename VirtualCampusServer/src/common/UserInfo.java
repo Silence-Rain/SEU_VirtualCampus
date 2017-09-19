@@ -8,14 +8,12 @@ public class UserInfo implements Serializable{
 	private String stuId;
 	private String pwd;
 	private String type;
-	private String card;
 	private String name;
 	
-	public UserInfo(String id, String p, String t, String c, String n) {
+	public UserInfo(String id, String p, String t, String n) {
 		this.setStuId(id);
 		this.setPwd(p);
 		this.setType(t);
-		this.setCard(c);
 		this.setName(n);
 	}
 	
@@ -51,11 +49,4 @@ public class UserInfo implements Serializable{
 		return this.name;
 	}
 	
-	public void setCard(String param) {
-		this.card = param;
-	}
-	
-	public String getCard() {
-		return this.card;
-	}
 }
