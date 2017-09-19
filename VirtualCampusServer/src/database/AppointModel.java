@@ -25,7 +25,7 @@ public class AppointModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbAppoint values ('" + info.getItem() + "','" + info.getItemRemain() + "');";
+			query = "insert into tbAppoint values ('" + info.getItem() + "','" + info.getItemRemainStr() + "');";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -63,6 +63,8 @@ public class AppointModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
+
+			
 			query = "delete from tbAppoint where item='" + info.getItem() + "';";
 			System.out.println(query);
 			
