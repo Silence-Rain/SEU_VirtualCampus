@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class BankInfo implements Serializable{
 
 	private static final long serialVersionUID = 3;
-	private String id;
-	private double balance;
-	private String transferTo;
-	private double transferAmount;
-	private long transferDate;
+	private String id;//用户ID
+	private double balance;//当前余额
+	private String transferTo;//转账对象
+	private double transferAmount;//转账数额
+	private long transferDate;//转账时间（时间戳）
 	
 	public BankInfo(String id, double b, String to, double am, long dt) {
 		this.setId(id);

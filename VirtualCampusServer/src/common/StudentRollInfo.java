@@ -5,18 +5,18 @@ import java.io.Serializable;
 public class StudentRollInfo implements Serializable{
 
 	private static final long serialVersionUID = 10;
-	private String id;
-	private String name;
-	private String age;
-	private String gender;
-	private String birthday;
-	private String birthPlace;
-	private String entranceTime;
-	private String photo;
-	private String nation;
-	private String department;
-	private String major;
-	private String dormitory;
+	private String id;//学号
+	private String name;//学生姓名
+	private String age;//年龄
+	private String gender;//性别
+	private String birthday;//生日
+	private String birthPlace;//出生地
+	private String entranceTime;//入学时间
+	private String photo;//照片URL
+	private String nation;//国籍
+	private String department;//院系
+	private String major;//专业
+	private String dormitory;//宿舍
 	
 	public StudentRollInfo(String id, String name, String age, String gender, String birthday, String birthPlace,
 			String entranceTime, String photo, String nation, String department, String major, String dormitory) {

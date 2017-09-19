@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class AppointStatusInfo implements Serializable{
 
 	private static final long serialVersionUID = 7;
-	private String userID;
-	private String item;
-	private int appointDate;
-	private int appointTime;
-	private long timestamp;
+	private String userID;//预约用户ID
+	private String item;//预约项目名称
+	private int appointDate;//预约日期（数组下标）
+	private int appointTime;//预约时间段（数组下标）
+	private long timestamp;//预约时间戳
 	
 	
 	public AppointStatusInfo(String userID, String item, int appointDate, int appointTime, long ts) {

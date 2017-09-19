@@ -3,17 +3,20 @@ package common;
 import java.io.Serializable;
 
 public class BookInfo implements Serializable {
-	
+		
 	private static final long serialVersionUID = 4;
-	private int id;
-	private String name;
-	private String author;
-	private String pub;
-	private boolean isBorrowed;
+	private int id;//书籍ID
+	private String name;//书籍名
+	private String isbn;//ISBN号
+	private String author;//作者
+	private String pub;//出版社
+	private boolean isBorrowed;//是否已被借阅
 
-	public BookInfo(int id, String name, String author, String pub, boolean isBorrowed) {
+	public BookInfo(int id, String name, String isbn, String author, String pub, boolean isBorrowed) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.isbn = isbn;
 		this.author = author;
 		this.pub = pub;
 		this.isBorrowed = isBorrowed;
@@ -48,6 +51,14 @@ public class BookInfo implements Serializable {
 	}
 	public void setBorrowed(boolean isBorrowed) {
 		this.isBorrowed = isBorrowed;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 }

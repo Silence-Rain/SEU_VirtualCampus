@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class OrderInfo implements Serializable {
 
 	private static final long serialVersionUID = 9;
-	private int id;
-	private String name;
-	private String buyer;
-	private int buyNum;
-	private long buyTime;
+	private int id;//订单ID
+	private String name;//商品名称
+	private String buyer;//买家学号
+	private int buyNum;//购买数量
+	private long buyTime;//购买时间
 
 	public OrderInfo(int id, String name, String buyer, int buyNum, long buyTime) {
 		super();

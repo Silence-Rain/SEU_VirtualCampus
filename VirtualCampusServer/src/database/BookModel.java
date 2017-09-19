@@ -25,7 +25,7 @@ public class BookModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "insert into tbBook values (" + info.getId() + ",'" + info.getName() + "','" + info.getAuthor() 
+			query = "insert into tbBook (bookName, ISBN, author, pub, isBorrowed) values ('" + info.getName() + "','" + info.getIsbn() + "','" + info.getAuthor() 
 			+ "','" + info.getPub() + "'," + info.isBorrowed() + ");";
 			System.out.println(query);
 			
@@ -45,7 +45,7 @@ public class BookModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbBook set bookName='" + info.getName() + "',author='" + info.getAuthor() + "',pub='" 
+			query = "update tbBook set bookName='" + info.getName() + "',ISBN='" + info.getIsbn() + "',author='" + info.getAuthor() + "',pub='" 
 			+ info.getPub()+ "',isBorrowed=" + info.isBorrowed() + " where ID=" + info.getId() + ";";
 			System.out.println(query);
 			
@@ -83,9 +83,13 @@ public class BookModel implements Model{
 		info = (BookInfo)obj;
 		
 		if (info.getId() != 0)
-			query = "select * from tbBook where ID=" + info.getId() + ";";
-		else if (info.getName() != null)
+			query = "select * from tbBook where ID='" + info.getId() + "';";
+		else if (!info.getName().equals(""))
 			query = "select * from tbBook where bookName='" + info.getName() + "';";
+		else if (!info.getAuthor().equals(""))
+			query = "select * from tbBook where author='" + info.getAuthor() + "';";
+		else
+			query = "select * from tbBook;";
 		
 		try {
 			Statement stmt = con.createStatement();

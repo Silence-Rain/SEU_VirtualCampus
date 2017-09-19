@@ -10,12 +10,10 @@ import database.StudentRollModel;
 
 public class Login{
 	private LoginModel model;
-	private boolean loginFlag;
 	private StudentRollModel srm;
 	
 	public Login() {
 		this.model = new LoginModel();
-		this.loginFlag = false;
 		this.srm = new StudentRollModel();
 	}
 	
@@ -26,7 +24,7 @@ public class Login{
 			ResultSet rs = (ResultSet)model.search(info);
 
 			rs.next();
-			loginFlag =  info.getPwd().equals(rs.getString("u_Pwd")) && info.getType().equals(rs.getString("u_Type"));
+			return info.getPwd().equals(rs.getString("u_Pwd")) && info.getType().equals(rs.getString("u_Type"));
 
 		}
 		catch (SQLException e) {
@@ -36,7 +34,6 @@ public class Login{
 			return false;
 		} 
 		
-		return loginFlag;
 	}
 	
 	public boolean register(UserInfo info) {

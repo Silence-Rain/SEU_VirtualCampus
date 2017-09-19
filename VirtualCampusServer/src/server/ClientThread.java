@@ -1,4 +1,4 @@
-	package server;
+package server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,6 +24,7 @@ import helper.StudentRoll;
 import helper.Library;
 import helper.Course;
 import helper.Appoint;
+import view.ServerFrameView_MY;
 
 public class ClientThread extends Thread 
 	implements MsgType{
@@ -39,6 +40,7 @@ public class ClientThread extends Thread
 		try {
 			ois = new ObjectInputStream(client.getInputStream());
 			oos = new ObjectOutputStream(client.getOutputStream());
+			//ServerFrameView_MY.setTextArea("");
 			System.out.println("Client connected");
 		} catch (IOException e) {
 			System.out.println("Cannot get IO stream");
@@ -53,6 +55,7 @@ public class ClientThread extends Thread
 		while (true) {
 			try {
 				cmd = ois.readInt();
+				System.out.println(cmd);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -205,7 +208,7 @@ public class ClientThread extends Thread
 	}
 	
 	private void Bank(int cmd) {
-		System.out.println(cmd);
+
 		BankInfo bankInfo = null;
 		Bank bk = new Bank();
 		
@@ -391,6 +394,7 @@ public class ClientThread extends Thread
 				try {
 					int writeBack = (lb.addBook(bookInfo)) ? LIBRARY_BOOK_ADD_SUCCESS : LIBRARY_BOOK_ADD_FAIL;
 					oos.writeInt(writeBack);
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -401,6 +405,7 @@ public class ClientThread extends Thread
 				try {
 					int writeBack = (lb.deleteBook(bookInfo)) ? LIBRARY_BOOK_DELETE_SUCCESS : LIBRARY_BOOK_DELETE_FAIL;
 					oos.writeInt(writeBack);
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -411,6 +416,7 @@ public class ClientThread extends Thread
 				try {
 					int writeBack = (lb.modifyBook(bookInfo)) ? LIBRARY_BOOK_MODIFY_SUCCESS : LIBRARY_BOOK_MODIFY_FAIL;
 					oos.writeInt(writeBack);
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -433,6 +439,7 @@ public class ClientThread extends Thread
 				try {
 					int writeBack = (lb.borrowBook(bsInfo)) ? LIBRARY_STATUS_BORROW_SUCCESS : LIBRARY_STATUS_BORROW_FAIL;
 					oos.writeInt(writeBack);
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -443,6 +450,7 @@ public class ClientThread extends Thread
 				try {
 					int writeBack = (lb.returnBook(bsInfo)) ? LIBRARY_STATUS_RETURN_SUCCESS : LIBRARY_STATUS_RETURN_FAIL;
 					oos.writeInt(writeBack);
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -473,7 +481,7 @@ public class ClientThread extends Thread
 	}
 	
 	private void Shop(int cmd) {
-		System.out.println(cmd);
+
 		GoodInfo goodInfo = null;
 		Shop sp = new Shop();
 		
@@ -481,10 +489,8 @@ public class ClientThread extends Thread
 			try {
 				goodInfo = (GoodInfo)ois.readObject();
 			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			

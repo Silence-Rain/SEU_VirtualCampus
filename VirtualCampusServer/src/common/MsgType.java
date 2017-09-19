@@ -1,6 +1,9 @@
 package common;
 
+//消息第二位用0,1区别是因为方便在不同表中查询数据
+
 public abstract interface MsgType {
+	//登录模块（1）
 	public static final int LOGIN  = 101;
 	public static final int LOGIN_SUCCESS = 1011;
 	public static final int LOGIN_FAIL = 1012;
@@ -11,6 +14,7 @@ public abstract interface MsgType {
 	public static final int LOGOUT_SUCCESS = 1031;
 	public static final int LOGOUT_FAIL = 1032;
 	
+	//银行模块（2）
 	public static final int BANK_BALANCE_QUERY = 201;
 	public static final int BANK_BALANCE_QUERY_SUCCESS = 2011;
 	public static final int BANK_BALANCE_QUERY_FAIL = 2012;
@@ -21,6 +25,7 @@ public abstract interface MsgType {
 	public static final int BANK_TRANSFER_RECORD_QUERY_SUCCESS = 2031;
 	public static final int BANK_TRANSFER_RECORD_QUERY_FAIL = 2032;
 	
+	//学籍信息模块（3）
 	public static final int STUDENTROLL_INFO_QUERY = 301;
 	public static final int STUDENTROLL_INFO_QUERY_SUCCESS = 3011;
 	public static final int STUDENTROLL_INFO_QUERY_FAIL = 3012;
@@ -34,6 +39,8 @@ public abstract interface MsgType {
 	public static final int STUDENTROLL_MODIFY_SUCCESS = 3041;
 	public static final int STUDENTROLL_MODIFY_FAIL = 3042;
 	
+	//图书馆模块(4)
+	//图书馆书籍模块（40）
 	public static final int LIBRARY_BOOK_QUERY = 401;
 	public static final int LIBRARY_BOOK_QUERY_SUCCESS = 4011;
 	public static final int LIBRARY_BOOK_QUERY_FAIL = 4012;
@@ -46,6 +53,7 @@ public abstract interface MsgType {
 	public static final int LIBRARY_BOOK_MODIFY = 404;
 	public static final int LIBRARY_BOOK_MODIFY_SUCCESS = 4041;
 	public static final int LIBRARY_BOOK_MODIFY_FAIL = 4042;
+	//图书馆借阅模块（41）
 	public static final int LIBRARY_STATUS_BORROW = 411;
 	public static final int LIBRARY_STATUS_BORROW_SUCCESS = 4111;
 	public static final int LIBRARY_STATUS_BORROW_FAIL = 4112;
@@ -56,6 +64,8 @@ public abstract interface MsgType {
 	public static final int LIBRARY_STATUS_QUERY_SUCCESS = 4131;
 	public static final int LIBRARY_STATUS_QUERY_FAIL = 4132;
 	
+	//商店模块（5）
+	//商店商品模块（50）
 	public static final int SHOP_GOODS_QUERY = 501;
 	public static final int SHOP_GOODS_QUERY_SUCCESS = 5011;
 	public static final int SHOP_GOODS_QUERY_FAIL = 5012;
@@ -68,6 +78,7 @@ public abstract interface MsgType {
 	public static final int SHOP_GOODS_MODIFY = 504;
 	public static final int SHOP_GOODS_MODIFY_SUCCESS = 5041;
 	public static final int SHOP_GOODS_MODIFY_FAIL = 5042;
+	//商店订单模块（51）
 	public static final int SHOP_ORDER_QUERY_ADMIN=511;
 	public static final int SHOP_ORDER_QUERY_ADMIN_SUCCESS=5111;
 	public static final int SHOP_ORDER_QUERY_ADMIN_FAIL=5112;
@@ -78,6 +89,8 @@ public abstract interface MsgType {
 	public static final int SHOP_ORDER_QUERY_STUTEA_SUCCESS = 5131;
 	public static final int SHOP_ORDER_QUERY_STUTEA_FAIL = 5132;	
 	
+	//课程模块（6）
+	//课程信息模块（60）
 	public static final int COURSE_QUERY = 601;
 	public static final int COURSE_QUERY_SUCCESS = 6011;
 	public static final int COURSE_QUERY_FAIL = 6012;
@@ -90,6 +103,7 @@ public abstract interface MsgType {
 	public static final int COURSE_MODIFY = 604;
 	public static final int COURSE_MODIFY_SUCCESS = 6041;
 	public static final int COURSE_MODIFY_FAIL = 6042;
+	//课程选择状态模块（61）
 	public static final int COURSE_STATUS_SELECT = 611;
 	public static final int COURSE_STATUS_SELECT_SUCCESS = 6111;
 	public static final int COURSE_STATUS_SELECT_FAIL = 6112;
@@ -103,6 +117,8 @@ public abstract interface MsgType {
 	public static final int COURSE_STATUS_QUERY_SUCCESS = 6141;
 	public static final int COURSE_STATUS_QUERY_FAIL = 6142;
 	
+	//场馆预约模块（7）
+	//场馆预约项目模块（70）
 	public static final int APPOINT_ITEM_QUERY = 701;
 	public static final int APPOINT_ITEM_QUERY_SUCCESS = 7011;
 	public static final int APPOINT_ITEM_QUERY_FAIL = 7012;
@@ -115,6 +131,7 @@ public abstract interface MsgType {
 	public static final int APPOINT_ITEM_MODIFY = 704;
 	public static final int APPOINT_ITEM_MODIFY_SUCCESS = 7041;
 	public static final int APPOINT_ITEM_MODIFY_FAIL = 7042;
+	//场馆预约记录模块（71）
 	public static final int APPOINT_STATUS_ADD = 711;
 	public static final int APPOINT_STATUS_ADD_SUCCESS = 7111;
 	public static final int APPOINT_STATUS_ADD_FAIL = 7112;

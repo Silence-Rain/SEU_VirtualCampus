@@ -45,8 +45,8 @@ public class BookStatusModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbBookStatus set bookName='" + info.getName() + "',borrower='" + info.getBorrower() + "',borrowDate=" 
-			+ info.getBorrowDate()+ ",returnDate=" + info.getReturnDate() + " where ID=" + info.getId() + ";";
+			query = "update tbBookStatus set returnDate=" + info.getReturnDate() + " where ID=" + info.getId() + " and borrowDate="
+			+ info.getBorrowDate() + ";";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)
@@ -82,9 +82,9 @@ public class BookStatusModel implements Model{
 	public Object search(Object obj) {
 		info = (BookStatusInfo)obj;
 		
-		if (info.getBorrower() != null)
-			query = "select * from tbBookStatus where borrower=" + info.getBorrower() + ";";
-		else if (info.getName() != null)
+		if (!info.getBorrower().equals(""))
+			query = "select * from tbBookStatus where borrower='" + info.getBorrower() + "';";
+		else if (!info.getName().equals(""))
 			query = "select * from tbBookStatus where bookName='" + info.getName() + "';";
 		
 		try {

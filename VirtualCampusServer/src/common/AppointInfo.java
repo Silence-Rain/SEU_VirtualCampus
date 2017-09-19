@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class AppointInfo implements Serializable{
 
 	private static final long serialVersionUID = 6;
-	private String item;
-	private String itemRemain[][];
+	private String item;//项目名称
+	private String itemRemain[][];//用二维数组保存各个时间段剩余场次
 	
 	public AppointInfo(String item, String itemRemain) {
 		this.item = item;
@@ -19,10 +19,13 @@ public class AppointInfo implements Serializable{
 	public void setItem(String item) {
 		this.item = item;
 	}
+	//返回二维数组形式的剩余场次（给客户端）
 	public String[][] getItemRemain(){
 		return itemRemain;
 	}
+	//返回字符串形式的剩余场次（给数据库）
 	public String getItemRemainStr() {
+		//字符串格式：不同日期之间以";"分隔，一天不同时段之间以"&"分隔
 		String temp = "";
 		
 		for (int i = 0; i < itemRemain.length; i++) {  
@@ -35,6 +38,7 @@ public class AppointInfo implements Serializable{
 		
 		return temp;
 	}
+	//用字符串形式设置二维数组形式
 	public void setItemRemain(String itemRemain) {
 		String temp[] = itemRemain.split(";");
 		String res[][] = new String [temp.length][];

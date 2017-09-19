@@ -24,7 +24,7 @@ public class Library {
 			Vector<BookInfo> v = new Vector<BookInfo>();
 			
 			while (rs.next()) {	
-				BookInfo temp = new BookInfo(rs.getInt("ID"), rs.getString("bookName"), rs.getString("author"), rs.getString("pub"), 
+				BookInfo temp = new BookInfo(rs.getInt("ID"), rs.getString("bookName"), rs.getString("ISBN"), rs.getString("author"), rs.getString("pub"), 
 						rs.getBoolean("isBorrowed"));
 				v.add(temp);
 			}
@@ -77,12 +77,50 @@ public class Library {
 	}
 	
 	public boolean borrowBook(BookStatusInfo info) {
-		info.setBorrowDate(System.currentTimeMillis());
-		return bsModel.insert(info);
+		BookInfo temp = new BookInfo(info.getId(), null, null, null, null, false);
+		boolean flag = false;
+		ResultSet rs = (ResultSet)bookModel.search(temp);
+		
+		try {
+			if (rs.next()) {
+				temp.setName(rs.getString("bookName"));
+				temp.setIsbn(rs.getString("ISBN"));
+				temp.setAuthor(rs.getString("author"));
+				temp.setPub(rs.getString("pub"));
+				flag = rs.getBoolean("isBorrowed");
+				temp.setBorrowed(true);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (!flag)
+			return bookModel.modify(temp) && bsModel.insert(info);
+		else
+			return false;
 	}
 	
 	public boolean returnBook(BookStatusInfo info) {
-		info.setReturnDate(System.currentTimeMillis());
-		return bsModel.modify(info);
+		BookInfo temp = new BookInfo(info.getId(), null, null, null, null, false);
+		boolean flag = true;
+		ResultSet rs = (ResultSet)bookModel.search(temp);
+		
+		try {
+			if (rs.next()) {
+				temp.setName(rs.getString("bookName"));
+				temp.setIsbn(rs.getString("ISBN"));
+				temp.setAuthor(rs.getString("author"));
+				temp.setPub(rs.getString("pub"));
+				flag = rs.getBoolean("isBorrowed");
+				temp.setBorrowed(false);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (flag)
+			return bookModel.modify(temp) && bsModel.modify(info);
+		else
+			return false;
 	}
 }

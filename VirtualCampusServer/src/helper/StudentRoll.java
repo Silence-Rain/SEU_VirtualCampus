@@ -18,11 +18,13 @@ public class StudentRoll {
 		try {
 			ResultSet rs = (ResultSet)model.search(info);
 			
-			rs.next();
-			
-			return new StudentRollInfo(rs.getString("ID"), rs.getString("stuName"), rs.getString("age"), rs.getString("gender"), 
+			if (rs.next()) {
+				return new StudentRollInfo(rs.getString("ID"), rs.getString("stuName"), rs.getString("age"), rs.getString("gender"), 
 					rs.getString("birthday"), rs.getString("birthPlace"), rs.getString("entranceTime"), rs.getString("photo"), rs.getString("nation"), 
 					rs.getString("department"), rs.getString("major"), rs.getString("dormitory"));
+			}
+			
+			return null;
 			
 		} catch (SQLException e) {
 			System.out.println("Database exception");

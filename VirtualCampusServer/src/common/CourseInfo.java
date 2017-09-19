@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class CourseInfo implements Serializable {
 
 	private static final long serialVersionUID = 1;
-	private String id;
-	private String name;
-	private String teacher;
-	private String place;
-	private String time;
-	private double credit;
+	private String id;//课程ID
+	private String name;//课程名
+	private String teacher;//教师姓名
+	private String place;//授课教室
+	private String time;//上课时间
+	private double credit;//课程学分
 	
 	public CourseInfo(String id, String name, String teacher, String place, String time, double credit) {
 		this.id = id;

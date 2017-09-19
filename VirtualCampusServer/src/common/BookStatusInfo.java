@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class BookStatusInfo implements Serializable {
 	
 	private static final long serialVersionUID = 5;
-	private int id;
-	private String name;
-	private String borrower;
-	private long borrowDate;
-	private long returnDate;
+	private int id;//书籍ID
+	private String name;//书名
+	private String borrower;//借阅者学号
+	private long borrowDate;//借书时间（时间戳）
+	private long returnDate;//还书时间（时间戳）
 
 	public BookStatusInfo(int id, String name, String borrower, long borrowDate, long returnDate) {
 		this.id = id;
