@@ -26,33 +26,56 @@ import helper.Course;
 import helper.Appoint;
 import view.ServerFrameView_MY;
 
+/**
+ * 客户端线程
+ * 
+ * @author Silence
+ *
+ */
 public class ClientThread extends Thread 
 	implements MsgType{
 	
+	/**
+	 * 客户端当前连接的服务器线程
+	 */
 	private ServerThread currentServer;
+	/**
+	 * 客户端Socket
+	 */
 	private Socket client;
+	/**
+	 * Socket对象输入流
+	 */
 	private ObjectInputStream ois;
+	/**
+	 * Socket对象输出流
+	 */
 	private ObjectOutputStream oos;
 	
 	public ClientThread(Socket s, ServerThread st) {
 		client = s;
 		currentServer = st;
 		try {
+			//建立输入输出流（次序与客户端相反）
 			ois = new ObjectInputStream(client.getInputStream());
 			oos = new ObjectOutputStream(client.getOutputStream());
-			//ServerFrameView_MY.setTextArea("");
+			currentServer.addClientConnection(this);
+			
+			ServerFrameView_MY.setTextArea("客户端已连接\n客户端IP：" + client.getInetAddress().getHostAddress());
 			System.out.println("Client connected");
+			ServerFrameView_MY.setTextNumber(currentServer.getSize());
+			System.out.println("Number of connected client: " + currentServer.getSize());
 		} catch (IOException e) {
 			System.out.println("Cannot get IO stream");
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void run() {
-		int cmd = 0;
+		int cmd = 0;//从客户端读到的消息
 		
 		while (true) {
+			//读取消息
 			try {
 				cmd = ois.readInt();
 				System.out.println(cmd);
@@ -60,56 +83,49 @@ public class ClientThread extends Thread
 				e.printStackTrace();
 			}
 			
+			//判断消息属于哪一类型，调用对应模块函数完成相应功能
 			switch (cmd / 100) {
-			//Error: variable cmd hasn't been initialize
+			//错误：cmd没有被正确初始化
 			case 0:
 				System.out.println("Abnormal command");
 				return;
 				
-			//Login	module
+			//登录模块
 			case 1:
 				Login(cmd);
-				
 				break;
 			
-			//Bank module
+			//银行模块
 			case 2:
 				Bank(cmd);				
-				
 				break;
 				
-			//StudentRoll module
+			//学籍管理模块
 			case 3:
 				StudentRoll(cmd);
-				
 				break;
 				
-			//Library module
+			//图书馆模块
 			case 4:
 				Library(cmd);
-				
 				break;
 				
-			//Shop module
+			//商店模块
 			case 5:
 				Shop(cmd);				
-				
 				break;
 				
-			//Course module
+			//课程选择模块
 			case 6:
 				Course(cmd);
-				
 				break;
 				
-			//Appoint module
+			//场馆预约模块
 			case 7:
 				Appoint(cmd);
-				
 				break;
 					
-			}
-			
+			}		
 		}
 	}
 	
@@ -118,9 +134,10 @@ public class ClientThread extends Thread
 			try {
 				oos.close();
 				ois.close();
+				ServerFrameView_MY.setTextArea("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
 				client.close();
 				
-				currentServer.closeClientConnection(this);
+				currentServer.closeClientConnection(this);//在服务器线程中关闭该客户端
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -129,17 +146,29 @@ public class ClientThread extends Thread
 	
 	
 	
+	/**
+	 * 各模块功能函数
+	 * 
+	 * 服务器端与客户端的数据交流遵从以下模式：
+	 * 1. 服务器从客户端读取消息
+	 * 2. 服务器从客户端读取所需参数（可选）
+	 * 3. 服务器向客户端写回请求状态
+	 * 4. 服务器向客户端写回请求结果集（可选） 
+	 */
 	
 	
-	/////////////////////////////////////////////////////////////////
-	//Utility functions
-	/////////////////////////////////////////////////////////////////
-	
+
+	/**
+	 * 登录模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Login(int cmd) {
 		UserInfo info = null;
 		Login lg = new Login();
 		
 		try {
+			//登出操作不需要从客户端读取信息
 			if (cmd != LOGOUT)
 				info = (UserInfo)ois.readObject();
 		} catch (IOException e) {
@@ -151,15 +180,15 @@ public class ClientThread extends Thread
 			e.printStackTrace();
 		}
 		
+		//根据不同消息，进行不同操作
 		switch (cmd) {
-		//Login
+		//登录
 		case LOGIN:
 			try {
 				if (lg.login(info)) {
 					oos.writeInt(LOGIN_SUCCESS);
 					
-					currentServer.addClientConnection(this);
-					System.out.println("Number of connected client: " + currentServer.getSize());
+					ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登录");
 				}
 				else {
 					oos.writeInt(LOGIN_FAIL);
@@ -171,15 +200,12 @@ public class ClientThread extends Thread
 				
 			break;
 			
-		//Register
+		//注册
 		case REGISTER:
 			try {
-				if (lg.register(info)) {
-					oos.writeInt(REGISTER_SUCCESS);
-				}
-				else {
-					oos.writeInt(REGISTER_FAIL);
-				}
+				int wb = (lg.register(info)) ? REGISTER_SUCCESS : REGISTER_FAIL;
+				oos.writeInt(wb);
+				
 				oos.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -187,19 +213,19 @@ public class ClientThread extends Thread
 			
 			break;
 			
-		//Logout	
+		//登出	
 		case LOGOUT:
 			try {
 				if (currentServer.searchClientConnection(this)) {
+					ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登出");
 					oos.writeInt(LOGOUT_SUCCESS);
-					oos.flush();
-					
 					this.close();
 				}
 				else {
 					oos.writeInt(LOGOUT_FAIL);
-					oos.flush();
-			}
+				}
+				
+				oos.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -207,6 +233,11 @@ public class ClientThread extends Thread
 		}
 	}
 	
+	/**
+	 * 银行模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Bank(int cmd) {
 
 		BankInfo bankInfo = null;
@@ -220,7 +251,9 @@ public class ClientThread extends Thread
 			e.printStackTrace();
 		}
 		
+		//根据不同消息，进行不同操作
 		switch (cmd) {
+		//余额查询
 		case BANK_BALANCE_QUERY:
 			try {
 				double result = bk.queryBalance(bankInfo);
@@ -239,14 +272,11 @@ public class ClientThread extends Thread
 			
 			break;
 			
+		//转账
 		case BANK_TRANSFER:
 			try {
-				if (bk.transfer(bankInfo)) {
-					oos.writeInt(BANK_TRANSFER_SUCCESS);
-				}
-				else {
-					oos.writeInt(BANK_TRANSFER_FAIL);
-				}
+				int wb = (bk.transfer(bankInfo)) ? BANK_TRANSFER_SUCCESS : BANK_TRANSFER_FAIL;
+				oos.writeInt(wb);
 				
 				oos.flush();
 			} catch (IOException e) {
@@ -254,7 +284,8 @@ public class ClientThread extends Thread
 			}
 			
 			break;
-			
+		
+		//转账记录查询
 		case BANK_TRANSFER_RECORD_QUERY:
 			try {
 				BankInfo results[] = bk.queryTranferRecord(bankInfo);
@@ -276,20 +307,28 @@ public class ClientThread extends Thread
 		}
 	}
 	
+	/**
+	 * 学籍信息模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void StudentRoll(int cmd) {
 
 		StudentRollInfo stuInfo = null;
 		StudentRoll sr = new StudentRoll();
 		
 		try {
-			stuInfo = (StudentRollInfo)ois.readObject();
+			if (cmd != STUDENTROLL_INFO_QUERY_ADMIN)
+				stuInfo = (StudentRollInfo)ois.readObject();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
+		//根据不同消息，进行不同操作
 		switch (cmd) {
+		//查询学生学籍信息
 		case STUDENTROLL_INFO_QUERY:
 			try {
 				StudentRollInfo result = sr.query(stuInfo);
@@ -307,14 +346,12 @@ public class ClientThread extends Thread
 			}
 			
 			break;
+			
+		//添加学生信息
 		case STUDENTROLL_ADD:
 			try {
-				if (sr.addInfo(stuInfo)) {
-					oos.writeInt(STUDENTROLL_ADD_SUCCESS);
-				}
-				else {
-					oos.writeInt(STUDENTROLL_ADD_FAIL);
-				}
+				int wb = (sr.addInfo(stuInfo)) ? STUDENTROLL_ADD_SUCCESS : STUDENTROLL_ADD_FAIL;
+				oos.writeInt(wb);
 				
 				oos.flush();
 			} catch (IOException e) {
@@ -322,14 +359,12 @@ public class ClientThread extends Thread
 			}
 			
 			break;
+			
+		//删除学生信息
 		case STUDENTROLL_DELETE:
 			try {
-				if (sr.deleteInfo(stuInfo)) {
-					oos.writeInt(STUDENTROLL_DELETE_SUCCESS);
-				}
-				else {
-					oos.writeInt(STUDENTROLL_DELETE_FAIL);
-				}
+				int wb = (sr.deleteInfo(stuInfo)) ? STUDENTROLL_DELETE_SUCCESS : STUDENTROLL_DELETE_FAIL;
+				oos.writeInt(wb);
 				
 				oos.flush();
 			} catch (IOException e) {
@@ -337,14 +372,12 @@ public class ClientThread extends Thread
 			}
 			
 			break;
+			
+		//修改学生信息
 		case STUDENTROLL_MODIFY:
 			try {
-				if (sr.modifyInfo(stuInfo)) {
-					oos.writeInt(STUDENTROLL_MODIFY_SUCCESS);
-				}
-				else {
-					oos.writeInt(STUDENTROLL_MODIFY_FAIL);
-				}
+				int wb = (sr.modifyInfo(stuInfo)) ? STUDENTROLL_MODIFY_SUCCESS : STUDENTROLL_MODIFY_FAIL;
+				oos.writeInt(wb);
 				
 				oos.flush();
 			} catch (IOException e) {
@@ -352,16 +385,38 @@ public class ClientThread extends Thread
 			}
 			
 			break;
-
+			
+		//学籍信息查询（管理员查询）
+		case STUDENTROLL_INFO_QUERY_ADMIN:
+			try {
+				StudentRollInfo[] result = sr.queryAll();
+				if (result != null) {
+					oos.writeInt(STUDENTROLL_INFO_QUERY_ADMIN_SUCCESS);
+					oos.writeObject(result);	
+				}
+				else {
+					oos.writeInt(STUDENTROLL_INFO_QUERY_ADMIN_FAIL);
+				}
+				
+				oos.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
+	/**
+	 * 图书馆模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Library(int cmd) {
 		
 		BookInfo bookInfo = null;
 		BookStatusInfo bsInfo = null;
 		Library lb = new Library();
 		
+		//书籍信息查询（40），对tbBook表进行操作
 		if (cmd / 10 == 40) {
 			try {
 				bookInfo = (BookInfo)ois.readObject();
@@ -370,8 +425,10 @@ public class ClientThread extends Thread
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			
+
+			//根据不同消息，进行不同操作
 			switch(cmd) {
+			//书籍信息查询
 			case LIBRARY_BOOK_QUERY:
 				try {
 					BookInfo result[] = lb.queryBook(bookInfo);
@@ -390,6 +447,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//添加书籍
 			case LIBRARY_BOOK_ADD:
 				try {
 					int writeBack = (lb.addBook(bookInfo)) ? LIBRARY_BOOK_ADD_SUCCESS : LIBRARY_BOOK_ADD_FAIL;
@@ -401,6 +459,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//删除书籍
 			case LIBRARY_BOOK_DELETE:
 				try {
 					int writeBack = (lb.deleteBook(bookInfo)) ? LIBRARY_BOOK_DELETE_SUCCESS : LIBRARY_BOOK_DELETE_FAIL;
@@ -412,6 +471,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//修改书籍信息
 			case LIBRARY_BOOK_MODIFY:
 				try {
 					int writeBack = (lb.modifyBook(bookInfo)) ? LIBRARY_BOOK_MODIFY_SUCCESS : LIBRARY_BOOK_MODIFY_FAIL;
@@ -425,6 +485,7 @@ public class ClientThread extends Thread
 			
 			}
 		}
+		//书籍借阅状态查询（41），对tbBookStatus表进行操作
 		else {
 			try {
 				bsInfo = (BookStatusInfo)ois.readObject();
@@ -434,7 +495,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch(cmd) {
+			//借书
 			case LIBRARY_STATUS_BORROW:
 				try {
 					int writeBack = (lb.borrowBook(bsInfo)) ? LIBRARY_STATUS_BORROW_SUCCESS : LIBRARY_STATUS_BORROW_FAIL;
@@ -446,6 +509,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//还书
 			case LIBRARY_STATUS_RETURN:
 				try {
 					int writeBack = (lb.returnBook(bsInfo)) ? LIBRARY_STATUS_RETURN_SUCCESS : LIBRARY_STATUS_RETURN_FAIL;
@@ -457,6 +521,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//借阅记录查询
 			case LIBRARY_STATUS_QUERY:
 				try {
 					BookStatusInfo result[] = lb.queryStatus(bsInfo);
@@ -480,11 +545,17 @@ public class ClientThread extends Thread
 		
 	}
 	
+	/**
+	 * 商店模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Shop(int cmd) {
 
 		GoodInfo goodInfo = null;
 		Shop sp = new Shop();
 		
+		//商品信息查询（50），对tbGood表进行操作
 		if (cmd / 10 == 50) {
 			try {
 				goodInfo = (GoodInfo)ois.readObject();
@@ -494,7 +565,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch(cmd) {
+			//商品信息查询
 			case SHOP_GOODS_QUERY:
 				try {
 					GoodInfo[] result = sp.queryGoods(goodInfo);
@@ -515,14 +588,11 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//添加商品
 			case SHOP_GOODS_ADD:
 				try {
-					if (sp.addGood(goodInfo)) {
-						oos.writeInt(SHOP_GOODS_ADD_SUCCESS);
-					}
-					else {
-						oos.writeInt(SHOP_GOODS_ADD_FAIL);
-					}
+					int wb = (sp.addGood(goodInfo)) ? SHOP_GOODS_ADD_SUCCESS : SHOP_GOODS_ADD_FAIL;
+					oos.writeInt(wb);
 					
 					oos.flush();
 					
@@ -531,15 +601,12 @@ public class ClientThread extends Thread
 				}
 				
 				break;
-				
+			
+			//删除商品
 			case SHOP_GOODS_DELETE:
 				try {
-					if (sp.deleteGood(goodInfo)) {
-						oos.writeInt(SHOP_GOODS_DELETE_SUCCESS);
-					}
-					else {
-						oos.writeInt(SHOP_GOODS_DELETE_FAIL);
-					}
+					int wb = (sp.deleteGood(goodInfo)) ? SHOP_GOODS_DELETE_SUCCESS : SHOP_GOODS_DELETE_FAIL;
+					oos.writeInt(wb);
 					
 					oos.flush();
 					
@@ -549,14 +616,11 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//修改商品信息
 			case SHOP_GOODS_MODIFY:
 				try {
-					if (sp.modifyGood(goodInfo)) {
-						oos.writeInt(SHOP_GOODS_MODIFY_SUCCESS);
-					}
-					else {
-						oos.writeInt(SHOP_GOODS_MODIFY_FAIL);
-					}
+					int wb = (sp.modifyGood(goodInfo)) ? SHOP_GOODS_MODIFY_SUCCESS : SHOP_GOODS_MODIFY_FAIL;
+					oos.writeInt(wb);
 					
 					oos.flush();
 					
@@ -567,14 +631,17 @@ public class ClientThread extends Thread
 				break;
 			}
 		}
+		//商品订单查询（51），对tbOrder表进行操作
 		else {
 			switch (cmd) {
+			//订单查询
 			case SHOP_ORDER_QUERY_ADMIN:
 				try {						
 					OrderInfo result[] = sp.queryOrderAdmin();
 					
 					if (result != null) {
 						oos.writeInt(SHOP_ORDER_QUERY_ADMIN_SUCCESS);
+						oos.writeObject(result);
 					}
 					else {
 						oos.writeInt(SHOP_ORDER_QUERY_ADMIN_FAIL);
@@ -587,16 +654,12 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//购买
 			case SHOP_ORDER_BUY:
 				try {
 					OrderInfo order[] = (OrderInfo[])ois.readObject();
-					
-					if (sp.buy(order)) {
-						oos.writeInt(SHOP_ORDER_BUY_SUCCESS);
-					}
-					else {
-						oos.writeInt(SHOP_ORDER_BUY_FAIL);
-					}
+					int wb = (sp.buy(order)) ? SHOP_ORDER_BUY_SUCCESS : SHOP_ORDER_BUY_FAIL;
+					oos.writeInt(wb);
 					
 					oos.flush();
 				} catch (ClassNotFoundException e) {
@@ -608,6 +671,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//订单记录查询
 			case SHOP_ORDER_QUERY_STUTEA:
 				try {
 					OrderInfo orderInfo = (OrderInfo)ois.readObject();
@@ -635,11 +699,17 @@ public class ClientThread extends Thread
 
 	}
 	
+	/**
+	 * 课程选择模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Course(int cmd) {
 		CourseInfo courseInfo = null;
 		CourseStatusInfo csInfo = null;
 		Course cs = new Course();
 		
+		//课程信息查询（60），对tbCourse表进行操作
 		if (cmd / 10 == 60) {
 			try {
 				if (cmd != COURSE_QUERY)
@@ -650,7 +720,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch(cmd) {
+			//课程查询
 			case COURSE_QUERY:
 				try {
 					CourseInfo result[] = cs.queryCourse(courseInfo);
@@ -672,6 +744,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//添加课程
 			case COURSE_ADD:
 				try {
 					int wb = (cs.addCourse(courseInfo)) ? COURSE_ADD_SUCCESS : COURSE_ADD_FAIL;
@@ -685,6 +758,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//删除课程
 			case COURSE_DELETE:
 				try {
 					int wb = (cs.deleteCourse(courseInfo)) ? COURSE_DELETE_SUCCESS : COURSE_DELETE_FAIL;
@@ -698,6 +772,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//修改课程信息
 			case COURSE_MODIFY:
 				try {
 					int wb = (cs.modifyCourse(courseInfo)) ? COURSE_MODIFY_SUCCESS : COURSE_MODIFY_FAIL;
@@ -712,6 +787,7 @@ public class ClientThread extends Thread
 				break;
 			}
 		}
+		//课程选择（61），对tbCourseStatus表进行操作
 		else {
 			try {
 				if (cmd != COURSE_STATUS_QUERY)
@@ -722,7 +798,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch (cmd) {
+			//选课
 			case COURSE_STATUS_SELECT:
 				try {
 					int wb = (cs.selectCourse(csInfo)) ? COURSE_STATUS_SELECT_SUCCESS : COURSE_STATUS_SELECT_FAIL;
@@ -736,6 +814,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//退课
 			case COURSE_STATUS_DESELECT:
 				try {
 					int wb = (cs.deselectCourse(csInfo)) ? COURSE_STATUS_DESELECT_SUCCESS : COURSE_STATUS_DESELECT_FAIL;
@@ -749,6 +828,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//学生查询课表
 			case COURSE_STATUS_CURRICULUM:
 				try {
 					CourseInfo result[] = cs.queryCurriculum(csInfo);
@@ -768,6 +848,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//教师查询选课学生
 			case COURSE_STATUS_QUERY:
 				try {
 
@@ -794,12 +875,18 @@ public class ClientThread extends Thread
 		}
 	}
 	
+	/**
+	 * 场馆预约模块
+	 * 
+	 * @param cmd 接受的消息
+	 */
 	private void Appoint(int cmd) {
 		
 		AppointInfo apInfo = null;
 		AppointStatusInfo apsInfo = null;
 		Appoint ap = new Appoint();
 		
+		//预约项目（70），对tbAppoint表进行操作
 		if (cmd / 10 == 70) {
 			try {
 				apInfo = (AppointInfo)ois.readObject();
@@ -809,7 +896,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch(cmd) {
+			//查询预约项目
 			case APPOINT_ITEM_QUERY:
 				try {
 					AppointInfo[] result = ap.queryAppointItem(apInfo);
@@ -830,6 +919,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//添加项目
 			case APPOINT_ITEM_ADD:
 				try {
 					int wb = (ap.addItem(apInfo)) ? APPOINT_ITEM_ADD_SUCCESS : APPOINT_ITEM_ADD_FAIL;
@@ -843,6 +933,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//删除项目
 			case APPOINT_ITEM_DELETE:
 				try {
 					int wb = (ap.deleteItem(apInfo)) ? APPOINT_ITEM_DELETE_SUCCESS : APPOINT_ITEM_DELETE_FAIL;
@@ -856,6 +947,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//修改项目信息
 			case APPOINT_ITEM_MODIFY:
 				try {
 					int wb = (ap.modifyItem(apInfo)) ? APPOINT_ITEM_MODIFY_SUCCESS : APPOINT_ITEM_MODIFY_FAIL;
@@ -870,6 +962,7 @@ public class ClientThread extends Thread
 				break;
 			}
 		}
+		//预约操作（71），对tbAppointStatus表进行操作
 		else {
 			try {
 				apsInfo = (AppointStatusInfo)ois.readObject();
@@ -879,7 +972,9 @@ public class ClientThread extends Thread
 				e1.printStackTrace();
 			}
 			
+			//根据不同消息，进行不同操作
 			switch (cmd) {
+			//添加预约
 			case APPOINT_STATUS_ADD:
 				try {
 					int wb = (ap.addStatus(apsInfo)) ? APPOINT_STATUS_ADD_SUCCESS : APPOINT_STATUS_ADD_FAIL;
@@ -893,6 +988,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//取消预约
 			case APPOINT_STATUS_DELETE:
 				try {
 					int wb = (ap.deleteStatus(apsInfo)) ? APPOINT_STATUS_DELETE_SUCCESS : APPOINT_STATUS_DELETE_FAIL;
@@ -906,6 +1002,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//修改预约信息
 			case APPOINT_STATUS_MODIFY:
 				try {
 					int wb = (ap.modifyStatus(apsInfo)) ? APPOINT_STATUS_MODIFY_SUCCESS : APPOINT_STATUS_MODIFY_FAIL;
@@ -919,6 +1016,7 @@ public class ClientThread extends Thread
 				
 				break;
 				
+			//查询预约记录
 			case APPOINT_STATUS_RECORD_QUERY:
 				try {
 					AppointStatusInfo result[] = ap.queryStatus(apsInfo);

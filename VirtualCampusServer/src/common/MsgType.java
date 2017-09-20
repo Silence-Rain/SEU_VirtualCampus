@@ -1,7 +1,15 @@
 package common;
 
-//消息第二位用0,1区别是因为方便在不同表中查询数据
-
+/**
+ * 消息类型接口
+ * 第一位代表模块类型
+ * 第二位用0,1区别是因为方便在不同表中查询数据
+ * 第三位为具体handler
+ * 第四位（如果存在）代表操作状态
+ * 
+ * @author Silence
+ *
+ */
 public abstract interface MsgType {
 	//登录模块（1）
 	public static final int LOGIN  = 101;
@@ -38,6 +46,9 @@ public abstract interface MsgType {
 	public static final int STUDENTROLL_MODIFY = 304;
 	public static final int STUDENTROLL_MODIFY_SUCCESS = 3041;
 	public static final int STUDENTROLL_MODIFY_FAIL = 3042;
+	public static final int STUDENTROLL_INFO_QUERY_ADMIN = 305;
+	public static final int STUDENTROLL_INFO_QUERY_ADMIN_SUCCESS = 3051;
+	public static final int STUDENTROLL_INFO_QUERY_ADMIN_FAIL = 3052;
 	
 	//图书馆模块(4)
 	//图书馆书籍模块（40）

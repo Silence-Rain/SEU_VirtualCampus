@@ -9,8 +9,8 @@ import common.AppointStatusInfo;
 
 public class AppointStatusModel implements Model{
 
-	private Connection con;
-	private String query;
+	private Connection con;//数据库连接
+	private String query;//SQL查询语句
 	private AppointStatusInfo info;
 	
 	public AppointStatusModel() {
@@ -19,6 +19,7 @@ public class AppointStatusModel implements Model{
 		this.info = null;
 	}
 
+	//数据库插入操作
 	@Override
 	public boolean insert(Object obj) {
 		info = (AppointStatusInfo)obj;
@@ -39,6 +40,7 @@ public class AppointStatusModel implements Model{
 		return false;
 	}
 
+	//数据库修改操作（以userID为key）
 	@Override
 	public boolean modify(Object obj) {
 		info = (AppointStatusInfo)obj;
@@ -59,6 +61,7 @@ public class AppointStatusModel implements Model{
 		return false;
 	}
 
+	//数据库删除操作（以userID为key）
 	@Override
 	public boolean delete(Object obj) {
 		info = (AppointStatusInfo)obj;
@@ -78,6 +81,7 @@ public class AppointStatusModel implements Model{
 		return false;
 	}
 
+	//数据库查询操作（根据输入判断以userID或item作为key）
 	@Override
 	public Object search(Object obj) {
 		info = (AppointStatusInfo)obj;

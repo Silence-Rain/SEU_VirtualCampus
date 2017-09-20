@@ -66,7 +66,6 @@ public class ServerFrameView_MY extends JFrame {
 	
 	// 登录弹框界面
 	LoginPopUp_MY LoginPopUpViewWindow;
-//	LoggedPopUp_MY LoggedPopUpViewWindow;
 	
 	// 移动框架的相关坐标
 	int xOld = 0;
@@ -84,7 +83,7 @@ public class ServerFrameView_MY extends JFrame {
 		Button_Login.setToolTipText("");
 	}
 	
-	public static void setTextNumber(){
+	public static void setTextNumber(int count){
 		Label_ShowNumber.setText(count + " 人");
 		Panel_Main.repaint();		
 	}
@@ -105,8 +104,8 @@ public class ServerFrameView_MY extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new ServerThread();
-		/*EventQueue.invokeLater(new Runnable() {
+		//new ServerThread();
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ServerFrameView_MY window = new ServerFrameView_MY();
@@ -115,7 +114,7 @@ public class ServerFrameView_MY extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 	}
 
 	public ServerFrameView_MY() {
@@ -189,7 +188,7 @@ public class ServerFrameView_MY extends JFrame {
 		Panel_Header.add(Button_Login);
 		
 		this.Label_Upright = new JLabel("|");
-		this.Label_Upright.setFont(new Font("幼圆", Font.BOLD, 18));
+		this.Label_Upright.setFont(new Font("微软雅黑", Font.BOLD, 18));
 		this.Label_Upright.setForeground(UIManager.getColor("ComboBox.selectionBackground"));
 		this.Label_Upright.setBounds(537, 6, 50, 30);
 		this.Panel_Header.add(this.Label_Upright);		
@@ -332,7 +331,7 @@ public class ServerFrameView_MY extends JFrame {
 	private void setMainPanel() {//设置主体面板
 		Panel_Main = new JPanel();
 		Panel_Main.setToolTipText("");
-		Panel_Main.setFont(new Font("幼圆", Font.PLAIN, 36));
+		Panel_Main.setFont(new Font("微软雅黑", Font.PLAIN, 36));
 		Panel_Main.setForeground(UIManager.getColor("Button.darkShadow"));
 		Panel_Main.setBackground(UIManager.getColor("Button.background"));
 		Panel_Main.setBounds(0, 40, 640, 317);
@@ -398,7 +397,7 @@ public class ServerFrameView_MY extends JFrame {
 		
 		TextArea_ShowOnlineMessage = new JTextArea(50,30);
 		TextArea_ShowOnlineMessage.setForeground(SystemColor.controlDkShadow);
-		TextArea_ShowOnlineMessage.setFont(new Font("幼圆", Font.PLAIN, 14));
+		TextArea_ShowOnlineMessage.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		TextArea_ShowOnlineMessage.setBounds(343, 83, 253, 99);
 		TextArea_ShowOnlineMessage.enable(false);
 		TextArea_ShowOnlineMessage.setDisabledTextColor(SystemColor.controlDkShadow);//设置用于呈现禁用文本的当前颜色

@@ -27,7 +27,7 @@ public class StudentRollModel implements Model{
 			Statement stmt = con.createStatement();
 			query = "insert into tbStudentRoll values ('" + info.getId() + "','" + info.getName() + "','" + info.getAge()
 			+ "','" + info.getGender() + "','" + info.getBirthday() + "','" + info.getBirthPlace() + "','" + info.getEntranceTime()
-			+ "','" + info.getPhoto() + "','" + info.getNation() + info.getDepartment() + "','" + info.getMajor()
+			+ "','" + info.getPhoto() + "','" + info.getNation() + "','" + info.getDepartment() + "','" + info.getMajor()
 			+ "','" + info.getDormitory() + "');";
 			System.out.println(query);
 			
@@ -47,10 +47,10 @@ public class StudentRollModel implements Model{
 		
 		try {
 			Statement stmt = con.createStatement();
-			query = "update tbStudentRoll set stuName='" + info.getName() + "',age=" + info.getAge()+ "',gender=" + info.getGender() 
-			+ "',birthday='" + info.getBirthday() + "',birthPlace=" + info.getBirthPlace()+ "',entranceTime=" + info.getEntranceTime() 
-			+ "',photo='" + info.getPhoto() + "',nation=" + info.getNation() + "',department=" + info.getDepartment() 
-			+ "',major='" + info.getMajor() + "',dormitory=" + info.getDormitory() + "' where ID='" + info.getId() + "';";
+			query = "update tbStudentRoll set stuName='" + info.getName() + "',age='" + info.getAge()+ "',gender='" + info.getGender() 
+			+ "',birthday='" + info.getBirthday() + "',birthPlace='" + info.getBirthPlace()+ "',entranceTime='" + info.getEntranceTime() 
+			+ "',photo='" + info.getPhoto() + "',nation='" + info.getNation() + "',department='" + info.getDepartment() 
+			+ "',major='" + info.getMajor() + "',dormitory='" + info.getDormitory() + "' where ID='" + info.getId() + "';";
 			System.out.println(query);
 			
 			if (stmt.executeUpdate(query) != 0)

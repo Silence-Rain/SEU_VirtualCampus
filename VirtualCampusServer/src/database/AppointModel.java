@@ -9,8 +9,8 @@ import common.AppointInfo;
 
 public class AppointModel implements Model{
 
-	private Connection con;
-	private String query;
+	private Connection con;//数据库连接
+	private String query;//SQL查询语句
 	private AppointInfo info;
 	
 	public AppointModel() {
@@ -19,6 +19,7 @@ public class AppointModel implements Model{
 		this.info = null;
 	}
 
+	//数据库插入操作
 	@Override
 	public boolean insert(Object obj) {
 		info = (AppointInfo)obj;
@@ -38,6 +39,7 @@ public class AppointModel implements Model{
 		return false;
 	}
 
+	//数据库修改操作（以item为key修改itemRemain）
 	@Override
 	public boolean modify(Object obj) {
 		info = (AppointInfo)obj;
@@ -57,6 +59,7 @@ public class AppointModel implements Model{
 		return false;
 	}
 
+	//数据库删除操作（以item为key）
 	@Override
 	public boolean delete(Object obj) {
 		info = (AppointInfo)obj;
@@ -78,6 +81,7 @@ public class AppointModel implements Model{
 		return false;
 	}
 
+	//数据库查询操作，返回所有项目信息
 	@Override
 	public Object search(Object obj) {
 		info = (AppointInfo)obj;
@@ -99,6 +103,7 @@ public class AppointModel implements Model{
 		return null;
 	}
 	
+	//数据库查询操作（以item为key）
 	public Object searchByName(Object obj) {
 		info = (AppointInfo)obj;
 		
