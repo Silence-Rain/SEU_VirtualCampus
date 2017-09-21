@@ -1,8 +1,6 @@
 ﻿# SEU_VirtualCampus
 
-标签（空格分隔）： Java
-
----
+ Written By：Silence心雨---
 
 这是东南大学2017-18-1学期 计算机科学与工程学院的软件实训项目
 做的比较仓促，也是第一次用Java开发一个比较大的C/S项目。
