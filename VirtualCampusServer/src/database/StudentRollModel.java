@@ -7,10 +7,26 @@ import java.sql.Statement;
 
 import common.StudentRollInfo;
 
+/**
+ * 学生学籍信息模块Model
+ * 统一实现Model接口
+ * 
+ * @author Silence
+ *
+ */
 public class StudentRollModel implements Model{
 	
+	/**
+	 * 数据库连接
+	 */
 	private Connection con;
+	/**
+	 * SQL查询语句
+	 */
 	private String query;
+	/**
+	 * 学生学籍信息
+	 */
 	private StudentRollInfo info;
 	
 	public StudentRollModel() {
@@ -19,6 +35,12 @@ public class StudentRollModel implements Model{
 		this.info = null;
 	}	
 
+	/**
+	 * 数据库插入操作（实现Model接口）
+	 * 
+	 * @param obj 所插入的学生信息
+	 * @return 是否插入成功
+	 */
 	@Override
 	public boolean insert(Object obj) {
 		info = (StudentRollInfo)obj;
@@ -41,6 +63,13 @@ public class StudentRollModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 以学号ID为key
+	 * 
+	 * @param obj 所修改的学生信息
+	 * @return 是否修改成功
+	 */
 	@Override
 	public boolean modify(Object obj) {
 		info = (StudentRollInfo)obj;
@@ -63,6 +92,13 @@ public class StudentRollModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 以学号ID为key
+	 * 
+	 * @param obj 所修改的学生信息
+	 * @return 是否修改成功
+	 */
 	@Override
 	public boolean delete(Object obj) {
 		info = (StudentRollInfo)obj;
@@ -82,31 +118,30 @@ public class StudentRollModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库查询操作（实现Model接口）
+	 * 根据输入不同，以ID、ID与姓名为key，或返回所有学生信息
+	 * 
+	 * @param obj 所查询的信息
+	 * @return 所查询的所有学生信息
+	 */
 	@Override
 	public Object search(Object obj) {
 		info = (StudentRollInfo)obj;
 		
-		try {
-			Statement stmt = con.createStatement();
-			query = "select * from tbStudentRoll where ID='" + info.getId() + "';";
-			System.out.println(query);
+		if (info != null)
+			query = "select * from tbStudentRoll;";
+		else if (!info.getId().equals("")) {
+				query = "select * from tbStudentRoll where ID='" + info.getId() + "';";
 			
-			ResultSet rs = stmt.executeQuery(query);
-			
-			if (rs != null)
-				return rs;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+				if (!info.getName().equals("")) {
+					query = "select * from tbStudentRoll where stuName='" + info.getName() + "' and ID='" + info.getId() + "';";
+				}
 		}
 		
-		return null;
-	}
-	
-	public Object searchAll() {
 		try {
+
 			Statement stmt = con.createStatement();
-			query = "select * from tbStudentRoll;";
 			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);

@@ -7,10 +7,26 @@ import java.sql.Statement;
 
 import common.BookInfo;
 
+/**
+ * 书籍信息模块Model
+ * 统一实现Model接口
+ * 
+ * @author Silence
+ *
+ */
 public class BookModel implements Model{
 	
+	/**
+	 * 数据库连接
+	 */
 	private Connection con;
+	/**
+	 * SQL查询语句
+	 */
 	private String query;
+	/**
+	 * 书籍信息
+	 */
 	private BookInfo info;
 	
 	public BookModel() {
@@ -19,6 +35,12 @@ public class BookModel implements Model{
 		this.info = null;
 	}
 
+	/**
+	 * 数据库插入操作（实现Model接口）
+	 * 
+	 * @param obj 所插入的书籍
+	 * @return 是否插入成功
+	 */
 	@Override
 	public boolean insert(Object obj) {
 		info = (BookInfo)obj;
@@ -39,6 +61,13 @@ public class BookModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 以ID为key
+	 * 
+	 * @param obj 所修改的书籍
+	 * @return 是否修改成功
+	 */
 	@Override
 	public boolean modify(Object obj) {
 		info = (BookInfo)obj;
@@ -59,6 +88,13 @@ public class BookModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库删除操作（实现Model接口）
+	 * 以ID为key
+	 * 
+	 * @param obj 所删除的书籍
+	 * @return 是否删除成功
+	 */
 	@Override
 	public boolean delete(Object obj) {
 		info = (BookInfo)obj;
@@ -78,6 +114,13 @@ public class BookModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 根据输入不同，分别以ID、书名、作者为key，若参数为null则返回所有书籍
+	 * 
+	 * @param obj 所查询的书籍
+	 * @return 所查询的书籍详细信息
+	 */
 	@Override
 	public Object search(Object obj) {
 		info = (BookInfo)obj;

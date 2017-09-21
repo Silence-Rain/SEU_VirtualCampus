@@ -61,9 +61,9 @@ public class ClientThread extends Thread
 			oos = new ObjectOutputStream(client.getOutputStream());
 			currentServer.addClientConnection(this);
 			
-			ServerFrameView_MY.setTextArea("客户端已连接\n客户端IP：" + client.getInetAddress().getHostAddress());
+			//ServerFrameView_MY.setTextArea("客户端已连接\n客户端IP：" + client.getInetAddress().getHostAddress());
 			System.out.println("Client connected");
-			ServerFrameView_MY.setTextNumber(currentServer.getSize());
+			//ServerFrameView_MY.setTextNumber(currentServer.getSize());
 			System.out.println("Number of connected client: " + currentServer.getSize());
 		} catch (IOException e) {
 			System.out.println("Cannot get IO stream");
@@ -80,7 +80,8 @@ public class ClientThread extends Thread
 				cmd = ois.readInt();
 				System.out.println(cmd);
 			} catch (IOException e) {
-				e.printStackTrace();
+				//读不到指令，说明已登出
+				return;
 			}
 			
 			//判断消息属于哪一类型，调用对应模块函数完成相应功能
@@ -134,9 +135,10 @@ public class ClientThread extends Thread
 			try {
 				oos.close();
 				ois.close();
-				ServerFrameView_MY.setTextArea("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
+				//ServerFrameView_MY.setTextArea("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
+				System.out.println("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
 				client.close();
-				
+
 				currentServer.closeClientConnection(this);//在服务器线程中关闭该客户端
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -188,7 +190,7 @@ public class ClientThread extends Thread
 				if (lg.login(info)) {
 					oos.writeInt(LOGIN_SUCCESS);
 					
-					ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登录");
+					//ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登录");
 				}
 				else {
 					oos.writeInt(LOGIN_FAIL);
@@ -217,7 +219,7 @@ public class ClientThread extends Thread
 		case LOGOUT:
 			try {
 				if (currentServer.searchClientConnection(this)) {
-					ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登出");
+					//ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登出");
 					oos.writeInt(LOGOUT_SUCCESS);
 					this.close();
 				}
@@ -558,7 +560,8 @@ public class ClientThread extends Thread
 		//商品信息查询（50），对tbGood表进行操作
 		if (cmd / 10 == 50) {
 			try {
-				goodInfo = (GoodInfo)ois.readObject();
+				if (cmd != SHOP_GOODS_QUERY)
+					goodInfo = (GoodInfo)ois.readObject();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -570,7 +573,7 @@ public class ClientThread extends Thread
 			//商品信息查询
 			case SHOP_GOODS_QUERY:
 				try {
-					GoodInfo[] result = sp.queryGoods(goodInfo);
+					GoodInfo[] result = sp.queryGoods();
 					if (result != null) {
 						oos.writeInt(SHOP_GOODS_QUERY_SUCCESS);
 						oos.writeObject(result);	
@@ -725,7 +728,7 @@ public class ClientThread extends Thread
 			//课程查询
 			case COURSE_QUERY:
 				try {
-					CourseInfo result[] = cs.queryCourse(courseInfo);
+					CourseInfo result[] = cs.queryCourse();
 					
 					if (result != null) {
 						oos.writeInt(COURSE_QUERY_SUCCESS);
@@ -889,7 +892,8 @@ public class ClientThread extends Thread
 		//预约项目（70），对tbAppoint表进行操作
 		if (cmd / 10 == 70) {
 			try {
-				apInfo = (AppointInfo)ois.readObject();
+				if (cmd != APPOINT_ITEM_QUERY)
+					apInfo = (AppointInfo)ois.readObject();
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -901,7 +905,7 @@ public class ClientThread extends Thread
 			//查询预约项目
 			case APPOINT_ITEM_QUERY:
 				try {
-					AppointInfo[] result = ap.queryAppointItem(apInfo);
+					AppointInfo[] result = ap.queryAppointItem();
 					if (result != null) {
 						oos.writeInt(APPOINT_ITEM_QUERY_SUCCESS);
 						oos.writeObject(result);	

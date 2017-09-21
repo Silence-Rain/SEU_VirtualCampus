@@ -7,10 +7,26 @@ import java.sql.Statement;
 
 import common.GoodInfo;
 
+/**
+ * 商品信息Model
+ * 统一实现Model接口
+ * 
+ * @author Silence
+ *
+ */
 public class GoodModel implements Model{
 	
+	/**
+	 * 数据库连接
+	 */
 	private Connection con;
+	/**
+	 * SQL查询语句
+	 */
 	private String query;
+	/**
+	 * 商品信息
+	 */
 	private GoodInfo info;
 	
 	public GoodModel() {
@@ -19,6 +35,12 @@ public class GoodModel implements Model{
 		this.info = null;
 	}
 
+	/**
+	 * 数据库插入操作（实现Model接口）
+	 * 
+	 * @param obj 所插入的商品
+	 * @return 是否插入成功
+	 */
 	@Override
 	public boolean insert(Object obj) {
 		info = (GoodInfo)obj;
@@ -39,6 +61,13 @@ public class GoodModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 以ID为key
+	 * 
+	 * @param obj 所修改的记录
+	 * @return 是否修改成功
+	 */
 	@Override
 	public boolean modify(Object obj) {
 		info = (GoodInfo)obj;
@@ -59,6 +88,13 @@ public class GoodModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库删除操作（实现Model接口）
+	 * 以ID为key
+	 * 
+	 * @param obj 所删除的记录
+	 * @return 是否删除成功
+	 */
 	@Override
 	public boolean delete(Object obj) {
 		info = (GoodInfo)obj;
@@ -78,9 +114,14 @@ public class GoodModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库查询操作（实现Model接口）
+	 * 
+	 * @param obj 此处直接传入null
+	 * @return 返回所有商品信息
+	 */
 	@Override
 	public Object search(Object obj) {
-		info = (GoodInfo)obj;
 
 		query = "select * from tbGoods;";
 		

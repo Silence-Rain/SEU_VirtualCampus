@@ -9,9 +9,21 @@ import common.AppointStatusInfo;
 import database.AppointModel;
 import database.AppointStatusModel;
 
+/**
+ * 场馆预约模块Controller
+ * 
+ * @author Silence
+ *
+ */
 public class Appoint {
 	
+	/**
+	 * 预约项目Model
+	 */
 	private AppointModel am;
+	/**
+	 * 预约记录Model
+	 */
 	private AppointStatusModel asm;
 	
 	public Appoint() {
@@ -19,9 +31,15 @@ public class Appoint {
 		asm = new AppointStatusModel();
 	}
 	
-	public AppointInfo[] queryAppointItem(AppointInfo info) {
+	/**
+	 * 查询预约项目响应函数
+	 * 向客户端返回所有项目的信息
+	 * 
+	 * @return 所有项目的信息
+	 */
+	public AppointInfo[] queryAppointItem() {
 		try {
-			ResultSet rs = (ResultSet)am.search(info);
+			ResultSet rs = (ResultSet)am.search(null);
 			Vector<AppointInfo> v = new Vector<AppointInfo>();
 			
 			while (rs.next()) {
@@ -41,22 +59,47 @@ public class Appoint {
 		}
 	}
 	
+	/**
+	 * 添加项目响应函数
+	 * 
+	 * @param info 要添加的项目
+	 * @return 是否添加成功
+	 */
 	public boolean addItem(AppointInfo info) {
 		return am.insert(info);
 	}
 	
+	/**
+	 * 删除项目响应函数
+	 * 
+	 * @param info 要删除的项目
+	 * @return 是否删除成功
+	 */
 	public boolean deleteItem(AppointInfo info) {
 		return am.delete(info);
 	}
 	
+	/**
+	 * 修改项目信息响应函数
+	 * 
+	 * @param info 要修改的项目
+	 * @return 是否修改成功
+	 */
 	public boolean modifyItem(AppointInfo info) {
 		return am.modify(info);
 	}
 	
+	/**
+	 * 添加预约响应函数
+	 * 如果添加成功，则在项目信息中将此时间段剩余次数减1
+	 * 
+	 * @param info 要预约的项目
+	 * @return 是否预约成功
+	 */
 	public boolean addStatus(AppointStatusInfo info) {
 		
 		AppointInfo temp = new AppointInfo(info.getItem(), "");
-		ResultSet rs = (ResultSet)am.searchByName(temp);
+		ResultSet rs = (ResultSet)am.search(temp);
 		
 		try {
 			rs.next();
@@ -71,14 +114,32 @@ public class Appoint {
 		return asm.insert(info) && am.modify(temp);
 	}
 	
+	/**
+	 * 取消预约响应函数
+	 * 
+	 * @param info 要取消的预约
+	 * @return 是否取消成功
+	 */
 	public boolean deleteStatus(AppointStatusInfo info) {
 		return asm.delete(info);
 	}
 	
+	/**
+	 * 修改预约响应函数
+	 * 
+	 * @param info 要修改的预约
+	 * @return 是否修改成功
+	 */
 	public boolean modifyStatus(AppointStatusInfo info) {
 		return asm.modify(info);
 	}
 	
+	/**
+	 * 查询预约记录响应函数
+	 * 
+	 * @param info 当前用户信息
+	 * @return 当前用户的所有预约记录
+	 */
 	public AppointStatusInfo[] queryStatus(AppointStatusInfo info) {
 		try {
 			ResultSet rs = (ResultSet)asm.search(info);

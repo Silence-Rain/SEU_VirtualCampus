@@ -2,15 +2,40 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 商品信息
+ * （即tbGoods表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class GoodInfo implements Serializable {
 
 	private static final long serialVersionUID = 8;
-	private int id;//商品ID
-	private String name;//商品名
-	private int remainNum;//商品剩余数量
-	private double price;//商品单价
-	private String supplier;//商品供应商
-	private String tag;//商品标签（衣、食、住、行）
+	/**
+	 * 商品ID
+	 */
+	private int id;
+	/**
+	 * 商品名
+	 */
+	private String name;
+	/**
+	 * 商品剩余数量
+	 */
+	private int remainNum;
+	/**
+	 * 商品单价
+	 */
+	private double price;
+	/**
+	 * 商品供应商
+	 */
+	private String supplier;
+	/**
+	 * 商品标签（衣、食、住、行）
+	 */
+	private String tag;
 	
 	public GoodInfo(int id, String name, int remainNum, double price, String supplier,
 			String tag) {

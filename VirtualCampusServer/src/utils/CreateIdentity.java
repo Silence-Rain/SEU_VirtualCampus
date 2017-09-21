@@ -7,6 +7,11 @@ import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/**
+ * 生成验证码
+ * 
+ * 算法来自网络
+ */
 public class CreateIdentity {
 	public static final char[] CHARS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
@@ -21,21 +26,19 @@ public class CreateIdentity {
 		return sb.toString();
 	}
 
-//	public static Color getRandomColor() {
-//		return new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
-//	}
 	public static Color getRandomColor() {
 		return SystemColor.textHighlight;
 	}
 
-//	public static Color getReverseColor(Color c) {
-//		return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
-//	}
 	public static Color getReverseColor(Color c) {
 		return SystemColor.window;
 	}
 
-
+	/**
+	 * 获取验证码图片
+	 * 
+	 * @return 验证码图片
+	 */
 	public BufferedImage getIdentity() {
 		identity = getRandomString();
 		int width = 100;

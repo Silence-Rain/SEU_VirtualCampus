@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 场馆预约项目信息
+ * （即tbAppoint表的结构）
  * 
  * @author Silence
  *

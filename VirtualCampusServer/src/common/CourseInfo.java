@@ -2,15 +2,40 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 课程信息
+ * （即tbCourse表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class CourseInfo implements Serializable {
 
 	private static final long serialVersionUID = 1;
-	private String id;//课程ID
-	private String name;//课程名
-	private String teacher;//教师姓名
-	private String place;//授课教室
-	private String time;//上课时间
-	private double credit;//课程学分
+	/**
+	 * 课程ID
+	 */
+	private String id;
+	/**
+	 * 课程名
+	 */
+	private String name;
+	/**
+	 * 教师姓名
+	 */
+	private String teacher;
+	/**
+	 * 授课教室
+	 */
+	private String place;
+	/**
+	 * 上课时间
+	 */
+	private String time;
+	/**
+	 * 课程学分
+	 */
+	private double credit;
 	
 	public CourseInfo(String id, String name, String teacher, String place, String time, double credit) {
 		this.id = id;

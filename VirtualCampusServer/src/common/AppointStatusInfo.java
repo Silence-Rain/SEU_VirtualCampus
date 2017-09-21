@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 场馆预约记录信息
+ * （即tbAppointStatus表的结构）
  * 
  * @author Silence
  *
@@ -11,11 +12,26 @@ import java.io.Serializable;
 public class AppointStatusInfo implements Serializable{
 
 	private static final long serialVersionUID = 7;
-	private String userID;//预约用户ID
-	private String item;//预约项目名称
-	private int appointDate;//预约日期（数组下标）
-	private int appointTime;//预约时间段（数组下标）
-	private long timestamp;//预约时间戳
+	/**
+	 * 预约用户ID
+	 */
+	private String userID;
+	/**
+	 * 预约项目名称
+	 */
+	private String item;
+	/**
+	 * 预约日期（数组下标）
+	 */
+	private int appointDate;
+	/**
+	 * 预约时间段（数组下标）
+	 */
+	private int appointTime;
+	/**
+	 * 预约时间戳
+	 */
+	private long timestamp;
 	
 	
 	public AppointStatusInfo(String userID, String item, int appointDate, int appointTime, long ts) {

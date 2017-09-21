@@ -4,6 +4,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 
+/**
+ * 添加约束布局
+ * 
+ * @author Silence
+ *
+ */
 public class Layout
 {
   public static void addComp(Component c, Container container, GridBagConstraints gbConstraints, int gridx, int gridy, int gridwidth, int gridheight, double weightx, double weighty)

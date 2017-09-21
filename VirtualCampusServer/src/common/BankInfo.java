@@ -2,18 +2,45 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 银行账户信息
+ * （即tbBank表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class BankInfo implements Serializable{
 
 	private static final long serialVersionUID = 3;
-	private String id;//用户ID
-	private double balance;//当前余额
-	private String transferTo;//转账对象
-	private double transferAmount;//转账数额
-	private long transferDate;//转账时间（时间戳）
+	/**
+	 * 用户ID
+	 */
+	private String id;
+	/**
+	 * 当前余额
+	 */
+	private double balance;
+	/**
+	 * 用户交易密码
+	 */
+	private String pwd;
+	/**
+	 * 转账对象
+	 */
+	private String transferTo;
+	/**
+	 * 转账数额
+	 */
+	private double transferAmount;
+	/**
+	 * 转账时间（时间戳）
+	 */
+	private long transferDate;
 	
-	public BankInfo(String id, double b, String to, double am, long dt) {
+	public BankInfo(String id, double b, String pwd, String to, double am, long dt) {
 		this.setId(id);
 		this.setBalance(b);
+		this.setPwd(pwd);
 		this.setTransferTo(to);
 		this.setTransferAmount(am);
 		this.setTransferDate(dt);
@@ -33,6 +60,14 @@ public class BankInfo implements Serializable{
 	
 	public double getBalance() {
 		return this.balance;
+	}
+	
+	public void setPwd(String param) {
+		this.pwd = param;
+	}
+	
+	public String getPwd() {
+		return this.pwd;
 	}
 	
 	public void setTransferTo(String param) {

@@ -4,12 +4,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//建立数据库连接
+/**
+ * 建立数据库连接，加载JDBC驱动
+ * 
+ * @author Silence
+ *
+ */
 public class DBConnection {
+	/**
+	 * 数据库连接
+	 */
 	private static Connection con = null;
-	private static String DBurl = "jdbc:Access:///C:/学习/项目/SEU_VirtualCampus/db/vCampus.accdb";
+	/**
+	 * 数据库文件相对路径
+	 */
+	private static String DBurl = "jdbc:Access:///../db/vCampus.accdb";
 	
-	//静态方法，其他model中直接调用
+	/**
+	 * 建立与数据库的连接
+	 * 静态方法，其他model中直接调用
+	 * 
+	 * @return 数据库连接
+	 */
 	public static Connection getConnection() {
 		if (con == null) {
 			try{

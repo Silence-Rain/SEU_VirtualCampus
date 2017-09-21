@@ -27,7 +27,7 @@ public class ServerThread extends Thread {
 		
 		try {
 			server = new ServerSocket(8081);
-			ServerFrameView_MY.setTextArea("服务端主线程启动\n监听8081端口");
+			//ServerFrameView_MY.setTextArea("服务端主线程启动\n监听8081端口");
 			System.out.println("Server main thread start.\nListen on port 8081");
 			clients = new Vector<ClientThread>();
 			
@@ -99,9 +99,7 @@ public class ServerThread extends Thread {
 	/**
 	 * 在向量中寻找客户端
 	 */
-	public boolean searchClientConnection(ClientThread ct) {
-		System.out.println(clients);
-		
+	public boolean searchClientConnection(ClientThread ct) {		
 		return clients.contains(ct);
 	}
 }

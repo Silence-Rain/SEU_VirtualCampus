@@ -2,15 +2,40 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 图书馆书籍信息
+ * （即tbBook表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class BookInfo implements Serializable {
 		
 	private static final long serialVersionUID = 4;
-	private int id;//书籍ID
-	private String name;//书籍名
-	private String isbn;//ISBN号
-	private String author;//作者
-	private String pub;//出版社
-	private boolean isBorrowed;//是否已被借阅
+	/**
+	 * 书籍ID
+	 */
+	private int id;
+	/**
+	 * 书名
+	 */
+	private String name;
+	/**
+	 * ISBN号
+	 */
+	private String isbn;
+	/**
+	 * 作者
+	 */
+	private String author;
+	/**
+	 * 出版社
+	 */
+	private String pub;
+	/**
+	 * 是否已被借阅
+	 */
+	private boolean isBorrowed;
 
 	public BookInfo(int id, String name, String isbn, String author, String pub, boolean isBorrowed) {
 		super();

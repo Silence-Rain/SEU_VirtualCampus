@@ -7,13 +7,29 @@ import java.util.Vector;
 import common.StudentRollInfo;
 import database.StudentRollModel;
 
+/**
+ * 学生学籍信息Controller
+ * 
+ * @author Silence
+ *
+ */
 public class StudentRoll {
+	/**
+	 * 学生学籍信息Model
+	 */
 	private StudentRollModel model;
 	
 	public StudentRoll() {
 		this.model = new StudentRollModel();
 	}
 	
+	/**
+	 * 查找学生信息响应函数
+	 * 根据提供的不同key（学号，姓名）返回结果
+	 * 
+	 * @param info 查找的key
+	 * @return 所查询学生详细信息
+	 */
 	public StudentRollInfo query(StudentRollInfo info) {
 		try {
 			ResultSet rs = (ResultSet)model.search(info);
@@ -34,9 +50,14 @@ public class StudentRoll {
 		} 
 	}
 	
+	/**
+	 * 查询所有学生信息响应函数
+	 * 
+	 * @return 所有学生详细信息
+	 */
 	public StudentRollInfo[] queryAll() {
 		try {
-			ResultSet rs = (ResultSet)model.searchAll();
+			ResultSet rs = (ResultSet)model.search(null);
 			Vector<StudentRollInfo> v = new Vector<StudentRollInfo>();
 			
 			while (rs.next()) {
@@ -56,14 +77,32 @@ public class StudentRoll {
 		} 
 	}
 
+	/**
+	 * 添加学生信息响应函数
+	 * 
+	 * @param info 要添加的学生
+	 * @return 是否添加成功
+	 */
 	public boolean addInfo(StudentRollInfo info) {
 		return model.insert(info);
 	}
 	
+	/**
+	 * 修改学生信息响应函数
+	 * 
+	 * @param info 要修改的学生
+	 * @return 是否修改成功
+	 */
 	public boolean modifyInfo(StudentRollInfo info) {
 		return model.modify(info);
 	}
 	
+	/**
+	 * 删除学生信息响应函数
+	 * 
+	 * @param info 要删除的学生
+	 * @return 是否删除成功
+	 */
 	public boolean deleteInfo(StudentRollInfo info) {
 		return model.delete(info);
 	}

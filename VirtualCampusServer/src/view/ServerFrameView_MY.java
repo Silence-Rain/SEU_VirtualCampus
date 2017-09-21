@@ -28,6 +28,7 @@ import java.awt.event.MouseMotionAdapter;
 
 import com.sun.awt.AWTUtilities;
 
+import database.DBConnection;
 import server.ServerThread;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -104,8 +105,8 @@ public class ServerFrameView_MY extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		//new ServerThread();
-		EventQueue.invokeLater(new Runnable() {
+		new ServerThread();
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ServerFrameView_MY window = new ServerFrameView_MY();
@@ -114,7 +115,7 @@ public class ServerFrameView_MY extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});
+		});*/
 	}
 
 	public ServerFrameView_MY() {
@@ -351,7 +352,7 @@ public class ServerFrameView_MY extends JFrame {
 		this.Label_ShowTime.setBounds(133, 67, 188, 32);
 		Panel_Main.add(this.Label_ShowTime);
 				
-		this.Label_MessageState = new JLabel("\u670D\u52A1\u72B6\u6001\uFF1A");
+		this.Label_MessageState = new JLabel("控制台信息");
 		this.Label_MessageState.setForeground(Color.DARK_GRAY);
 		this.Label_MessageState.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		this.Label_MessageState.setBounds(35, 117, 80, 32);

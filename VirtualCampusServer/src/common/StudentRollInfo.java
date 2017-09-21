@@ -2,21 +2,64 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 学生学籍信息
+ * （即tbStudentRoll表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class StudentRollInfo implements Serializable{
 
 	private static final long serialVersionUID = 10;
-	private String id;//学号
-	private String name;//学生姓名
-	private String age;//年龄
-	private String gender;//性别
-	private String birthday;//生日
-	private String birthPlace;//出生地
-	private String entranceTime;//入学时间
-	private String photo;//照片URL
-	private String nation;//国籍
-	private String department;//院系
-	private String major;//专业
-	private String dormitory;//宿舍
+	/**
+	 * 学号
+	 */
+	private String id;
+	/**
+	 * 学生姓名
+	 */
+	private String name;
+	/**
+	 * 年龄
+	 */
+	private String age;
+	/**
+	 * 性别
+	 */
+	private String gender;
+	/**
+	 * 生日
+	 */
+	private String birthday;
+	/**
+	 * 出生地
+	 */
+	private String birthPlace;
+	/**
+	 * 入学时间
+	 */
+	private String entranceTime;
+	/**
+	 * 照片URL
+	 */
+	private String photo;
+	/**
+	 * 国籍
+	 */
+	private String nation;
+	/**
+	 * 院系
+	 */
+	private String department;
+	/**
+	 * 专业
+	 */
+	private String major;
+	/**
+	 * 宿舍
+	 */
+	private String dormitory;
 	
 	public StudentRollInfo(String id, String name, String age, String gender, String birthday, String birthPlace,
 			String entranceTime, String photo, String nation, String department, String major, String dormitory) {

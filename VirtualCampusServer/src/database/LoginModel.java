@@ -7,10 +7,27 @@ import java.sql.Statement;
 import common.UserInfo;
 import database.DBConnection;
 
+/**
+ * 登录模块Model
+ * 统一实现Model接口
+ * 
+ * @author Silence
+ *
+ */
 public class LoginModel implements Model{
-	private UserInfo info;
+	
+	/**
+	 * 数据库连接
+	 */
 	private Connection con;
+	/**
+	 * SQL查询语句
+	 */
 	private String query;
+	/**
+	 * 用户账户信息
+	 */
+	private UserInfo info;
 	
 	public LoginModel() {
 		this.info = null;
@@ -18,6 +35,12 @@ public class LoginModel implements Model{
 		this.query = "";
 	}
 	
+	/**
+	 * 数据库插入操作（实现Model接口）
+	 * 
+	 * @param obj 所插入的用户
+	 * @return 是否插入成功
+	 */
 	@Override
 	public boolean insert(Object obj) {
 		info = (UserInfo)obj;
@@ -38,6 +61,13 @@ public class LoginModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库修改操作（实现Model接口）
+	 * 以u_ID为key
+	 * 
+	 * @param obj 所修改的用户
+	 * @return 是否修改成功
+	 */
 	@Override
 	public boolean modify(Object obj) {
 		info = (UserInfo)obj;
@@ -58,6 +88,13 @@ public class LoginModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库删除操作（实现Model接口）
+	 * 以u_ID为key
+	 * 
+	 * @param obj 所删除的用户
+	 * @return 是否删除成功
+	 */
 	@Override
 	public boolean delete(Object obj) {
 		info = (UserInfo)obj;
@@ -77,6 +114,13 @@ public class LoginModel implements Model{
 		return false;
 	}
 
+	/**
+	 * 数据库查询操作（实现Model接口）
+	 * 以u_ID为key
+	 * 
+	 * @param obj 所查询的用户
+	 * @return 所查询用户详细信息
+	 */
 	@Override
 	public Object search(Object obj) {
 		info = (UserInfo)obj;

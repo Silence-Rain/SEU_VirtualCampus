@@ -2,14 +2,36 @@ package common;
 
 import java.io.Serializable;
 
+/**
+ * 商品订单信息
+ * （即tbOrder表的结构）
+ * 
+ * @author Silence
+ *
+ */
 public class OrderInfo implements Serializable {
 
 	private static final long serialVersionUID = 9;
-	private int id;//订单ID
-	private String name;//商品名称
-	private String buyer;//买家学号
-	private int buyNum;//购买数量
-	private long buyTime;//购买时间
+	/**
+	 * 订单ID
+	 */
+	private int id;
+	/**
+	 * 商品名称
+	 */
+	private String name;
+	/**
+	 * 买家学号
+	 */
+	private String buyer;
+	/**
+	 * 购买数量
+	 */
+	private int buyNum;
+	/**
+	 * 购买时间
+	 */
+	private long buyTime;
 
 	public OrderInfo(int id, String name, String buyer, int buyNum, long buyTime) {
 		super();
