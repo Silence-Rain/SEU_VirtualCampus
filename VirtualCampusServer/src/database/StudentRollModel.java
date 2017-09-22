@@ -129,7 +129,7 @@ public class StudentRollModel implements Model{
 	public Object search(Object obj) {
 		info = (StudentRollInfo)obj;
 		
-		if (info != null)
+		if (info == null)
 			query = "select * from tbStudentRoll;";
 		else if (!info.getId().equals("")) {
 				query = "select * from tbStudentRoll where ID='" + info.getId() + "';";

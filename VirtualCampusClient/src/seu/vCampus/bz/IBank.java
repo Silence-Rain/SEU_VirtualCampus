@@ -1,11 +1,15 @@
 package seu.vCampus.bz;
-import seu.vCampus.common.Bank;
+import java.util.List;
+
+import common.Bank;
 
 
 public abstract interface IBank {
-	public abstract String checkAccount(String paramString1, String paramString2);
+	public abstract double checkAccount(String bCad);
 
-	public abstract boolean transferAccount(String money,String receiveID );
+	public abstract boolean transferAccount(double money,String receiver,String pwd,Long time,double b);
+	
+	public abstract List record();
 
 }
 

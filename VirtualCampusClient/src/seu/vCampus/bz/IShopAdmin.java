@@ -1,14 +1,12 @@
 package seu.vCampus.bz;
 
-import java.util.Date;
-import java.util.Vector;
-import seu.vCampus.common.Order;
+import java.util.List;
 
-public interface IShopAdmin {
-	public abstract boolean addProductAdmin(String id,String name,double price,int remainNum,String supplier,String tab);//Ìí¼Ó¿â´æÉÌÆ·
-	public abstract boolean deleteProductAdmin(String id);//É¾³ı¿â´æÉÌÆ·
-	public abstract boolean changeProductPrice(String id,double price);//ĞŞ¸ÄÉÌÆ·µ¥¼Û
-	public abstract boolean changeProductRemainNum(String id,int num);//ĞŞ¸ÄÉÌÆ·¿â´æÁ¿
-	public abstract boolean changeProductTab(String id,String tab);//ĞŞ¸ÄÉÌÆ·±êÇ©
-	public abstract Vector<Order> inquireOrder(Date t);//¸ù¾İÈÕÆÚ²éÑ¯¶©µ¥
+import common.GoodInfo;
+
+public abstract interface IShopAdmin {
+	public abstract boolean addProductAdmin(String id,String name,double price,int remainNum,String supplier,String tab);//ç®¡ç†å‘˜æ·»åŠ åº“å­˜å•†å“
+	public abstract boolean deleteProductAdmin(String id);//ç®¡ç†å‘˜åˆ é™¤åº“å­˜å•†å“
+	public abstract List inquireProduct();//æŒ‰å•†å“IDæŸ¥è¯¢å•†å“
+	public abstract boolean changeProduct(String id,String name,String supplier,double price,int num,String tab);//ç®¡ç†å‘˜ä¿®æ”¹åº“å­˜å•†å“ä¿¡æ¯
 }

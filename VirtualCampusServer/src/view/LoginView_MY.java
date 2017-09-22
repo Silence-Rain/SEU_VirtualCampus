@@ -250,7 +250,7 @@ public class LoginView_MY extends JFrame {
 		this.TextField_VerificationCode.setBounds(71, 134, 171, 28);
 		this.TextField_VerificationCode.setBorder(null);
 		String identity = CreateIdentity.identity;
-		this.TextField_VerificationCode.setText(identity);
+		//this.TextField_VerificationCode.setText(identity);
 		this.Panel_Main.add(this.TextField_VerificationCode);
 		
 		this.TextField_StudentID.addFocusListener(new MyJTextFieldListener(Prompt_StudentID, this.TextField_StudentID));

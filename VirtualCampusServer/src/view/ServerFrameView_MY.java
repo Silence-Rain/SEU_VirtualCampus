@@ -105,8 +105,8 @@ public class ServerFrameView_MY extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new ServerThread();
-		/*EventQueue.invokeLater(new Runnable() {
+		//new ServerThread();
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ServerFrameView_MY window = new ServerFrameView_MY();
@@ -115,7 +115,7 @@ public class ServerFrameView_MY extends JFrame {
 					e.printStackTrace();
 				}
 			}
-		});*/
+		});
 	}
 
 	public ServerFrameView_MY() {
@@ -352,10 +352,10 @@ public class ServerFrameView_MY extends JFrame {
 		this.Label_ShowTime.setBounds(133, 67, 188, 32);
 		Panel_Main.add(this.Label_ShowTime);
 				
-		this.Label_MessageState = new JLabel("控制台信息");
+		this.Label_MessageState = new JLabel("服务器状态：");
 		this.Label_MessageState.setForeground(Color.DARK_GRAY);
 		this.Label_MessageState.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-		this.Label_MessageState.setBounds(35, 117, 80, 32);
+		this.Label_MessageState.setBounds(35, 117, 100, 32);
 		Panel_Main.add(this.Label_MessageState);
 		
 		this.Label_ShowState = new JLabel("\u5173\u95ED");
@@ -386,17 +386,17 @@ public class ServerFrameView_MY extends JFrame {
 		this.Button_Stop.setBounds(329, 255, 188, 32);
 		Panel_Main.add(this.Button_Stop);
 		
-		this.Label_MessageOnlineMessage = new JLabel("\u66F4\u591A\u5728\u7EBF\u4FE1\u606F\uFF1A");
+		this.Label_MessageOnlineMessage = new JLabel("控制台信息");
 		this.Label_MessageOnlineMessage.setForeground(Color.DARK_GRAY);
 		this.Label_MessageOnlineMessage.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-		this.Label_MessageOnlineMessage.setBounds(342, 47, 124, 32);
+		this.Label_MessageOnlineMessage.setBounds(337, 47, 124, 32);
 		Panel_Main.add(this.Label_MessageOnlineMessage);
 		
 		this.ScrollPane_ShowOnlineMessage = new JScrollPane();
 		this.ScrollPane_ShowOnlineMessage.setBounds(337, 77, 253, 140);
 		Panel_Main.add(this.ScrollPane_ShowOnlineMessage);
 		
-		TextArea_ShowOnlineMessage = new JTextArea(50,30);
+		TextArea_ShowOnlineMessage = new JTextArea(50,17);
 		TextArea_ShowOnlineMessage.setForeground(SystemColor.controlDkShadow);
 		TextArea_ShowOnlineMessage.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		TextArea_ShowOnlineMessage.setBounds(343, 83, 253, 99);
@@ -439,7 +439,7 @@ public class ServerFrameView_MY extends JFrame {
 					ServerFrameView_MY.this.Button_Start.setEnabled(false);
 					ServerFrameView_MY.this.Button_Stop.setEnabled(true);
 					ServerFrameView_MY.this.Label_ShowState.setText("开启");
-					ServerFrameView_MY.TextArea_ShowOnlineMessage.append("服务器已经开启！\n");
+					ServerFrameView_MY.TextArea_ShowOnlineMessage.append("服务器已经开启！\n\n");
 					ServerFrameView_MY.Panel_Main.repaint();	
 				}
 			}

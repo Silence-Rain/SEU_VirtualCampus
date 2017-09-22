@@ -1,7 +1,3 @@
-/server/
-/common/
-/view/
-/helper/
-/database/
 /utils/
-/common.zip
+/view/
+/server/

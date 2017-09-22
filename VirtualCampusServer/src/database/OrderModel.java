@@ -129,7 +129,7 @@ public class OrderModel implements Model{
 	public Object search(Object obj) {
 		info = (OrderInfo)obj;
 		
-		if (info != null)
+		if (info == null)
 			query = "select * from tbOrder;";
 		else
 			query = "select * from tbOrder where buyer='" + info.getBuyer() + "';";

@@ -51,20 +51,23 @@ public class ClientThread extends Thread
 	 * Socket对象输出流
 	 */
 	private ObjectOutputStream oos;
+	/**
+	 * 当前登录用户
+	 */
+	public String curUser; 
 	
 	public ClientThread(Socket s, ServerThread st) {
 		client = s;
 		currentServer = st;
+		curUser = "";
 		try {
 			//建立输入输出流（次序与客户端相反）
 			ois = new ObjectInputStream(client.getInputStream());
-			oos = new ObjectOutputStream(client.getOutputStream());
-			currentServer.addClientConnection(this);
+			oos = new ObjectOutputStream(client.getOutputStream());	
 			
-			//ServerFrameView_MY.setTextArea("客户端已连接\n客户端IP：" + client.getInetAddress().getHostAddress());
+			ServerFrameView_MY.setTextArea("客户端已连接\n客户端IP：" + client.getInetAddress().getHostAddress() + "\n");
 			System.out.println("Client connected");
-			//ServerFrameView_MY.setTextNumber(currentServer.getSize());
-			System.out.println("Number of connected client: " + currentServer.getSize());
+			
 		} catch (IOException e) {
 			System.out.println("Cannot get IO stream");
 			e.printStackTrace();
@@ -135,11 +138,12 @@ public class ClientThread extends Thread
 			try {
 				oos.close();
 				ois.close();
-				//ServerFrameView_MY.setTextArea("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
-				System.out.println("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress());
+				ServerFrameView_MY.setTextArea("客户端已断开\n客户端IP：" + client.getInetAddress().getHostAddress() + "\n");
+				
 				client.close();
 
 				currentServer.closeClientConnection(this);//在服务器线程中关闭该客户端
+				ServerFrameView_MY.setTextNumber(currentServer.getSize());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -187,10 +191,15 @@ public class ClientThread extends Thread
 		//登录
 		case LOGIN:
 			try {
-				if (lg.login(info)) {
+				if (!currentServer.searchClientConnection(info.getStuId()) && lg.login(info)) {
 					oos.writeInt(LOGIN_SUCCESS);
 					
-					//ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登录");
+					currentServer.addClientConnection(this);
+					curUser = info.getStuId();
+					
+					ServerFrameView_MY.setTextNumber(currentServer.getSize());
+					System.out.println("Number of connected client: " + currentServer.getSize());
+					ServerFrameView_MY.setTextArea("用户" + curUser + "已登录\n");
 				}
 				else {
 					oos.writeInt(LOGIN_FAIL);
@@ -209,6 +218,16 @@ public class ClientThread extends Thread
 				oos.writeInt(wb);
 				
 				oos.flush();
+				
+				//注册后直接登录
+				if (wb == REGISTER_SUCCESS) {
+					currentServer.addClientConnection(this);
+					curUser = info.getStuId();
+					
+					ServerFrameView_MY.setTextNumber(currentServer.getSize());
+					System.out.println("Number of connected client: " + currentServer.getSize());
+					ServerFrameView_MY.setTextArea("用户" + curUser + "已登录\n");
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -218,8 +237,8 @@ public class ClientThread extends Thread
 		//登出	
 		case LOGOUT:
 			try {
-				if (currentServer.searchClientConnection(this)) {
-					//ServerFrameView_MY.setTextArea("用户" + info.getStuId() + "已登出");
+				if (currentServer.searchClientConnection(curUser)) {
+					ServerFrameView_MY.setTextArea("用户" + curUser + "已登出\n");
 					oos.writeInt(LOGOUT_SUCCESS);
 					this.close();
 				}
@@ -670,8 +689,7 @@ public class ClientThread extends Thread
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-				
+						
 				break;
 				
 			//订单记录查询
