@@ -75,7 +75,7 @@ public class IShopImpl implements IShop, MsgType {
 		try {
 			this.os.writeInt(513);///////////////////////////////////////
 			this.os.flush();
-			OrderInfo Shoptemp = new OrderInfo(0, "", "", 0, 0);
+			OrderInfo Shoptemp = new OrderInfo(0, "", id, 0, 0);
 			this.os.writeObject(Shoptemp);
 			this.os.flush();
 			try {

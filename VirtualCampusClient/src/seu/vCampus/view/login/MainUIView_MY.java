@@ -29,6 +29,7 @@ import java.awt.event.MouseMotionAdapter;
 import com.sun.awt.AWTUtilities;
 
 import seu.vCampus.util.SocketHelper;
+import seu.vCampus.view.admin.mainAdminView;
 import seu.vCampus.view.stu.mainView;
 
 import java.io.IOException;
@@ -76,8 +77,13 @@ public class MainUIView_MY extends JFrame {
 	int yy = 150;
 	
 	private static String StudentId = null;
+	private static String type = null;
 	private static boolean isLogin = false;
 	private static SocketHelper sockethelper;
+	
+	public static void setType(String t){
+		type = t;
+	}
 	
 	public static void setIsLogin(boolean il){
 		isLogin = il;
@@ -488,9 +494,23 @@ public class MainUIView_MY extends JFrame {
 		this.Button_Library.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,5);
 					mv.UpdateButtonShowOnline();
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
+					Frame_VC.dispose();
+					//mv.setTabbedPane(3);
+					//sockethelper.setStuId(StudentId);
+				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						mainAdminView mav = new mainAdminView(sockethelper,StudentId,2);
+						System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入图书馆模块！\n请先登录！");
@@ -517,9 +537,23 @@ public class MainUIView_MY extends JFrame {
 		this.Button_StuRoll.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,0);
 					mv.UpdateButtonShowOnline();
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
+					Frame_VC.dispose();
+					//mv.setTabbedPane(3);
+					//sockethelper.setStuId(StudentId);
+				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						mainAdminView mav = new mainAdminView(sockethelper,StudentId,4);
+						System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入学籍管理模块！\n请先登录！");
@@ -546,16 +580,23 @@ public class MainUIView_MY extends JFrame {
 		this.Button_Course.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,3);
 					mv.UpdateButtonShowOnline();
-					System.out.println("dispose() 111");
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
-					System.out.println("dispose() 222");
 					Frame_VC.dispose();
-					System.out.println("dispose() 333");
 					//mv.setTabbedPane(3);
 					//sockethelper.setStuId(StudentId);
 				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						mainAdminView mav = new mainAdminView(sockethelper,StudentId,3);
+						System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入选课模块！\n请先登录！");
@@ -583,9 +624,23 @@ public class MainUIView_MY extends JFrame {
 		this.Button_Shop.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,2);
 					mv.UpdateButtonShowOnline();
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
+					Frame_VC.dispose();
+					//mv.setTabbedPane(3);
+					//sockethelper.setStuId(StudentId);
+				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						mainAdminView mav = new mainAdminView(sockethelper,StudentId,1);
+						System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入商店模块！\n请先登录！");
@@ -613,9 +668,23 @@ public class MainUIView_MY extends JFrame {
 		this.Button_Venue.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,4);
 					mv.UpdateButtonShowOnline();
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
+					Frame_VC.dispose();
+					//mv.setTabbedPane(3);
+					//sockethelper.setStuId(StudentId);
+				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						mainAdminView mav = new mainAdminView(sockethelper,StudentId,0);
+						System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入场馆预约模块！\n请先登录！");
@@ -643,9 +712,25 @@ public class MainUIView_MY extends JFrame {
 		this.Button_Bank.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				if(isLogin == true){
+					if(type == "student"){
 					mainView mv = new mainView(sockethelper,StudentId,1);
 					mv.UpdateButtonShowOnline();
+					System.out.println("学生登录选课模块");
 					Frame_VC.dispose();
+					Frame_VC.dispose();
+					//mv.setTabbedPane(3);
+					//sockethelper.setStuId(StudentId);
+				    //mainView.setStudentId(StudentId);
+					}
+					else if(type == "admin"){
+						System.out.println("管理员登录选课模块");
+						JOptionPane.showMessageDialog(null, "管理员无银行功能模块");
+						return;
+						//mainAdminView mav = new mainAdminView(sockethelper,StudentId,1);
+						/*System.out.println("guan登录选课模块");
+						Frame_VC.dispose();
+						Frame_VC.dispose();*/
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "您尚未登录，无法进入银行模块！\n请先登录！");

@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import seu.vCampus.bz.IBank;
 import seu.vCampus.bz.IBankImpl;
 import seu.vCampus.bz.IUserImpl;
+import seu.vCampus.util.SetTableColor;
 import seu.vCampus.util.SocketHelper;
 import seu.vCampus.view.login.MainUIView_MY;
 
@@ -227,7 +228,7 @@ public class BankView {
 			textPane_7.setText("晚上好！");
 		}
 		
-		textPane_7.setBounds(42, 40, 191, 130);
+		textPane_7.setBounds(42, 40, 268, 130);
 		transferPanel.add(textPane_7);
 		
 		textField_1 = new JTextField();
@@ -410,7 +411,7 @@ public class BankView {
 		});
 		// bankPanel.setLayout(null);
 		button_record.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		button_record.setBounds(377, 32, 65, 38);
+		button_record.setBounds(432, 32, 65, 38);
 		recordPanel.add(button_record);
 
 		scrollPane = new JScrollPane();
@@ -419,24 +420,25 @@ public class BankView {
 		
 		JTextPane textPane_2 = new JTextPane();
 		textPane_2.setBackground(UIManager.getColor("Button.background"));
-		textPane_2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		textPane_2.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		textPane_2.setText("亲爱的：");
-		textPane_2.setBounds(67, 37, 82, 21);
+		textPane_2.setBounds(67, 39, 82, 33);
 		recordPanel.add(textPane_2);
 		
 		textField = new JTextField();
+		textField.setBorder(null);
 		textField.setBackground(UIManager.getColor("Button.background"));
-		textField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		textField.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		textField.setText(userName);
-		textField.setBounds(159, 39, 106, 21);
+		textField.setBounds(159, 39, 106, 31);
 		recordPanel.add(textField);
 		textField.setColumns(10);
 		
 		JTextPane textPane_6 = new JTextPane();
 		textPane_6.setBackground(UIManager.getColor("Button.background"));
-		textPane_6.setFont(new Font("微软雅黑", Font.PLAIN, 14));
+		textPane_6.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		textPane_6.setText("欢迎你~");
-		textPane_6.setBounds(283, 38, 85, 21);
+		textPane_6.setBounds(283, 38, 85, 32);
 		recordPanel.add(textPane_6);
 
 		// bankPanel.add(tab1);
@@ -469,6 +471,7 @@ public class BankView {
 			model.addRow(rowData);
 		}
 		table.setEnabled(false);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 	private String getInfo(){

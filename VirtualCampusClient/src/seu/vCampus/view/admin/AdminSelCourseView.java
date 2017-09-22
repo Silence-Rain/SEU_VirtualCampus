@@ -48,6 +48,7 @@ import org.omg.CORBA.PRIVATE_MEMBER;
 import com.sun.awt.AWTUtilities;
 import common.CourseInfo;
 import seu.vCampus.bz.ISelectCourseImpl;
+import seu.vCampus.util.SetTableColor;
 import seu.vCampus.util.SocketHelper;
 
 
@@ -288,6 +289,7 @@ public class AdminSelCourseView {
 				Object[] rowData = {courseList.getId(),courseList.getName(),courseList.getTeacher(),courseList.getPlace(),courseList.getTime(),courseList.getCredit()};
 				model.addRow(rowData);
 			}
+			SetTableColor.makeFace(table_selcourse);
 			return table_selcourse;
 	}
 }

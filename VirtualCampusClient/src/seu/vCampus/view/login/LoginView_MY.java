@@ -336,26 +336,32 @@ public class LoginView_MY extends JFrame {
 		MainUIView_MY.setSocketHelper(sockethelper);
 		LoggedPopUp_MY.setSocketHelper(sockethelper);
 		
-//		if (!iden.equals(CreateIdentity.identity)) {//�ж���֤���Ƿ���ȷ  //验证码 要改回去
-//			JOptionPane.showMessageDialog(null, "验证码错误！");
-//			return;
-//		}
+		if (!iden.equals(CreateIdentity.identity)) {//�ж���֤���Ƿ���ȷ  //验证码 要改回去
+			JOptionPane.showMessageDialog(null, "验证码错误！");
+			return;
+		}
 		
 		UserInfo user = new UserInfo(id,pwd,typeE,"","");
 		
 		if (ius.Login(user)) {//�ж����ݿ��Ƿ�ƥ�䲢��¼�ɹ�
 			System.out.println("登录成功");
 			if (type == "学生") {		
-				JOptionPane.showMessageDialog(null, "成功登录！");
+				JOptionPane.showMessageDialog(null, "学生界面成功登录！");
 				MainUIView_MY.setStudentId(id); //����id����
 				MainUIView_MY.setIsLogin(true);
+				MainUIView_MY.setType("student");
 				MainUIView_MY.UpdateButtonShowOnline();
 				MainUIView_MY.setMinimizeRestore();//����������ָ�
 				Frame_Login.dispose();			
 			} 
 			else if (type == "管理员") {
-				dispose();
-		//		AdminMainView e6 = new AdminMainView(sockethelper);
+				JOptionPane.showMessageDialog(null, "管理员界面成功登录！");
+				MainUIView_MY.setStudentId(id); //����id����
+				MainUIView_MY.setIsLogin(true);
+				MainUIView_MY.setType("admin");
+				MainUIView_MY.UpdateButtonShowOnline();
+				MainUIView_MY.setMinimizeRestore();//����������ָ�
+				Frame_Login.dispose();	
 			}
 		} 
 		else {

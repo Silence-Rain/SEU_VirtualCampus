@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import seu.vCampus.bz.IBank;
 import seu.vCampus.bz.IBankImpl;
 import seu.vCampus.bz.ILibraryImpl;
+import seu.vCampus.util.SetTableColor;
 import seu.vCampus.util.SocketHelper;
 import seu.vCampus.view.login.MainUIView_MY;
 
@@ -74,15 +75,15 @@ public class LibrView {
 	private JTextField InquiryBookName_TextField;
 //	JPanel Library_Panel = new JPanel();
 	private List<BookInfo[]> LibList = new ArrayList();
-	JButton InquiryBookByName_Button = new JButton("查询书名");
+	JButton InquiryBookByName_Button = new JButton("");
 	final JScrollPane InquiryBook_ScrollPane = new JScrollPane();
-	JButton InquiryBookByAuthor_Button = new JButton("查询作者");
-	JButton BorrowThisBook_Button = new JButton("借阅此书");
+	JButton InquiryBookByAuthor_Button = new JButton("");
+	JButton BorrowThisBook_Button = new JButton("");
 	//private  JPanel panel_record = new JPanel();
 	private final JScrollPane scrollPane_Record = new JScrollPane();
 	private final JTable table_Record = new JTable();
-	JButton jb_ReturnBook = new JButton("还书");
-	private final JButton jb_Refresh = new JButton("刷新");
+	JButton jb_ReturnBook = new JButton("");
+	private final JButton jb_Refresh = new JButton("");
 	private String id = null;
 	
 	int countSize = 0;
@@ -237,9 +238,10 @@ public class LibrView {
 			"\u4E66\u7C4D\u540D\u79F0", "\u4E66\u7C4D\u4F5C\u8005", "\u51FA\u7248\u793E", "\u5E93\u5B58\u6570\u91CF", "\u53EF\u501F\u6570\u91CF"
 		}));
 		InquiryBook_ScrollPane.setViewportView(InquiryBook_Table);
+		BorrowThisBook_Button.setIcon(new ImageIcon(LibrView.class.getResource("/images/btn/borrow.png")));
 		
 		BorrowThisBook_Button.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		BorrowThisBook_Button.setBounds(593, 221, 93, 23);
+		BorrowThisBook_Button.setBounds(593, 214, 93, 39);
 		InquiryBook_Panel.add(BorrowThisBook_Button);
 		
 		InquiryBookName_TextField = new JTextField();
@@ -250,21 +252,23 @@ public class LibrView {
 
 		JLabel InquiryBookInformation_Label = new JLabel("查询信息");
 		InquiryBookInformation_Label.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		InquiryBookInformation_Label.setBounds(51, 221, 78, 29);
+		InquiryBookInformation_Label.setBounds(49, 217, 78, 29);
 		InquiryBook_Panel.add(InquiryBookInformation_Label);
+		InquiryBookByName_Button.setIcon(new ImageIcon(LibrView.class.getResource("/images/btn/bookname.png")));
 		InquiryBookByName_Button.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
 
 		
 		
 		
-		InquiryBookByName_Button.setBounds(355, 221, 93, 23);
+		InquiryBookByName_Button.setBounds(355, 214, 93, 39);
 		InquiryBook_Panel.add(InquiryBookByName_Button);
+		InquiryBookByAuthor_Button.setIcon(new ImageIcon(LibrView.class.getResource("/images/btn/writer.png")));
 		InquiryBookByAuthor_Button.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
 		
 		
-		InquiryBookByAuthor_Button.setBounds(473, 221, 93, 23);
+		InquiryBookByAuthor_Button.setBounds(473, 214, 93, 39);
 		InquiryBook_Panel.add(InquiryBookByAuthor_Button);
 		
         Book_TabbedPane.addTab("借阅记录", null, panel_record, null);
@@ -282,6 +286,7 @@ public class LibrView {
 		));
 		
 		scrollPane_Record.setViewportView(table_Record);
+		jb_ReturnBook.setIcon(new ImageIcon(LibrView.class.getResource("/images/btn/return.png")));
 		jb_ReturnBook.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		
 		
@@ -324,23 +329,25 @@ public class LibrView {
 				}
 			}
 		});
-		jb_ReturnBook.setBounds(43, 256, 93, 23);
+		jb_ReturnBook.setContentAreaFilled(false);
+		jb_ReturnBook.setBounds(43, 234, 93, 45);
 		panel_record.add(jb_ReturnBook);
 		
 	//	this.tabbedPane.setSelectedIndex(5);//设置第六个界面，即图书馆界面为初始界面
 		
 		InquiryBook_ScrollPane.setViewportView(getAllBookTable());
 		scrollPane_Record.setViewportView(getRecordTable());
+		jb_Refresh.setIcon(new ImageIcon(LibrView.class.getResource("/images/btn/re_13.png")));
 		jb_Refresh.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		jb_Refresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				scrollPane_Record.setViewportView(getRecordTable());
 			}
 		});
-		jb_Refresh.setBounds(192, 256, 93, 23);
+		jb_Refresh.setBounds(192, 234, 93, 45);
 		
 		panel_record.add(jb_Refresh);
-		
+		jb_Refresh.setContentAreaFilled(false);
 		StudentEvent();
 	}
 	
@@ -353,7 +360,7 @@ public class LibrView {
 		Image smallImage = image.getScaledInstance(26 + cs, (int) (35 + cs * 1.386), Image.SCALE_FAST);
 		ImageIcon smallIcon = new ImageIcon(smallImage);
 		button.setIcon(smallIcon);
-		button.setBounds(5 + cs, 70 - cs, 150, 208);
+		button.setBounds(5 + cs, 70 - cs, 27 + cs, (int) (36 + cs * 1.386));
 	}
 
 	private void makeImageBigger(ImageIcon ic, JButton button, int period) {
@@ -362,7 +369,7 @@ public class LibrView {
 		Image smallImage = image.getScaledInstance(51 + cs * 2, (int) (69.333 + cs * 2.7733), Image.SCALE_FAST);
 		ImageIcon smallIcon = new ImageIcon(smallImage);
 		button.setIcon(smallIcon);
-		button.setBounds(30 + cs * 5, 55 - cs, 150, 208);
+		button.setBounds(30 + cs * 5, 55 - cs, 52 + cs * 2, (int) (70.333 + cs * 2.7733));
 	}
 
 	private void makeImageSmaller(ImageIcon ic, JButton button, int period) {
@@ -371,12 +378,12 @@ public class LibrView {
 		Image smallImage = image.getScaledInstance(151 - cs * 2, (int) (208 - cs * 2.7733), Image.SCALE_FAST);
 		ImageIcon smallIcon = new ImageIcon(smallImage);
 		button.setIcon(smallIcon);
-		button.setBounds(280 + cs * 5, 5 + cs, 150, 208);
+		button.setBounds(280 + cs * 5, 5 + cs, 152 - cs * 2, (int) (209 - cs * 2.7733));
 	}
 
 /////////****************************************************************************************
 
-	
+	//InquiryBookByName_Button
 		private void StudentEvent(){
 			InquiryBookByName_Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -386,7 +393,7 @@ public class LibrView {
 					System.out.println("查找出来了1");
 				}
 			});
-			
+			InquiryBookByName_Button.setContentAreaFilled(false);
 			InquiryBookByAuthor_Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					String tmp = LibrView.this.InquiryBookName_TextField.getText();
@@ -395,7 +402,7 @@ public class LibrView {
 					System.out.println("查找出来了2");
 				}
 			});
-			
+			InquiryBookByAuthor_Button.setContentAreaFilled(false);
 			BorrowThisBook_Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					//借书
@@ -435,7 +442,7 @@ public class LibrView {
 					
 				}
 			});
-		
+			BorrowThisBook_Button.setContentAreaFilled(false);
 		
 		
 		
@@ -476,7 +483,7 @@ public class LibrView {
 				model.addRow(rowData);
 			}
 		}
-		
+		SetTableColor.makeFace(InquiryBook_Table);
 		return InquiryBook_Table;
 	}
 	
@@ -513,7 +520,7 @@ public class LibrView {
 				model.addRow(rowData);
 			}
 		}
-		
+		SetTableColor.makeFace(InquiryBook_Table);
 		return InquiryBook_Table;
 		
 	}
@@ -551,7 +558,7 @@ public class LibrView {
 				model.addRow(rowData);
 			}
 		}
-		
+		SetTableColor.makeFace(InquiryBook_Table);
 		return InquiryBook_Table;
 		
 	}
@@ -599,7 +606,7 @@ public class LibrView {
 				
 			}
 		}
-		
+		SetTableColor.makeFace(table_Record);
 		return table_Record;
 		
 	}

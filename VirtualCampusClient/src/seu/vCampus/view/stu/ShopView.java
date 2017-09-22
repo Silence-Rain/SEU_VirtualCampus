@@ -25,6 +25,7 @@ import seu.vCampus.bz.IBank;
 import seu.vCampus.bz.IBankImpl;
 import seu.vCampus.bz.IShopImpl;
 import seu.vCampus.util.ColorIcon_MY;
+import seu.vCampus.util.SetTableColor;
 import seu.vCampus.util.SocketHelper;
 
 import java.awt.FlowLayout;
@@ -92,10 +93,12 @@ public class ShopView {
 	private JPopupMenu jpopupMenu;
 	private JTextField textField;
 	private JTextField textField_1;
+	private String Stuid =null;
 
-	public ShopView(mainView mview,SocketHelper sockethelper ) {
+	public ShopView(mainView mview,SocketHelper sockethelper,String stuId ) {
 		this.sockethelper = sockethelper;
 		//sockethelper.getConnection();
+		Stuid = stuId;
 		initialize(mview);
 	}
 	
@@ -161,7 +164,7 @@ public class ShopView {
 			}
 		});
 		button_check1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		button_check1.setBounds(300, 25, 42, 37);
+		button_check1.setBounds(278, 25, 42, 37);
 		buyPanel.add(button_check1);
 		Object[][] cellData = { { "row1-col1", "row1-col2" }, { "row2-col1", "row2-col2" } };
 		String[] columnNames = { "col1", "col2" };
@@ -216,7 +219,7 @@ public class ShopView {
 		});
 		button_check2.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		button_check2.setBackground(UIManager.getColor("Button.background"));
-		button_check2.setBounds(637, 32, 42, 30);
+		button_check2.setBounds(637, 25, 42, 34);
 		buyPanel.add(button_check2);
 
 		JLayeredPane layeredPane_1 = new JLayeredPane();
@@ -243,10 +246,6 @@ public class ShopView {
 		layeredPane_1.setLayer(byNameField, 2);
 		byNameField.setBorder(null);
 		byNameField.setColumns(10);
-
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		lblNewLabel_2.setBounds(637, 114, 133, 115);
-		buyPanel.add(lblNewLabel_2);
 		// the shopcat
 		// part---------------------------------------------------------------------------------------------
 		JPanel shopcatPanel = new JPanel();
@@ -290,7 +289,7 @@ public class ShopView {
 						System.out.println("购买数量：" + totalnum);
 						if (Integer.valueOf(totalnum) <= catlist.get(i).getRemainNum()) {
 							int n = Integer.valueOf(totalnum);
-							OrderInfo order = new OrderInfo(0, catlist.get(i).getName(), null, n,
+							OrderInfo order = new OrderInfo(0, catlist.get(i).getName(), Stuid, n,
 									System.currentTimeMillis() / 1000);
 							orderlist.add(order);
 							// System.out.println("flag is"+flag);
@@ -333,7 +332,9 @@ public class ShopView {
 		textPane_9.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		textPane_9.setText("\u5408\u8BA1\uFF1A");
 
-		JButton btnNewButton = new JButton("刷新");
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setContentAreaFilled(false);
+		btnNewButton.setIcon(new ImageIcon(ShopView.class.getResource("/images/btn/refresh.png")));
 		btnNewButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -341,7 +342,7 @@ public class ShopView {
 				scrollPane_shopcat.setViewportView(getShopCatTable(catlist.size()));
 			}
 		});
-		btnNewButton.setBounds(73, 23, 61, 23);
+		btnNewButton.setBounds(73, 10, 73, 36);
 		layeredPane.add(btnNewButton);
 
 		JLayeredPane layeredPane_2 = new JLayeredPane();
@@ -408,18 +409,20 @@ public class ShopView {
 				null);
 		checkshopPanel.setLayout(null);
 
-		JButton button_7 = new JButton("\u67E5\u8BE2");
+		JButton button_7 = new JButton("");
+		button_7.setContentAreaFilled(false);
+		button_7.setIcon(new ImageIcon(ShopView.class.getResource("/images/btn/check.png")));
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				scrollPane_record.setViewportView(getShopRecordTable());
 			}
 		});
 		button_7.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		button_7.setBounds(45, 10, 69, 22);
+		button_7.setBounds(56, 24, 69, 34);
 		checkshopPanel.add(button_7);
 
 		scrollPane_record = new JScrollPane();
-		scrollPane_record.setBounds(45, 42, 606, 332);
+		scrollPane_record.setBounds(56, 68, 606, 290);
 		checkshopPanel.add(scrollPane_record);
 	}
 
@@ -448,6 +451,7 @@ public class ShopView {
 
 		}
 		table.setEnabled(true);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 
@@ -471,6 +475,7 @@ public class ShopView {
 			}
 		}
 		table.setEnabled(true);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 
@@ -526,6 +531,7 @@ public class ShopView {
 				}
 			}
 		});
+		SetTableColor.makeFace(table_cat);
 		return table_cat;
 	}
 	private JTable getShopRecordTable() {
@@ -537,7 +543,7 @@ public class ShopView {
 		table_record.getTableHeader().setFont(new Font("Microsoft YaHei UI", 0, 14));//设置表头字体
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		table_record.setModel(model); // 设置表格模型.
-		List<OrderInfo> list = new IShopImpl(ShopView.this.sockethelper).record(null);
+		List<OrderInfo> list = new IShopImpl(ShopView.this.sockethelper).record(Stuid);
 		for (int i = 0; i < list.size(); i++) {
 			OrderInfo List = list.get(i);
 			Long time = List.getBuyTime() * 1000;
@@ -547,7 +553,9 @@ public class ShopView {
 			Object[] rowData = { i + 1, List.getName(), List.getBuyer(), List.getBuyNum(), rs };// socket返回值
 			model.addRow(rowData);
 		}
+		SetTableColor.makeFace(table_record);
 		table_record.setEnabled(false);
+		
 		return table_record;
 	}
 }

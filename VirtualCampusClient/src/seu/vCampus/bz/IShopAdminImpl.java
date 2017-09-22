@@ -60,8 +60,8 @@ public class IShopAdminImpl implements IShopAdmin,MsgType{
 			this.os.writeInt(SHOP_GOODS_QUERY);
 			this.os.flush();
 			GoodInfo p=new GoodInfo(0,"",0,0.0,"","");
-			this.os.writeObject(p);
-			this.os.flush();
+			//this.os.writeObject(p);
+			//this.os.flush();
 			try {
 				if(this.is.readInt()==SHOP_GOODS_QUERY_SUCCESS) {
 					return Arrays.asList((GoodInfo[])this.is.readObject());

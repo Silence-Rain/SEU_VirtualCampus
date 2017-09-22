@@ -361,7 +361,7 @@ public class mainView extends JFrame {
 		tabbedPane.addTab("222", null,
 				shopPanel, null);// 放在main里面
 		shopPanel.setLayout(null);
-		ShopView sview = new ShopView(this,sockethelper);
+		ShopView sview = new ShopView(this,sockethelper,StudentId);
 		
 		//选课
 		classPanel = new JPanel();

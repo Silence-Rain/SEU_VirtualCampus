@@ -34,117 +34,117 @@ public class HandleCourseList {
 				switch(args[j]){
 				//周一
 				case "周一12":
-					str[0][0] = tmpStr + placeStr;
+					str[0][0] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周一34":
-					str[1][0] = tmpStr + placeStr;
+					str[1][0] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周一56":
-					str[2][0] = tmpStr + placeStr;
+					str[2][0] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周一78":
-					str[3][0] = tmpStr + placeStr;
+					str[3][0] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周一910":
-					str[4][0] = tmpStr + placeStr;
+					str[4][0] ="<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周二
 				case "周二12":
-					str[0][1] = tmpStr + placeStr;
+					str[0][1] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周二34":
-					str[1][1] = tmpStr + placeStr;
+					str[1][1] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					//System.out.println("�������ܶ�34");
 					break;
 				case "周二56":
-					str[2][1] = tmpStr + placeStr;
+					str[2][1] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周二78":
-					str[3][1] = tmpStr + placeStr;
+					str[3][1] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周二910":
-					str[4][1] = tmpStr + placeStr;
+					str[4][1] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周三
 				case "周三12":
-					str[0][2] = tmpStr + placeStr;
+					str[0][2] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周三34":
-					str[1][2] = tmpStr + placeStr;
+					str[1][2] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周三56":
-					str[2][2] = tmpStr + placeStr;
+					str[2][2] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周三78":
-					str[3][2] = tmpStr + placeStr;
+					str[3][2] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周三910":
-					str[4][2] = tmpStr + placeStr;
+					str[4][2] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周四
 				case "周四12":
-					str[0][3] = tmpStr + placeStr;
+					str[0][3] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					//System.out.println("����������12");
 					break;
 				case "周四34":
-					str[1][3] = tmpStr + placeStr;
+					str[1][3] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周四56":
-					str[2][3] = tmpStr + placeStr;
+					str[2][3] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周四78":
-					str[3][3] = tmpStr + placeStr;
+					str[3][3] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周四910":
-					str[4][3] = tmpStr + placeStr;
+					str[4][3] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周五
 				case "周五12":
-					str[0][4] = tmpStr + placeStr;
+					str[0][4] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周五34":
-					str[1][4] = tmpStr + placeStr;
+					str[1][4] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周五56":
-					str[2][4] = tmpStr + placeStr;
+					str[2][4] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周五78":
-					str[3][4] = tmpStr + placeStr;
+					str[3][4] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周五910":
-					str[4][4] = tmpStr + placeStr;
+					str[4][4] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周六
 				case "周六12":
-					str[0][5] = tmpStr + placeStr;
+					str[0][5] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周六34":
-					str[1][5] = tmpStr + placeStr;
+					str[1][5] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周六56":
-					str[2][5] = tmpStr + placeStr;
+					str[2][5] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周六78":
-					str[3][5] = tmpStr + placeStr;
+					str[3][5] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周六910":
-					str[4][5] = tmpStr + placeStr;
+					str[4][5] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 					//周日
 				case "周日12":
-					str[0][6] = tmpStr + placeStr;
+					str[0][6] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周日34":
-					str[1][6] = tmpStr + placeStr;
+					str[1][6] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周日56":
-					str[2][6] = tmpStr + placeStr;
+					str[2][6] ="<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周日78":
-					str[3][6] = tmpStr + placeStr;
+					str[3][6] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				case "周日910":
-					str[4][6] = tmpStr + placeStr;
+					str[4][6] = "<html>" + tmpStr + "<br/>" + placeStr + "</html>";
 					break;
 				default:
 					break;

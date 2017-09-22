@@ -74,8 +74,9 @@ public class ClassView {
 	JScrollPane scrollPane_credit = new JScrollPane();
 	JScrollPane scrollPane_curriculum = new JScrollPane();
 	JButton button_checkoutCurriculurm = new JButton("");
-	JButton button_select = new JButton("选择课程");
-	JButton button_cancel = new JButton("退选课程");
+	
+	JButton button_select = new JButton("");
+	JButton button_cancel = new JButton("");
 
 	public ClassView(mainView mview,SocketHelper sockethelper,String StudentId) {
 		// this.ibank = ibank;
@@ -127,6 +128,7 @@ public class ClassView {
 		button_checkoutCurriculurm.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 		ImageIcon icon_btn1  = new ImageIcon(getClass().getResource("/images/btn/dianjichakan.png"));
 		button_checkoutCurriculurm.setIcon(icon_btn1);
+		button_checkoutCurriculurm.setContentAreaFilled(false);
 		button_checkoutCurriculurm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// System.out.println("31");
@@ -140,13 +142,15 @@ public class ClassView {
 		panel_selectCourse.setFont(new Font("幼圆", Font.PLAIN, 14));
 		tabbedPane_2.addTab("选  课", new ImageIcon(ClassView.class.getResource("/images/bank/choose.png")), panel_selectCourse, null);
 		panel_selectCourse.setLayout(null);
+		button_select.setIcon(new ImageIcon(ClassView.class.getResource("/images/btn/xuanze.png")));
 
 		button_select.setFont(new Font("幼圆", Font.PLAIN, 14));
-		button_select.setBounds(125, 299, 93, 23);
+		button_select.setBounds(126, 299, 93, 36);
 		panel_selectCourse.add(button_select);
+		button_cancel.setIcon(new ImageIcon(ClassView.class.getResource("/images/btn/tuixuan.png")));
 
 		button_cancel.setFont(new Font("幼圆", Font.PLAIN, 14));
-		button_cancel.setBounds(340, 299, 93, 23);
+		button_cancel.setBounds(340, 299, 93, 36);
 		panel_selectCourse.add(button_cancel);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -202,6 +206,7 @@ public class ClassView {
 	// 学生按钮相应事件
 	private void stuEvent() {
 		// 选择课程的按钮相应函数
+		button_select.setContentAreaFilled(false);
 		button_select.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("10");
@@ -234,6 +239,7 @@ public class ClassView {
 		);
 
 		// 退选课程的按钮相应函数
+		button_cancel.setContentAreaFilled(false);
 		button_cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("20");
@@ -356,7 +362,7 @@ public class ClassView {
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		table4.setModel(model); // 设置表格模型.
 		table4.setRowHeight(50);
-		table4.setFont(new Font("Dialog", 0, 10));
+		table4.setFont(new Font("Dialog", 0, 9));
 		/*
 		 * TableColumn secColumn = table.getColumnModel().getColumn(1);
 		 * secColumn.setPreferredWidth(60); secColumn.setMaxWidth(60);
@@ -370,17 +376,17 @@ public class ClassView {
 		 */
 		table = new JTable(); // 创建表格控件.
 		table.setRowHeight(25); // 设置行高.
-		String[] columns2 = { "ID", "课  程", "学分" }; // 创建列名数组.
+		String[] columns2 = { "ID", "课程", "学分" }; // 创建列名数组.
 		// 创建表格模型.
-		table.getTableHeader().setFont(new Font("Microsoft YaHei UI", 0, 14));//设置表头字体
+		table.getTableHeader().setFont(new Font("Microsoft YaHei UI", 0, 11));//设置表头字体
 		DefaultTableModel model2 = new DefaultTableModel(columns2, 0);
 		table.setModel(model2); // 设置表格模型.
 		table.setEnabled(false);
 		// 设置第二列的列宽
 		TableColumn secColumn = table.getColumnModel().getColumn(1);
-		secColumn.setPreferredWidth(55);
-		secColumn.setMaxWidth(55);
-		secColumn.setMinWidth(55);
+		secColumn.setPreferredWidth(50);
+		secColumn.setMaxWidth(50);
+		secColumn.setMinWidth(50);
 
 		List<CourseInfo> courselist = new ISelectCourseImpl(ClassView.this.sockethelper).EnquirySelectCourse(StudentId);
 

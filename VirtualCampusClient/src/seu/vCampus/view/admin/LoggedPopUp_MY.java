@@ -1,4 +1,4 @@
-package seu.vCampus.view.stu;
+package seu.vCampus.view.admin;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -185,9 +185,9 @@ public class LoggedPopUp_MY {
 						MainUIView_MY.setIsLogin(false);
 						MainUIView_MY.UpdateButtonShowOffline();
 						MainUIView_MY.setMinimizeRestore();
+						mainAdminView.frame.setVisible(false);
+						mainAdminView.frame.dispose();
 						Frame_Logged.dispose();
-						mainView.frame.setVisible(false);
-						mainView.frame.dispose();
 						MainUIView_MY.setMinimizeRestore();
 					}
 //				}else{

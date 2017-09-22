@@ -71,8 +71,8 @@ public class IAppointAdminImpl implements IAppointAdmin,MsgType{
 			this.os.writeInt(APPOINT_ITEM_QUERY);
 			this.os.flush();
 			AppointInfo item=new AppointInfo("","");
-			this.os.writeObject(item);
-			this.os.flush();
+			//this.os.writeObject(item);
+			//this.os.flush();
 			try {
 				if(this.is.readInt()==APPOINT_ITEM_QUERY_SUCCESS) {
 					return (AppointInfo[])(this.is.readObject());

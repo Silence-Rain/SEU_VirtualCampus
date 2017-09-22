@@ -22,6 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import seu.vCampus.bz.IBank;
 import seu.vCampus.bz.IBankImpl;
 import seu.vCampus.bz.IGymImpl;
+import seu.vCampus.util.SetTableColor;
 import seu.vCampus.util.SocketHelper;
 
 import java.awt.FlowLayout;
@@ -77,9 +78,9 @@ public class OrderView {
 	private JScrollPane scrollPane_after;
 	private JScrollPane scrollPane_record;
 	JTabbedPane tabbedPane_Play = new JTabbedPane(JTabbedPane.TOP);
-	JButton jb_SearchRecord = new JButton("\u67E5\u8BE2\u8BB0\u5F55");
-	JButton button_check = new JButton("查询");
-	JButton button_appoint = new JButton("进入预约");
+	JButton jb_SearchRecord = new JButton("");
+	JButton button_check = new JButton("");
+	JButton button_appoint = new JButton("");
 
 	public OrderView(mainView mview,SocketHelper sockethelper) {
 		this.sockethelper = sockethelper;
@@ -126,7 +127,7 @@ public class OrderView {
 		panel_Today.setLayout(null);
 
 		scrollPane_today = new JScrollPane();
-		scrollPane_today.setBounds(0, 0, 426, 223);
+		scrollPane_today.setBounds(0, 0, 500, 280);
 		panel_Today.add(scrollPane_today);
 
 		
@@ -139,7 +140,7 @@ public class OrderView {
 		panel_Tomorrow.setLayout(null);
 
 		scrollPane_tomorrow = new JScrollPane();
-		scrollPane_tomorrow.setBounds(0, 0, 426, 223);
+		scrollPane_tomorrow.setBounds(0, 0, 500, 280);
 		panel_Tomorrow.add(scrollPane_tomorrow);
 
 		JPanel panel_After = new JPanel();
@@ -149,13 +150,15 @@ public class OrderView {
 		scrollPane_after = new JScrollPane();
 		scrollPane_after.setBounds(0, 0, 500, 280);
 		panel_After.add(scrollPane_after);
+		button_check.setIcon(new ImageIcon(OrderView.class.getResource("/images/btn/check.png")));
 
 		
 		
 		button_check.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		button_check.setBounds(416, 49, 93, 23);
+		button_check.setBounds(341, 37, 93, 40);
 		panel_1.add(button_check);
-			button_appoint.setBounds(416, 79, 93, 23);
+			button_appoint.setIcon(new ImageIcon(OrderView.class.getResource("/images/btn/yuyue.png")));
+			button_appoint.setBounds(444, 37, 93, 40);
 			panel_1.add(button_appoint);
 		
 			
@@ -186,12 +189,13 @@ public class OrderView {
 				{ null, null, null }, { null, null, null },
 				{ null, null, null }, }, new String[] { "\u65F6\u95F4",
 				"\u9884\u7EA6\u9879\u76EE", "\u9884\u7EA6\u4EBA" }));*/
+		jb_SearchRecord.setIcon(new ImageIcon(OrderView.class.getResource("/images/btn/check.png")));
 		
 
 		
 		
 		jb_SearchRecord.setFont(new Font("幼圆", Font.PLAIN, 14));
-		jb_SearchRecord.setBounds(94, 36, 93, 23);
+		jb_SearchRecord.setBounds(83, 10, 93, 49);
 		panel_8.add(jb_SearchRecord);
 		
 		StuEvent();
@@ -212,6 +216,7 @@ public class OrderView {
 			model.addRow(rowData);
 		}*/
 		table.setEnabled(false);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 
@@ -230,6 +235,7 @@ public class OrderView {
 			model.addRow(rowData);
 		}*/
 		table.setEnabled(false);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 
@@ -248,13 +254,14 @@ public class OrderView {
 			model.addRow(rowData);
 		}*/
 		table.setEnabled(false);
+		SetTableColor.makeFace(table);
 		return table;
 	}
 
 	private JTable getRecordTable() {
 		table_record = new JTable(); // 创建表格控件.
 		table_record.setRowHeight(25); // 设置行高.
-		String[] columns = {"预约项目", "预约日期","预约时间","预约时间戳" }; // 创建列名数组.
+		String[] columns = {"预约项目", "预约日期","预约时间","操作时间" }; // 创建列名数组.
 		// 创建表格模型.
 		DefaultTableModel model = new DefaultTableModel(columns, 0);
 		table_record.setModel(model); // 设置表格模型.
@@ -309,6 +316,7 @@ public class OrderView {
 		 * model.addRow(rowData); }
 		 */
 		table_record.setEnabled(false);
+		SetTableColor.makeFace(table_record);
 		return table_record;
 		
 	}
@@ -322,6 +330,7 @@ public class OrderView {
 				System.out.println("fff");
 			}
 		});
+		jb_SearchRecord.setContentAreaFilled(false);
 		//显示剩余场次
 		button_check.addActionListener(new ActionListener() {
 
@@ -334,6 +343,7 @@ public class OrderView {
 				
 			}
 		});
+		button_check.setContentAreaFilled(false);
 		//进行预约
 		button_appoint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {// //////////////进入预约！！！！！！！！
@@ -418,6 +428,7 @@ public class OrderView {
 				
 			}
 		});
+		button_appoint.setContentAreaFilled(false);
 	}
 	 public static String stampToDate(long l){
 	        String res;
@@ -430,11 +441,11 @@ public class OrderView {
 	 
 	protected void setPlayTable(){
 		table_today = new JTable();
-	    table_today.setRowHeight(25); // 设置行高.
+	    table_today.setRowHeight(28); // 设置行高.
 	    table_tomorrow = new JTable();
-	    table_tomorrow.setRowHeight(25); // 设置行高.
+	    table_tomorrow.setRowHeight(28); // 设置行高.
 	    table_after = new JTable();
-	    table_after.setRowHeight(25);
+	    table_after.setRowHeight(28);
 		String[] columns = {"时间段", "剩余场次" }; // 创建列名数组.
 		// 创建表格模型.
 		DefaultTableModel modeltoday = new DefaultTableModel(columns, 0);
@@ -511,18 +522,19 @@ public class OrderView {
 				modelafter.addRow(rowDataAfter);
 			}
 			
-			
 		}
-		
-		
 		table_today.setEnabled(true);
+		SetTableColor.makeFace(table_today);
+		
 		table_tomorrow.setEnabled(true);
+		SetTableColor.makeFace(table_tomorrow);
+		
 		table_after.setEnabled(true);
+		SetTableColor.makeFace(table_after);
+		
 		scrollPane_today.setViewportView(table_today);
 		scrollPane_tomorrow.setViewportView(table_tomorrow);
 		scrollPane_after.setViewportView(table_after);
-
-		
 	}
 }
 
